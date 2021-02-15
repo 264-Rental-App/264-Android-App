@@ -11,7 +11,7 @@
         android:id="@+id/srcButton"
         android:layout_width="96dp"
         android:layout_height="35dp"
-        android:background="@drawable/button_rounded_corner"
+        android:background="@drawable/search_button_rounded_corner"
         android:text="Search"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
