@@ -30,7 +30,7 @@
         android:layout_marginLeft="20sp"
         android:layout_below="@+id/back"
         android:text="RENTAL AGREEMENT"
-        android:textColor="#FFD700" />
+        android:textColor="#ADD8E6" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -42,6 +42,7 @@
         android:layout_marginBottom="7dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
+        android:backgroundTint="#ADD8E6"
         android:layout_below="@+id/agreement">
 
         <TextView
