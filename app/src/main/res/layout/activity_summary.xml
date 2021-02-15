@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5sp"
-        android:background="#808080"
+        android:backgroundTint="#808080"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:text="Back"/>
@@ -26,7 +26,7 @@
         android:layout_marginTop="5sp"
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
-        android:background="#808080"
+        android:backgroundTint="#808080"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:text="Log In"/>
@@ -154,7 +154,7 @@
         android:layout_below="@+id/endDate"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:background="@color/teal_700"
+        android:backgroundTint="@color/teal_700"
         android:gravity="center"
         android:text="Done"
         android:textColor="@android:color/white"
