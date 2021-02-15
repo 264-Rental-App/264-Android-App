@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<androidx.constraintlayout.widget.ConstraintLayout-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5sp"
+        android:background="#808080"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Back"/>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5sp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:background="#808080"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Log In"/>
+
+
+<!--    <LinearLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:padding="16dp"-->
+<!--    android:orientation="vertical"-->
+<!--    tools:context="com.hfad.rentalequipmentshoppingflow.SummaryActivity">-->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="300sp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="7dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        android:layout_below="@+id/back">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/orderSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="30sp"
+                android:text="ORDER SUMMARY"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/summaryListRecycleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_below="@+id/orderSummary"/>
+
+
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="26sp"
+        android:textSize="25sp"
+        android:text="Total: $0"
+        android:textStyle="bold"
+        android:layout_below="@+id/cardView" />
+
+    <TextView
+        android:id="@+id/startDateDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="26sp"
+        android:textSize="25sp"
+        android:text="Start Date : "
+        android:textStyle="bold"
+        android:layout_below="@+id/total" />
+
+
+    <EditText
+        android:id="@+id/startDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/total"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/startDateDisplay"
+        android:gravity="center"
+        android:text="Select..."
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/endDateDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="26sp"
+        android:textSize="25sp"
+        android:text="End Date : "
+        android:textStyle="bold"
+        android:layout_below="@+id/startDateDisplay" />
+
+    <EditText
+        android:id="@+id/endDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startDate"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="-3dp"
+        android:layout_toRightOf="@+id/endDateDisplay"
+        android:gravity="center"
+        android:text="Select..."
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/checkOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/endDate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@color/teal_700"
+        android:gravity="center"
+        android:text="Done"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!--    </LinearLayout>-->
+
+
+
+
+</RelativeLayout>
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
