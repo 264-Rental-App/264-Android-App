@@ -5,32 +5,37 @@ import com.google.gson.annotations.SerializedName;
 public class Store {
 
     @SerializedName("name")
-    private String shopName;
+    private String storeName;
     @SerializedName("lat")
-    private Float shopLat;
+    private Float storeLat;
     @SerializedName("long")
-    private Float shopLong;
+    private Float storeLong;
     @SerializedName("id")
-    private int shopId;
+    private int storeId;
     @SerializedName("commonAddress")
-    private String shopAddress;
+    private String storeAddress;
+    @SerializedName("category")
+    private String storeCategory;
 
-    public Store(String name, Float lat, Float lon, int id, String address) {
-        this.shopName = name;
-        this.shopLat = lat;
-        this.shopLong = lon;
-        this.shopId = id;
-        this.shopAddress = address;
+    public Store(String name, Float lat, Float lon, int id, String address, String category) {
+        this.storeName = name;
+        this.storeLat = lat;
+        this.storeLong = lon;
+        this.storeId = id;
+        this.storeAddress = address;
+        this.storeCategory = category;
     }
 
-    public String getShopName() { return shopName; }
+    public String getStoreName() { return storeName; }
 
-    public Float getLatitude() { return shopLat; }
+    public Float getLatitude() { return storeLat; }
 
-    public Float getLongitude() { return shopLong; }
+    public Float getLongitude() { return storeLong; }
 
-    public int getShopId() { return shopId; }
+    public int getStoreId() { return storeId; }
 
-    public String getShopAddress() { return shopAddress; }
+    public String getStoreAddress() { return storeAddress; }
+
+    public String getStoreCategory() { return storeCategory; }
 
 }

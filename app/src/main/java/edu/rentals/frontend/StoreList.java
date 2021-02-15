@@ -7,9 +7,9 @@ import java.util.List;
 public class StoreList {
 
     @SerializedName("stores")
-    private List<Store> shopList;
+    public List<Store> storeList;
 
     public StoreList(List<Store> shops) {
-        this.shopList = shops;
+        this.storeList = shops;
     }
 }

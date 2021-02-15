@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +26,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchStoreActivity extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+
+    private StoreList storeList;
 
     static final String TAG = MainActivity.class.getSimpleName();
     static final String BASE_URL = "http://localhost:8080/";
@@ -37,6 +43,7 @@ public class SearchStoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_store);
 
+        linearLayoutManager = new LinearLayoutManager(this);
 
         Intent intent = getIntent();
         String userAddress = intent.getStringExtra("userAddress");
@@ -110,6 +117,11 @@ public class SearchStoreActivity extends AppCompatActivity {
             public void onResponse(Call<Store> call, Response<Store> response) {
                 // Once successfully get the response, need to use recyclerView and
                 // pass the data into SearchStoreActivity view
+
+                recyclerView = findViewById(R.id.rvStoreList);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setAdapter(new StoreListAdapter(storeList));
             }
 
             @Override

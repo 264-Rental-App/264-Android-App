@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/storeList"
+        android:id="@+id/rvStoreList"
         android:layout_width="369dp"
         android:layout_height="550dp"
         android:layout_marginStart="7dp"
