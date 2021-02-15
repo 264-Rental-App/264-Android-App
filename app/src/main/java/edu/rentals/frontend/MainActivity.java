@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             String usrAddress = inputField.getText().toString();
             System.out.println("User Address : " + usrAddress);
             // validating input
-            if(usrAddress == null || usrAddress.equals("") || usrAddress.equals(" ") || !usrAddress.matches("[a-zA-Z0-9]")) {
+            if(usrAddress == null || usrAddress.equals("") || usrAddress.equals(" ") || !usrAddress.matches("[a-zA-Z0-9\\s,.-]*")) {
                 System.out.println("Invalid address input");
                 inputField.setText("");
                 return;
