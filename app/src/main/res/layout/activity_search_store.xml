@@ -54,6 +54,7 @@
         android:layout_marginEnd="7dp"
         android:autoSizeMaxTextSize="24sp"
         android:autoSizeMinTextSize="14sp"
+        android:autoSizeTextType="uniform"
         android:fontFamily="@font/montserrat"
         android:hint="User's Address..."
         app:layout_constraintEnd_toEndOf="parent"
