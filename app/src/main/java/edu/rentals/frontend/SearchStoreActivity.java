@@ -115,8 +115,6 @@ public class SearchStoreActivity extends AppCompatActivity {
         call.enqueue(new Callback<Store>() {
             @Override
             public void onResponse(Call<Store> call, Response<Store> response) {
-                // Once successfully get the response, need to use recyclerView and
-                // pass the data into SearchStoreActivity view
 
                 recyclerView = findViewById(R.id.rvStoreList);
                 recyclerView.setHasFixedSize(true);
