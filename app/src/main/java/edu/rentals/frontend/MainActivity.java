@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             if(usrAddress == null || usrAddress.equals("") || usrAddress.equals(" ") || !usrAddress.matches("[a-zA-Z0-9\\s,.-]*")) {
                 System.out.println("Invalid address input");
                 inputField.setText("");
+                inputField.setError("Please enter valid address.");
                 return;
             }
 
