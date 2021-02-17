@@ -24,12 +24,12 @@
 
     <TextView
         android:id="@+id/eQuantity"
-        android:layout_width="81dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="118dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="12dp"
         android:layout_toRightOf="@+id/eName"
+        android:gravity="right"
         android:layout_alignParentRight="true"
         android:textSize="26sp"
         tools:text="Qty: 0" />

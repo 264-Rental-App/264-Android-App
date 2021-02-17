@@ -21,8 +21,8 @@ public class EquipmentListActivity extends AppCompatActivity {
     Button checkOut;
     Button back;
     TextView totalSum;
-    private int storeId;
-    private String storeName;
+    private int storeId; // get from StoreList.java
+    private String storeName; // get using stroreId
     private static int total = 0;
 
 
