@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -58,6 +59,7 @@ public class SummaryActivity extends AppCompatActivity {
 //        totalSum.setText("Total: $" + String.valueOf(EquipmentListActivity.getTotal()));
 
         // select and set start date
+        final int[] startDay = new int[1];
         tvStartDate = findViewById(R.id.startDateDisplay);
         etStartDate = findViewById(R.id.startDate);
         etStartDate.setInputType(InputType.TYPE_NULL);
@@ -73,6 +75,7 @@ public class SummaryActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                startDay[0] = dayOfMonth;
                                 etStartDate.setText( (monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
 //                                tvStartDate.setText("Start Date: "+ etStartDate.getText());
                             }
@@ -82,6 +85,7 @@ public class SummaryActivity extends AppCompatActivity {
         });
 
         // select and set end date
+        final int[] endDay = new int[1];
         tvEndDate = findViewById(R.id.endDateDisplay);
         etEndDate = findViewById(R.id.endDate);
         etEndDate.setInputType(InputType.TYPE_NULL);
@@ -97,11 +101,19 @@ public class SummaryActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                Log.d("endDay2", String.valueOf(dayOfMonth));
+                                Log.d("startDay2", String.valueOf(startDay[0]));
+                                endDay[0] = dayOfMonth;
                                 etEndDate.setText( (monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
+                                totalSum.setText("Total: $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum() * (endDay[0] - startDay[0])));
 //                                tvEndDate.setText("End Date: "+ etEndDate.getText());
                             }
                         }, year, month, day);
                 picker.show();
+                Log.d("startDay", String.valueOf(startDay[0]));
+                Log.d("endDay", String.valueOf(endDay[0]));
+                Log.d("duration", String.valueOf(endDay[0] - startDay[0]));
+
             }
         });
 
