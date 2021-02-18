@@ -59,7 +59,8 @@ public class SummaryActivity extends AppCompatActivity {
 //        totalSum.setText("Total: $" + String.valueOf(EquipmentListActivity.getTotal()));
 
         // select and set start date
-        final int[] startDay = new int[1];
+        Calendar startDay = Calendar.getInstance();
+        Calendar endDay = Calendar.getInstance();
         tvStartDate = findViewById(R.id.startDateDisplay);
         etStartDate = findViewById(R.id.startDate);
         etStartDate.setInputType(InputType.TYPE_NULL);
@@ -70,13 +71,24 @@ public class SummaryActivity extends AppCompatActivity {
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
+
                 // date picker dialog
                 picker = new DatePickerDialog(edu.rentals.frontend.SummaryActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                startDay[0] = dayOfMonth;
                                 etStartDate.setText( (monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
+
+                                startDay.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                startDay.set(Calendar.MONTH, monthOfYear);
+                                startDay.set(Calendar.YEAR, year);
+
+                                // change total price when startDay change
+                                long diff = endDay.getTimeInMillis() - startDay.getTimeInMillis();
+                                long days = diff / (1000 * 60 * 60 * 24);
+                                totalSum.setText("Total: $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum() * days));
+
+
 //                                tvStartDate.setText("Start Date: "+ etStartDate.getText());
                             }
                         }, year, month, day);
@@ -85,7 +97,7 @@ public class SummaryActivity extends AppCompatActivity {
         });
 
         // select and set end date
-        final int[] endDay = new int[1];
+
         tvEndDate = findViewById(R.id.endDateDisplay);
         etEndDate = findViewById(R.id.endDate);
         etEndDate.setInputType(InputType.TYPE_NULL);
@@ -96,23 +108,28 @@ public class SummaryActivity extends AppCompatActivity {
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
+
                 // date picker dialog
                 picker = new DatePickerDialog(edu.rentals.frontend.SummaryActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                Log.d("endDay2", String.valueOf(dayOfMonth));
-                                Log.d("startDay2", String.valueOf(startDay[0]));
-                                endDay[0] = dayOfMonth;
                                 etEndDate.setText( (monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
-                                totalSum.setText("Total: $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum() * (endDay[0] - startDay[0])));
-//                                tvEndDate.setText("End Date: "+ etEndDate.getText());
+
+
+                                endDay.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                endDay.set(Calendar.MONTH, monthOfYear);
+                                endDay.set(Calendar.YEAR, year);
+
+                                long diff = endDay.getTimeInMillis() - startDay.getTimeInMillis();
+                                long days = diff / (1000 * 60 * 60 * 24);
+
+                                Log.d("duration", String.valueOf(days));
+                                totalSum.setText("Total: $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum() * days));
+
                             }
                         }, year, month, day);
                 picker.show();
-                Log.d("startDay", String.valueOf(startDay[0]));
-                Log.d("endDay", String.valueOf(endDay[0]));
-                Log.d("duration", String.valueOf(endDay[0] - startDay[0]));
 
             }
         });
