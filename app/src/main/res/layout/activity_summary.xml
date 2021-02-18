@@ -54,6 +54,7 @@
         android:layout_below="@+id/back">
 
         <RelativeLayout
+            android:id="@+id/summaryList"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -77,43 +78,43 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_below="@+id/orderSummary"/>
 
-
-
+            <TextView
+                android:id="@+id/subTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="26sp"
+                android:textSize="25sp"
+                android:text="Sub Total : $0"
+                android:textStyle="bold"
+                android:layout_below="@+id/summaryListRecycleView" />
 
         </RelativeLayout>
 
+
+
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="26sp"
-        android:textSize="25sp"
-        android:text="Total: $0"
-        android:textStyle="bold"
-        android:layout_below="@+id/cardView" />
 
     <TextView
         android:id="@+id/startDateDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="26sp"
         android:textSize="25sp"
         android:text="Start Date : "
         android:textStyle="bold"
-        android:layout_below="@+id/total" />
+        android:layout_below="@+id/cardView" />
 
 
     <EditText
         android:id="@+id/startDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/total"
+        android:layout_below="@+id/cardView"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         android:layout_toRightOf="@+id/startDateDisplay"
@@ -127,7 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="26sp"
         android:textSize="25sp"
         android:text="End Date : "
@@ -140,18 +141,44 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/startDate"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="-3dp"
+        android:layout_marginTop="-5dp"
         android:layout_toRightOf="@+id/endDateDisplay"
         android:gravity="center"
         android:text="Select..."
         android:textSize="20sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="26sp"
+        android:textSize="25sp"
+        android:text="Duration (day) : 1"
+        android:textStyle="bold"
+        android:layout_below="@+id/endDateDisplay" />
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="26sp"
+        android:textSize="25sp"
+        android:text="Total : $0"
+        android:textStyle="bold"
+        android:layout_below="@+id/duration" />
+
+
+
     <Button
         android:id="@+id/checkOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/endDate"
+        android:layout_below="@+id/total"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:backgroundTint="@color/teal_700"
