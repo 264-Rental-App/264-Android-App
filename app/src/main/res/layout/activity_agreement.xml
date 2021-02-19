@@ -22,13 +22,13 @@
 
     <TextView
         android:id="@+id/agreement"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textStyle="bold"
         android:textSize="30sp"
-        android:layout_marginLeft="20sp"
         android:layout_below="@+id/back"
+        android:gravity="center"
         android:text="RENTAL AGREEMENT"
         android:textColor="#ADD8E6" />
 

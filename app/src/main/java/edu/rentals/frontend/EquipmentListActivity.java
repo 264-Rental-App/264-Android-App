@@ -11,25 +11,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class EquipmentListActivity extends AppCompatActivity {
-    private static List<Equipment> equipmentList;
+    static final String TAG = EquipmentListActivity.class.getSimpleName();
+    private static List<Equipment> equipmentList = new ArrayList<>();;
     private RecyclerView recyclerView;
     private EquipmentListAdapter eAdapter;
     Button checkOut;
     Button back;
     TextView totalSum;
-    private int storeId; // get from StoreList.java
+    private int storeId = 0; // get from StoreList.java
     private String storeName; // get using stroreId
     private static int total = 0;
+
+    static final String BASE_URL = "http://localhost:8080/";
+    static Retrofit retrofit = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_list);
+//        connect();
 
         // back
         back = findViewById(R.id.back);
@@ -47,12 +62,11 @@ public class EquipmentListActivity extends AppCompatActivity {
 
 
         // equipment list
-        equipmentList = new ArrayList<>();
         equipmentList.add(new Equipment("Bike", 50, R.drawable.bike, 0));
         equipmentList.add(new Equipment("Ski", 100, R.drawable.ski, 0));
         equipmentList.add(new Equipment("Snowboard", 150, R.drawable.snowboard, 0));
-        equipmentList.add(new Equipment("Helmet", 10, R.drawable.snowboard, 0));
-        equipmentList.add(new Equipment("Snow Pants", 30, R.drawable.snowboard, 0));
+        equipmentList.add(new Equipment("Helmet", 10, 0, 0));
+        equipmentList.add(new Equipment("Snow Pants", 30, 0, 0));
 
         // recycleView
         recyclerView = findViewById(R.id.equipmentListRecycleView);
@@ -88,6 +102,45 @@ public class EquipmentListActivity extends AppCompatActivity {
 
 
     }
+
+    private void connect() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
+        Call<StoreInfo> call = shoppingApiService.getStoreInfo(String.valueOf(storeId));
+        call.enqueue(new Callback<StoreInfo>() {
+
+            @Override
+            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
+                // Set store name and info
+                TextView tvShopName = findViewById(R.id.shopName);
+                TextView tvShopAddress = findViewById(R.id.shopAddress);
+                TextView tvShopNumber = findViewById(R.id.shopPhone);
+                JSONObject shopInfo = response.body().getStoreInfo();
+                try {
+                    String shopName = shopInfo.get("name").toString();
+                    String shopAddress = shopInfo.get("commonAddress").toString();
+                    String shopNumber = shopInfo.get("phoneNumber").toString();
+                    tvShopName.setText(shopName);
+                    tvShopAddress.setText(shopAddress);
+                    tvShopNumber.setText(shopNumber);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<StoreInfo> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
+
 
     private boolean SaveCart() {
 

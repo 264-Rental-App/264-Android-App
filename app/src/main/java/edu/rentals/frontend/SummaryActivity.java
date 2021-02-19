@@ -55,14 +55,14 @@ public class SummaryActivity extends AppCompatActivity {
 
         // set sub total
         subTotal = findViewById(R.id.subTotal);
-        subTotal.setText("Sub Total: $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum()));
+        subTotal.setText("Sub Total : $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum()));
 
         // set duration
         duration = findViewById(R.id.duration);
 
         // set total price
         totalSum = findViewById(R.id.total);
-        totalSum.setText("Total: $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum()));
+        totalSum.setText("Total : $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum()));
 
         // set initial start date as today and end date as today + 1
         Calendar startDay = Calendar.getInstance();

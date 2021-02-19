@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/shopName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
@@ -47,28 +47,29 @@
             android:layout_marginLeft="20sp"
             android:layout_below="@+id/back"
             android:text="SHOP NAME"
+            android:gravity="center"
             android:textColor="#FFD700" />
 
         <TextView
             android:id="@+id/shopAddress"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:textStyle="bold"
             android:textSize="15sp"
-            android:layout_marginLeft="20sp"
+            android:gravity="center"
             android:text="xxx St. City, CA 96551"
             android:layout_below="@+id/shopName"
             />
 
         <TextView
             android:id="@+id/shopPhone"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:textStyle="bold"
             android:textSize="15sp"
-            android:layout_marginLeft="20sp"
+            android:gravity="center"
             android:text="(000)000-0000"
             android:layout_below="@+id/shopAddress"
             />
@@ -76,7 +77,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/equipmentListRecycleView"
             android:layout_width="wrap_content"
-            android:layout_height="300sp"
+            android:layout_height="340sp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
