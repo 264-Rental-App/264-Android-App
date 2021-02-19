@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class EquipmentList {
+public class StoreEquipmentList {
     @SerializedName("equipment")
     private List equipmentList;
 
-    public EquipmentList(List equipmentList) {
+    public StoreEquipmentList(List equipmentList) {
         this.equipmentList = equipmentList;
     }
 
-    public List getEquipmentList() {
+    public List getStoreEquipmentList() {
         return equipmentList;
     }
 }

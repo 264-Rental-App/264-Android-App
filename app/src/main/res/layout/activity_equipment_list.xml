@@ -58,7 +58,7 @@
             android:textStyle="bold"
             android:textSize="15sp"
             android:gravity="center"
-            android:text="xxx St. City, CA 96551"
+            android:text="shop address"
             android:layout_below="@+id/shopName"
             />
 
@@ -70,7 +70,7 @@
             android:textStyle="bold"
             android:textSize="15sp"
             android:gravity="center"
-            android:text="(000)000-0000"
+            android:text="shop phone number"
             android:layout_below="@+id/shopAddress"
             />
 

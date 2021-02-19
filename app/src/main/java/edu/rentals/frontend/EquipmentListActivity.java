@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,7 @@ public class EquipmentListActivity extends AppCompatActivity {
     Button back;
     TextView totalSum;
     private int storeId = 0; // get from StoreList.java
-    private String storeName; // get using stroreId
+    private String storeName, storeAddress, storeNumber; // get from previous activity
     private static int total = 0;
 
     static final String BASE_URL = "http://localhost:8080/";
@@ -44,7 +42,7 @@ public class EquipmentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_list);
-//        connect();
+        connect();
 
         // back
         back = findViewById(R.id.back);
@@ -58,8 +56,16 @@ public class EquipmentListActivity extends AppCompatActivity {
         });
 
         // store name and info
+        // use get methods from searching flow
         storeName = "Shop Name";
-
+        storeAddress = "";
+        storeNumber = "";
+        TextView tvStoreName = findViewById(R.id.shopName);
+        TextView tvStoreAddress = findViewById(R.id.shopAddress);
+        TextView tvStoreNumber = findViewById(R.id.shopPhone);
+//        tvStoreName.setText("");
+//        tvStoreAddress.setText("");
+//        tvStoreNumber.setText("");
 
         // equipment list
         equipmentList.add(new Equipment("Bike", 50, R.drawable.bike, 0));
@@ -81,7 +87,7 @@ public class EquipmentListActivity extends AppCompatActivity {
         eAdapter.setOnTotalPriceChangeListener(new EquipmentListAdapter.OnTotalPriceChangeListener() {
             @Override
             public void onTotalPriceChanged(int totalPrice) {
-                Log.d("total : ",String.valueOf(totalPrice));
+                Log.d("total : ", String.valueOf(totalPrice));
                 total = totalPrice;
                 totalSum.setText(" $" + String.valueOf(totalPrice));
             }
@@ -111,31 +117,26 @@ public class EquipmentListActivity extends AppCompatActivity {
                     .build();
         }
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
-        Call<StoreInfo> call = shoppingApiService.getStoreInfo(String.valueOf(storeId));
-        call.enqueue(new Callback<StoreInfo>() {
+
+        // api call store info
+//        Call<StoreInfo> call = shoppingApiService.getStoreInfo(String.valueOf(storeId));
+        Call<StoreEquipmentList> call = shoppingApiService.getEquipmentList(String.valueOf(storeId));
+        call.enqueue(new Callback<StoreEquipmentList>() {
 
             @Override
-            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
-                // Set store name and info
-                TextView tvShopName = findViewById(R.id.shopName);
-                TextView tvShopAddress = findViewById(R.id.shopAddress);
-                TextView tvShopNumber = findViewById(R.id.shopPhone);
-                JSONObject shopInfo = response.body().getStoreInfo();
-                try {
-                    String shopName = shopInfo.get("name").toString();
-                    String shopAddress = shopInfo.get("commonAddress").toString();
-                    String shopNumber = shopInfo.get("phoneNumber").toString();
-                    tvShopName.setText(shopName);
-                    tvShopAddress.setText(shopAddress);
-                    tvShopNumber.setText(shopNumber);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<StoreEquipmentList> call, Response<StoreEquipmentList> response) {
+                // Set equipment list name and price
+                List<LinkedTreeMap> storeEquipmentList = response.body().getStoreEquipmentList();
+                for (int i = 0; i < storeEquipmentList.size(); i++) {
+                    String equipmentName = storeEquipmentList.get(i).get("name").toString();
+                    int equipmentPrice = (int) storeEquipmentList.get(i).get("price");
+                    equipmentList.add(new Equipment(equipmentName, equipmentPrice, 0, 0));
                 }
-
+                recyclerView.setAdapter(new EquipmentListAdapter(equipmentList));
             }
 
             @Override
-            public void onFailure(Call<StoreInfo> call, Throwable t) {
+            public void onFailure(Call< StoreEquipmentList > call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
