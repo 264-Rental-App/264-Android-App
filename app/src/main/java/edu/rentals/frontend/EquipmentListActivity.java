@@ -51,7 +51,8 @@ public class EquipmentListActivity extends AppCompatActivity {
         equipmentList.add(new Equipment("Bike", 50, R.drawable.bike, 0));
         equipmentList.add(new Equipment("Ski", 100, R.drawable.ski, 0));
         equipmentList.add(new Equipment("Snowboard", 150, R.drawable.snowboard, 0));
-//        equipmentList.add(new Equipment("Helmet", 10, R.drawable.snowboard));
+        equipmentList.add(new Equipment("Helmet", 10, R.drawable.snowboard, 0));
+        equipmentList.add(new Equipment("Snow Pants", 30, R.drawable.snowboard, 0));
 
         // recycleView
         recyclerView = findViewById(R.id.equipmentListRecycleView);
