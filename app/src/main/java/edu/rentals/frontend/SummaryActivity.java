@@ -40,7 +40,6 @@ public class SummaryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(edu.rentals.frontend.SummaryActivity.this, AgreementActivity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -67,7 +66,6 @@ public class SummaryActivity extends AppCompatActivity {
         // set initial start date as today and end date as today + 1
         Calendar startDay = Calendar.getInstance();
         Calendar endDay = Calendar.getInstance();
-        endDay.set(Calendar.DAY_OF_MONTH, endDay.get(Calendar.DAY_OF_MONTH) + 1);
 
         // select and set start date
         tvStartDate = findViewById(R.id.startDateDisplay);
@@ -79,7 +77,6 @@ public class SummaryActivity extends AppCompatActivity {
         int month = startDay.get(Calendar.MONTH);
         int year = startDay.get(Calendar.YEAR);
         etStartDate.setText( (month + 1) + "/" + day + "/" + year);
-
 
         etStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +106,7 @@ public class SummaryActivity extends AppCompatActivity {
         tvEndDate = findViewById(R.id.endDateDisplay);
         etEndDate = findViewById(R.id.endDate);
         etEndDate.setInputType(InputType.TYPE_NULL);
-        etEndDate.setText( (month + 1) + "/" + (day+1) + "/" + year);
+        etEndDate.setText( (month + 1) + "/" + day + "/" + year);
         etEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,10 +142,17 @@ public class SummaryActivity extends AppCompatActivity {
     private void setTotalPrice(Calendar endDay, Calendar startDay) {
         // change total price when startDay or endDay changes
         long diff = endDay.getTimeInMillis() - startDay.getTimeInMillis();
-        long days = diff / (1000 * 60 * 60 * 24);
+        long days = 1 + diff / (1000 * 60 * 60 * 24);
 
+        // start date >= today
+        boolean validStartDate;
+        if ((startDay.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / (1000 * 60 * 60 * 24) >= 0) {
+            validStartDate = true;
+        } else {
+            validStartDate = false;
+        }
 
-        if (days > 0) {
+        if (days > 0 && validStartDate) {
             totalSum.setText("Total: $" + String.valueOf(SummaryAdapter.totalSum() * days));
             //set duration
             duration.setText("Duration (day) : " + days);
