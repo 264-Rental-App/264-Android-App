@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EquipmentListActivity extends AppCompatActivity {
     static final String TAG = EquipmentListActivity.class.getSimpleName();
-    private static List<Equipment> equipmentList = new ArrayList<>();;
+    private static List<Equipment> equipmentList;
     private RecyclerView recyclerView;
     private EquipmentListAdapter eAdapter;
     Button checkOut;
@@ -68,6 +68,7 @@ public class EquipmentListActivity extends AppCompatActivity {
 //        tvStoreNumber.setText("");
 
         // equipment list
+        equipmentList = new ArrayList<>();
         equipmentList.add(new Equipment("Bike", 50, R.drawable.bike, 0));
         equipmentList.add(new Equipment("Ski", 100, R.drawable.ski, 0));
         equipmentList.add(new Equipment("Snowboard", 150, R.drawable.snowboard, 0));
