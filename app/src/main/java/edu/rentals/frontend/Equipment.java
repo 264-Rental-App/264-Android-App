@@ -5,7 +5,6 @@ public class Equipment {
     int ePrice;
     int ePhoto;
     int quantity;
-    int subTotal;
 
     public Equipment(String eName, int ePrice, int ePhoto, int quantity) {
         this.eName = eName;
@@ -33,14 +32,4 @@ public class Equipment {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-    public int getSubTotal() {
-        return subTotal;
-    }
-
-    public void setSubTotal(int subTotal) {
-        this.subTotal = subTotal;
-    }
-
-
 }

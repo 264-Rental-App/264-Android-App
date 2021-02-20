@@ -101,7 +101,7 @@ public class EquipmentListActivity extends AppCompatActivity {
                 Intent intent = new Intent(edu.rentals.frontend.EquipmentListActivity.this, AgreementActivity.class);
                 startActivity(intent);
 
-                SaveCart();
+//                SaveCart();
             }
         });
 
@@ -119,7 +119,6 @@ public class EquipmentListActivity extends AppCompatActivity {
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
 
         // api call store info
-//        Call<StoreInfo> call = shoppingApiService.getStoreInfo(String.valueOf(storeId));
         Call<StoreEquipmentList> call = shoppingApiService.getEquipmentList(String.valueOf(storeId));
         call.enqueue(new Callback<StoreEquipmentList>() {
 
@@ -143,10 +142,10 @@ public class EquipmentListActivity extends AppCompatActivity {
     }
 
 
-    private boolean SaveCart() {
-
-        return true;
-    }
+//    private boolean SaveCart() {
+//
+//        return true;
+//    }
 
 
 //    @Override
@@ -160,7 +159,4 @@ public class EquipmentListActivity extends AppCompatActivity {
         return equipmentList;
     }
 
-    public static int getTotal() {
-        return total;
-    }
 }

@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
  */
 public class ExampleUnitTest {
     @Mock
-    private ShoppingApiService shoppingApiService
+    private ShoppingApiService shoppingApiService;
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);

@@ -54,8 +54,8 @@ public class SummaryAdapter extends RecyclerView.Adapter<edu.rentals.frontend.Su
         String eQuantity = String.valueOf(equipmentSummaryList.get(position).getQuantity());
 
         holder.tvName.setText(eName);
-        Log.d("name : ", eName);
-        Log.d("quantity : ", eQuantity);
+//        Log.d("name : ", eName);
+//        Log.d("quantity : ", eQuantity);
         holder.tvQuantity.setText("Qty: " + eQuantity);
     }
 
