@@ -101,8 +101,6 @@ public class EquipmentListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(edu.rentals.frontend.EquipmentListActivity.this, AgreementActivity.class);
                 startActivity(intent);
-
-//                SaveCart();
             }
         });
 
@@ -141,20 +139,6 @@ public class EquipmentListActivity extends AppCompatActivity {
             }
         });
     }
-
-
-//    private boolean SaveCart() {
-//
-//        return true;
-//    }
-
-
-//    @Override
-//    public void onUserInteraction() {
-//        Log.d("total",String.valueOf(eAdapter.getTotalPrice()));
-//        totalSum.setText(String.valueOf(eAdapter.getTotalPrice()));
-//    }
-
 
     public static List<Equipment> getEquipmentList() {
         return equipmentList;
