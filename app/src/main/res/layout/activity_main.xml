@@ -22,15 +22,17 @@
         app:layout_constraintTop_toBottomOf="@+id/inputAddress"
         app:layout_constraintVertical_bias="0.118" />
 
+
     <EditText
         android:id="@+id/inputAddress"
-        android:layout_width="214dp"
-        android:layout_height="31dp"
+        android:layout_width="221dp"
+        android:layout_height="41dp"
         android:background="@drawable/text_field_rounded_corner"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName"
-        android:textAlignment="center"
+        android:padding="7sp"
+        android:textAlignment="textStart"
         android:textColor="#7D7D7D"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,5 +59,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.323" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

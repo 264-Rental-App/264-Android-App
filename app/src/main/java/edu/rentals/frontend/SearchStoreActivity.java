@@ -34,7 +34,7 @@ public class SearchStoreActivity extends AppCompatActivity {
     static final String TAG = MainActivity.class.getSimpleName();
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
-    static final String googleAPIKey = "AIza...";
+    static final String googleAPIKey = "AIz...";
     LatLng latLngFromGoogle;
 
 
