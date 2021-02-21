@@ -4,15 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFD59E"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/srcButton"
+        android:layout_width="96dp"
+        android:layout_height="35dp"
+        android:background="@drawable/search_button_rounded_corner"
+        android:text="Search"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputAddress"
+        app:layout_constraintVertical_bias="0.118" />
+
+
+    <EditText
+        android:id="@+id/inputAddress"
+        android:layout_width="221dp"
+        android:layout_height="41dp"
+        android:background="@drawable/text_field_rounded_corner"
+        android:ems="10"
+        android:hint="Address"
+        android:inputType="textPersonName"
+        android:padding="7sp"
+        android:textAlignment="textStart"
+        android:textColor="#7D7D7D"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.488" />
+
     <TextView
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:fontFamily="@font/montserrat"
+        android:shadowColor="#979797"
+        android:shadowDx="1"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:text="LOGO"
+        android:textColor="#FFFFFF"
+        android:textSize="80sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.323" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
