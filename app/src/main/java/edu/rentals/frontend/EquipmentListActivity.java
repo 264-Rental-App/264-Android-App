@@ -49,7 +49,8 @@ public class EquipmentListActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.EquipmentListActivity.this, MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                Intent intent = new Intent(edu.rentals.frontend.EquipmentListActivity.this, SearchStoreActivity.class);
                 startActivity(intent);
 
             }
