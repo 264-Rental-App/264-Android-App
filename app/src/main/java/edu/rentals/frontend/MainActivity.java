@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,12 +38,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // setting up Google Places Client --> this is more for current location
         // currently don't need this service but can be a potential for future development
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
              Intent intent = new Intent(getApplicationContext(), SearchStoreActivity.class);
              intent.putExtra("userAddress", usrAddress);
              startActivity(intent);
+
 
         });
     }

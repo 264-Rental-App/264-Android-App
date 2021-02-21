@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    tools:context=".EquipmentListActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5sp"
+            android:backgroundTint="#808080"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="Back"/>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5sp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="#808080"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="Log In"/>
+
+        <TextView
+            android:id="@+id/shopName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_marginLeft="20sp"
+            android:layout_below="@+id/back"
+            android:text="SHOP NAME"
+            android:gravity="center"
+            android:textColor="#FFD700" />
+
+        <TextView
+            android:id="@+id/shopAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="shop address"
+            android:layout_below="@+id/shopName"
+            />
+
+        <TextView
+            android:id="@+id/shopPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="shop phone number"
+            android:layout_below="@+id/shopAddress"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/equipmentListRecycleView"
+            android:layout_width="wrap_content"
+            android:layout_height="340sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_below="@+id/shopPhone"/>
+
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/equipmentListRecycleView"
+            android:textStyle="bold"
+            android:textSize="26sp"
+            android:layout_marginLeft="26sp"
+            android:text="Total : "
+            />
+
+        <TextView
+            android:id="@+id/priceSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/equipmentListRecycleView"
+            android:layout_toRightOf="@+id/totalPrice"
+            android:textStyle="bold"
+            android:textSize="26sp"
+            android:text=" $0"
+            />
+
+        <Button
+            android:id="@+id/checkOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5sp"
+            android:layout_below="@+id/priceSum"
+            android:backgroundTint="@color/teal_700"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="Rent"/>
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
