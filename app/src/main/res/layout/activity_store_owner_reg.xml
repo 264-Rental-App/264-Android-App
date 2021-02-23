@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffd59e">
+    android:background="#7D7D7D">
+
+    <Button
+        android:id="@+id/backToMainFromSSignUp"
+        android:layout_width="72dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/back_rounded_corner"
+        android:text="back"
+        android:textColor="#4C4C4C"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="350dp"
@@ -22,13 +33,13 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="174dp"
+                android:layout_width="230dp"
                 android:layout_height="102dp"
                 android:layout_marginTop="70dp"
                 android:fontFamily="@font/montserrat"
-                android:text="Customer Sign Up"
+                android:text="Store Owner Sign Up"
                 android:textAlignment="textStart"
-                android:textColor="#FFFFFF"
+                android:textColor="#FFD59E"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
@@ -39,7 +50,9 @@
                 android:layout_marginTop="40dp"
                 android:ems="10"
                 android:hint="Username"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:id="@+id/editTextTextPassword"
@@ -48,7 +61,8 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName2"
@@ -57,7 +71,8 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="First Name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName3"
@@ -66,7 +81,8 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Last Name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName4"
@@ -75,7 +91,8 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Address"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:id="@+id/editTextTextEmailAddress"
@@ -84,7 +101,8 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:id="@+id/editTextNumber"
@@ -93,7 +111,8 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Phone Number"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColorHint="#FFFFFF" />
 
             <Button
                 android:id="@+id/submitCInfo"
@@ -106,17 +125,4 @@
                 android:textColor="#FFFFFF" />
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/backToMainFromCSignUp"
-        android:layout_width="72dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/back_rounded_corner"
-        android:text="back"
-        android:textColor="#4C4C4C"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

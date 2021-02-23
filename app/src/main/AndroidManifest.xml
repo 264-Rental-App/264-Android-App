@@ -25,7 +25,7 @@
         <activity android:name=".SearchFailPage" />
         <activity android:name=".LogInActivity" />
         <activity android:name=".CustomerSignUpActivity" />
-
+        <activity android:name=".StoreOwnerSignUpActivity" />
 
         <activity android:name=".EquipmentListActivity" />
         <activity android:name=".SummaryActivity" />

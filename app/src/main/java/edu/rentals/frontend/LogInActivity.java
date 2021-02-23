@@ -27,6 +27,12 @@ public class LogInActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button storeManSignUpBtn = findViewById(R.id.storeManSignUp);
+        storeManSignUpBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), StoreOwnerSignUpActivity.class);
+            startActivity(intent);
+        });
+
         Button goBackHome = findViewById(R.id.homeFromLogin);
         goBackHome.setOnClickListener(view -> {
 
