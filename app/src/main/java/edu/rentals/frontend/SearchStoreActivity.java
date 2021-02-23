@@ -198,6 +198,7 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
         // start shopping flow
         Intent intent = new Intent(getApplicationContext(), EquipmentListActivity.class);
         intent.putExtra("storeID", selectedStore.getStoreId());
+        intent.putExtra("userAddress", userAddress);
         startActivity(intent);
 
     }

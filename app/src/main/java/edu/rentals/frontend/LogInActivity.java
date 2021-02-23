@@ -44,6 +44,8 @@ public class LogInActivity extends AppCompatActivity {
 
         // TODO: Set up authentication
 
+        // TODO: Google sign in option
+
     }
 
 }
