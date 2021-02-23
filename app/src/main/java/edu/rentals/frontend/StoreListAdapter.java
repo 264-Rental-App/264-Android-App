@@ -9,26 +9,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.ViewHolder> {
     private StoreList storeList;
+    private OnStoreListener mOnStoreListener;
 
-    StoreListAdapter(StoreList list) { this.storeList = list; }
+    StoreListAdapter(StoreList list, OnStoreListener mOnStoreListener) {
+        this.storeList = list;
+        this.mOnStoreListener = mOnStoreListener;
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView storeName;
         TextView storeAddress;
         TextView storeCategory;
+        OnStoreListener onStoreListener;
         
-        ViewHolder(View storeView) {
+        ViewHolder(View storeView, OnStoreListener onStoreListener) {
             super(storeView);
             storeName = storeView.findViewById(R.id.store_name);
             storeAddress = storeView.findViewById(R.id.store_address);
             storeCategory = storeView.findViewById(R.id.store_category);
+            this.onStoreListener = onStoreListener;
+
+            storeView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            System.out.println("Clicked in StoreListAdapter!");
+            onStoreListener.onStoreClicked(getAdapterPosition());
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_row, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnStoreListener);
     }
 
     @Override
@@ -37,8 +51,10 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.View
         viewHolder.storeName.setText(list.storeList.get(position).getStoreName());
         viewHolder.storeAddress.setText(list.storeList.get(position).getStoreAddress());
         viewHolder.storeCategory.setText(list.storeList.get(position).getStoreCategory());
+
     }
 
     @Override
     public int getItemCount() { return storeList.storeList.size(); }
+
 }

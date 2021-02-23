@@ -25,14 +25,6 @@ public class MainActivity extends AppCompatActivity {
         Button srcButton = findViewById(R.id.srcButton);
         EditText inputField = findViewById(R.id.inputAddress);
 
-        // after button click
-        // -> get user address
-        // -> send to google API
-        // -> get data from google API
-        // -> modify data received from google API
-        // -> send request to server
-        // -> get response from server
-        // -> load data into recycler view
 
         // Search Button onClick
         srcButton.setOnClickListener(view -> {
@@ -47,13 +39,30 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            Intent intent = new Intent(getApplicationContext(), SearchStoreActivity.class);
+            intent.putExtra("userAddress", usrAddress);
+            startActivity(intent);
 
-            // don't start this until hearing back from google api
-            // need to put extra for user's original address as well
-             Intent intent = new Intent(getApplicationContext(), SearchStoreActivity.class);
-             intent.putExtra("userAddress", usrAddress);
-             startActivity(intent);
+        });
 
+
+        Button loginButton = findViewById(R.id.logInBtnMain);
+
+        loginButton.setOnClickListener(view -> {
+
+            Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+            startActivity(intent);
+
+        });
+
+        // TODO: This is temporary, should delete after everything is set up and Google map service
+        //  is reactivated
+        Button failPageButton = findViewById(R.id.temp_fail);
+
+        failPageButton.setOnClickListener(view -> {
+
+            Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
+            startActivity(intent);
 
         });
     }
