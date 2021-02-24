@@ -10,22 +10,20 @@
         android:id="@+id/logInBtnMain"
         android:layout_width="81dp"
         android:layout_height="33dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/search_button_rounded_corner"
         android:text="Log In"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userPassword"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintTop_toBottomOf="@+id/userPassword" />
 
     <TextView
         android:id="@+id/logo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/montserrat"
         android:shadowDx="1"
         android:shadowDy="3"
@@ -63,17 +61,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userName" />
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/google_sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logInBtnMain" />
+
     <Button
         android:id="@+id/customerSignUp"
         android:layout_width="148dp"
         android:layout_height="37dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/rounded_border_button_general"
         android:text="Customer Sign Up"
         android:textColor="#686868"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logInBtnMain" />
+        app:layout_constraintTop_toBottomOf="@+id/google_sign_in_button" />
 
     <Button
         android:id="@+id/storeManSignUp"
@@ -97,4 +105,5 @@
         android:text="Home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
