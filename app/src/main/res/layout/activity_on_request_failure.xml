@@ -23,10 +23,10 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="278dp"
-        android:layout_height="189dp"
+        android:layout_width="292dp"
+        android:layout_height="150dp"
         android:fontFamily="@font/montserrat"
-        android:text="Uh oh... Sorry we could not find anything... :/"
+        android:text="Uh oh... Something went wrong.. :/"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
@@ -35,5 +35,5 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.423" />
+        app:layout_constraintVertical_bias="0.471" />
 </androidx.constraintlayout.widget.ConstraintLayout>

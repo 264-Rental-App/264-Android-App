@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -68,6 +69,11 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
            startActivity(mainIntent);
         });
 
+
+        // TODO: this might not be the best way to handle, might need to create button
+        //  programmatically, either a login button or "Hello, xxx" text depending on
+        //  if the user has logged in or not
+
     }
 
 
@@ -101,6 +107,8 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 //
 //                // Need to think of how to handle on failure
 //                // Blank page and tell user nothing is found? Try search again?
+//                Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
+//                startActivity(intent);
 //
 //            }
 //        });
@@ -131,9 +139,8 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 //            public void onFailure(Call<Store> call, Throwable throwable) {
 //                Log.e(TAG, throwable.toString());
 //
-//                // Need to think of how to handle on failure
-//                // Blank page and tell user nothing is found? Try search again?
-//
+//                  Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
+//                  startActivity(intent);
 //            }
 //        });
     }

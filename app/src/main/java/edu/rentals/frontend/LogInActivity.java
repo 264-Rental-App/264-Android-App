@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -100,11 +101,23 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-//            updateUI(account);
+            updateUI(account);
         } catch (Exception e) {
 //            Log.w(TAG, "signInResult:failed code=" + e.getStatusCodeString());
             Log.w(TAG, "signInResult:failed:: " + e.getLocalizedMessage());
-//            updateUI(null);
+            updateUI(null);
+        }
+    }
+
+    private void updateUI(GoogleSignInAccount account) {
+        System.out.println("Google account name: " + account);
+        if(account != null) {
+            Toast.makeText(this,"U Signed In successfully",Toast.LENGTH_LONG).show();
+//            startActivity(new Intent(this, CustomerPage.class));
+            startActivity(new Intent(this, MainActivity.class));
+        }
+        else {
+            Toast.makeText(this,"Sign In Failed",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -118,7 +131,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
         // TODO: Need to define this .updateUI()
-        // updateUI(account);
+         updateUI(account);
 
     }
 
