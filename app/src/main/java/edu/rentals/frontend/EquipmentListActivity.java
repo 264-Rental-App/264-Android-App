@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.internal.LinkedTreeMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,8 @@ public class EquipmentListActivity extends AppCompatActivity {
     Button checkOut;
     Button back;
     TextView totalSum;
-    private int storeId = 0; // get from StoreList.java
+    TextView tvStoreName, tvStoreAddress, tvStoreNumber;
+    private int storeId = 0;
     private String storeName, storeAddress, storeNumber; // get from previous activity
     private static int total = 0;
 
@@ -42,6 +46,9 @@ public class EquipmentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_list);
+        // get storeId from StoreList.java
+        storeId = 0;
+
         connect();
 
         // back
@@ -56,17 +63,7 @@ public class EquipmentListActivity extends AppCompatActivity {
             }
         });
 
-        // store name and info
-        // use get methods from searching flow
-        storeName = "Shop Name";
-        storeAddress = "";
-        storeNumber = "";
-        TextView tvStoreName = findViewById(R.id.shopName);
-        TextView tvStoreAddress = findViewById(R.id.shopAddress);
-        TextView tvStoreNumber = findViewById(R.id.shopPhone);
-//        tvStoreName.setText("");
-//        tvStoreAddress.setText("");
-//        tvStoreNumber.setText("");
+
 
         // equipment list
         equipmentList = new ArrayList<>();
@@ -83,6 +80,7 @@ public class EquipmentListActivity extends AppCompatActivity {
         // adapter
         eAdapter = new EquipmentListAdapter(equipmentList);
         recyclerView.setAdapter(eAdapter);
+
 
         // total sum
         totalSum = findViewById(R.id.priceSum);
@@ -118,7 +116,43 @@ public class EquipmentListActivity extends AppCompatActivity {
         }
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
 
+
         // api call store info
+        Call<StoreInfo> storeInfoCall = shoppingApiService.getStoreInfo(String.valueOf(storeId));
+        storeInfoCall.enqueue(new Callback<StoreInfo>() {
+
+            @Override
+            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
+                // Set store info
+                JSONObject storeInfo = response.body().getStoreInfo();
+
+                //store info
+                tvStoreName = findViewById(R.id.shopName);
+                tvStoreAddress = findViewById(R.id.shopAddress);
+                tvStoreNumber = findViewById(R.id.shopPhone);
+
+                // set store info
+                try {
+                    storeName = storeInfo.get("name").toString();
+                    storeAddress = storeInfo.get("commonAddress").toString();
+                    storeNumber = storeInfo.get("phoneNumber").toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // set text
+                tvStoreName.setText(storeName);
+                tvStoreAddress.setText(storeAddress);
+                tvStoreNumber.setText(storeNumber);
+            }
+
+            @Override
+            public void onFailure(Call< StoreInfo > call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+
+        // api call store equipment list
         Call<StoreEquipmentList> call = shoppingApiService.getEquipmentList(String.valueOf(storeId));
         call.enqueue(new Callback<StoreEquipmentList>() {
 
