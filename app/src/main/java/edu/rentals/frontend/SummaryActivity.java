@@ -1,5 +1,6 @@
 package edu.rentals.frontend;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ public class SummaryActivity extends AppCompatActivity {
     DatePickerDialog picker;
     EditText etStartDate, etEndDate;
     TextView tvStartDate, tvEndDate;
-    Button back;
+    Button back, checkOut;
     TextView subTotal, duration, totalSum;
     private RecyclerView recyclerView;
     private List<Equipment> equipmentList;
@@ -128,6 +129,17 @@ public class SummaryActivity extends AppCompatActivity {
                         }, year, month, day);
                 picker.show();
 
+            }
+        });
+
+
+        // done button
+        checkOut = findViewById(R.id.checkOut);
+        checkOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(edu.rentals.frontend.SummaryActivity.this, CustomerHomeActivity.class);
+                startActivity(intent);
             }
         });
     }

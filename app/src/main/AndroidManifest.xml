@@ -25,6 +25,8 @@
         <activity android:name=".SummaryActivity"></activity>
         <activity android:name=".AgreementActivity"></activity>
 
+        <activity android:name=".CustomerHomeActivity"></activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
