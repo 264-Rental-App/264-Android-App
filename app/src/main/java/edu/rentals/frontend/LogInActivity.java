@@ -112,12 +112,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private void updateUI(GoogleSignInAccount account) {
         System.out.println("Google account name: " + account);
         if(account != null) {
-            Toast.makeText(this,"U Signed In successfully",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"U Signed In successfully", Toast.LENGTH_LONG).show();
 //            startActivity(new Intent(this, CustomerPage.class));
             startActivity(new Intent(this, MainActivity.class));
         }
         else {
-            Toast.makeText(this,"Sign In Failed",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Sign In Failed", Toast.LENGTH_LONG).show();
         }
     }
 

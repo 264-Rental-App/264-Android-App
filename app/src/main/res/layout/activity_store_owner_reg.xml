@@ -44,7 +44,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/c_signup_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -55,7 +55,7 @@
                 android:textColorHint="#FFFFFF" />
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/c_signup_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -65,7 +65,7 @@
                 android:textColorHint="#FFFFFF" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/c_signup_firstname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -75,7 +75,7 @@
                 android:textColorHint="#FFFFFF" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/c_signup_lastname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -85,7 +85,7 @@
                 android:textColorHint="#FFFFFF" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
+                android:id="@+id/c_signup_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -95,7 +95,7 @@
                 android:textColorHint="#FFFFFF" />
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/c_signup_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -105,7 +105,7 @@
                 android:textColorHint="#FFFFFF" />
 
             <EditText
-                android:id="@+id/editTextNumber"
+                android:id="@+id/c_signup_phonenumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
