@@ -13,10 +13,10 @@ public class CustomerHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customerhome);
+        setContentView(R.layout.activity_customer_home);
 
         // search
-        search = findViewById(R.id.search);
+        search = findViewById(R.id.searchPage);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
