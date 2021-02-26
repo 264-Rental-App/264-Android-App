@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CustomerHomeActivity extends AppCompatActivity {
-    Button search;
+    Button search, editCustomer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,16 @@ public class CustomerHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(edu.rentals.frontend.CustomerHomeActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // edit info
+        editCustomer = findViewById(R.id.editCustomer);
+        editCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(edu.rentals.frontend.CustomerHomeActivity.this, CustomerEditActivity.class);
                 startActivity(intent);
             }
         });
