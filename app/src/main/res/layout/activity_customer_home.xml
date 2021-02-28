@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5sp"
-        android:backgroundTint="#808080"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:text="Search"/>
+        android:text="Search"
+        android:background="@drawable/back_rounded_corner"/>
 
     <Button
         android:id="@+id/editCustomer"
@@ -29,7 +29,8 @@
         android:backgroundTint="#808080"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:text="Edit Info"/>
+        android:text="Edit Info"
+        android:background="@drawable/back_rounded_corner"/>
 
 
     <TextView

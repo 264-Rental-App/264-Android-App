@@ -119,7 +119,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
                 // get customer info
                 JSONObject customerInfo = response.body().getCustomerInfo();
 
-                // set customer info
+                // get first name
                 try {
                     firstName = customerInfo.get("firstName").toString();
                 } catch (JSONException e) {

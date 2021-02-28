@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5sp"
-        android:backgroundTint="#808080"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:text="back"/>
+        android:text="back"
+        android:background="@drawable/back_rounded_corner"/>
 
 
     <TextView
@@ -324,6 +324,7 @@
         android:backgroundTint="@color/teal_700"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:text="update"/>
+        android:text="update"
+        android:background="@drawable/search_button_rounded_corner"/>
 
     </RelativeLayout>

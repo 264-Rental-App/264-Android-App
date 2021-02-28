@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5sp"
-        android:backgroundTint="#808080"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:text="Back"/>
+        android:text="Back"
+        android:background="@drawable/back_rounded_corner"/>
 
     <Button
         android:id="@+id/login"
@@ -29,7 +29,8 @@
         android:backgroundTint="#808080"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:text="Log In"/>
+        android:text="Log In"
+        android:background="@drawable/back_rounded_corner"/>
 
 
 <!--    <LinearLayout-->
@@ -66,7 +67,8 @@
                 android:layout_marginTop="10dp"
                 android:textSize="30sp"
                 android:text="ORDER SUMMARY"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#FFD700"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/summaryListRecycleView"
@@ -180,13 +182,14 @@
         android:layout_below="@+id/total"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:backgroundTint="@color/teal_700"
+
         android:gravity="center"
         android:text="Done"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        android:background="@drawable/search_button_rounded_corner"/>
+<!--    android:backgroundTint="@color/teal_700"-->
     <!--    </LinearLayout>-->
 
 

@@ -55,9 +55,9 @@ public class CustomerEditActivity extends AppCompatActivity {
         tvPhone = findViewById(R.id.phoneNumberCurr);
 
         // mock set
-        tvUserName.setText("angel");
-        tvFirstName.setText("Angel");
-        tvLastName.setText("Jiang");
+        tvUserName.setText("adamHa");
+        tvFirstName.setText("Adam");
+        tvLastName.setText("Ha");
         tvEmail.setText("a@gmail.com");
         tvPhone.setText("8888888888");
 
