@@ -35,7 +35,7 @@ public class EquipmentListActivity extends AppCompatActivity {
     TextView totalSum;
     TextView tvStoreName, tvStoreAddress, tvStoreNumber;
     private int storeId = 0;
-    private String storeName, storeAddress, storeNumber; // get from previous activity
+    private String storeName, storeAddress, storeNumber;
     private static int total = 0;
 
     static final String BASE_URL = "http://localhost:8080/";

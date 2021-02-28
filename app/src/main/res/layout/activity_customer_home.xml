@@ -58,7 +58,6 @@
         android:id="@+id/userFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
         android:textStyle="bold"
         android:textSize="30sp"
         android:gravity="center"
@@ -74,7 +73,7 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="center"
-        android:text="ACTIVE ITEMS"
+        android:text="ORDER HISTORY"
         android:layout_below="@+id/userFirstName"/>
 
     <TextView
@@ -87,41 +86,41 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="center"
-        android:text="DUE"
+        android:text="DATE"
         android:layout_below="@+id/userFirstName"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activeItems"
+        android:id="@+id/invoiceRecycleView"
         android:layout_width="wrap_content"
-        android:layout_height="200sp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_below="@+id/active"/>
 
-    <TextView
-        android:id="@+id/history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:text="HISTORY"
-        android:layout_below="@+id/activeItems"
-        />
+<!--    <TextView-->
+<!--        android:id="@+id/history"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="20sp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="HISTORY"-->
+<!--        android:layout_below="@+id/invoiceRecycleView"-->
+<!--        />-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/hitoryItems"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_below="@+id/history"/>
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/hitoryItems"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_below="@+id/history"/>-->
 
 
 

@@ -8,7 +8,7 @@
     tools:context=".CustomerHomeActivity">
 
     <Button
-        android:id="@+id/searchPage"
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -28,7 +28,7 @@
         android:textSize="30sp"
         android:text="PERSONAL INFO"
         android:textStyle="bold"
-        android:layout_below="@id/searchPage"/>
+        android:layout_below="@id/back"/>
 
     <TextView
         android:id="@+id/userName"
@@ -199,7 +199,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="username "
+        android:text=""
         android:layout_below="@+id/updateInfo"
         android:layout_toRightOf="@id/userNameUpdate"/>
 
@@ -221,7 +221,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="password"
+        android:text=""
         android:layout_below="@+id/userNameUpdate"
         android:layout_toRightOf="@id/passwordUpdate"/>
 
@@ -243,7 +243,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="firstName"
+        android:text=""
         android:layout_below="@+id/passwordUpdate"
         android:layout_toRightOf="@id/firstNameUpdate"/>
 
@@ -265,7 +265,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="lastName"
+        android:text=""
         android:layout_below="@+id/firstNameUpdate"
         android:layout_toRightOf="@id/lastNameUpdate"/>
 
@@ -287,7 +287,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="userEmail"
+        android:text=""
         android:layout_below="@+id/lastNameUpdate"
         android:layout_toRightOf="@id/userEmailUpdate"/>
 
@@ -309,7 +309,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="phoneNumber"
+        android:text=""
         android:layout_below="@+id/userEmailUpdate"
         android:layout_toRightOf="@id/phoneNumberUpdate"/>
 
