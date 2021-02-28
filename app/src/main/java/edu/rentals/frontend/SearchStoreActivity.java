@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
@@ -43,11 +45,17 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
     static final String googleAPIKey = "AIza...";
     LatLng latLngFromGoogle;
 
+    FirebaseAuth mAuth;
+    Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_store);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        login = findViewById(R.id.loginBtn_search_store);
 
         linearLayoutManager = new LinearLayoutManager(this);
 
@@ -208,6 +216,28 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
         intent.putExtra("userAddress", userAddress);
         startActivity(intent);
 
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            System.out.println("SearchStoreActicity --- User already logged in");
+            login.setText("Hello!");
+
+            login.setOnClickListener(v -> logout());
+        }
+    }
+
+
+    private void logout() {
+        mAuth.signOut();
+        startActivity(new Intent(this, SearchStoreActivity.class));
+        finish();
     }
 
 }

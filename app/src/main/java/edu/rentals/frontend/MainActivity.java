@@ -4,17 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    FirebaseAuth mAuth;
+    Button srcButton;
+    EditText inputField;
+    Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
 
         // setting up Google Places Client --> this is more for current location
         // currently don't need this service but can be a potential for future development
@@ -22,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
 //        PlacesClient placesClient = Places.createClient(this);
 
         // Button & EditText
-        Button srcButton = findViewById(R.id.srcButton);
-        EditText inputField = findViewById(R.id.inputAddress);
+        srcButton = findViewById(R.id.srcButton);
+        inputField = findViewById(R.id.inputAddress);
+        loginButton = findViewById(R.id.logInBtn_login_page);
 
 
         // Search Button onClick
@@ -45,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
-        Button loginButton = findViewById(R.id.logInBtn_login_page);
-
         loginButton.setOnClickListener(view -> {
 
             Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
@@ -65,6 +73,30 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            System.out.println("MainActivity --- User already logged in");
+//            reload();
+            loginButton.setText("Hello!");
+
+            loginButton.setOnClickListener(v -> logout());
+        }
+
+    }
+
+    
+    private void logout() {
+        mAuth.signOut();
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
 }
