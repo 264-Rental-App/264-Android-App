@@ -26,6 +26,7 @@
         <activity android:name=".AgreementActivity"></activity>
 
         <activity android:name=".CustomerHomeActivity"></activity>
+        <activity android:name=".CustomerHomeInvoiceActivity"></activity>
         <activity android:name=".CustomerEditActivity"></activity>
 
         <meta-data

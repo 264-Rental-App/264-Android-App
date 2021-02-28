@@ -1,5 +1,6 @@
 package edu.rentals.frontend;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CustomerHomeActivity extends AppCompatActivity {
+public class CustomerHomeActivity extends AppCompatActivity implements CustomerHomeAdapter.InvoiceListClickListener {
     Button search, editCustomer;
     static final String TAG = EquipmentListActivity.class.getSimpleName();
     static final String BASE_URL = "http://localhost:8080/";
@@ -37,6 +38,11 @@ public class CustomerHomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     TextView tvFirstName;
     private CustomerHomeAdapter eAdapter;
+    private static int positionChosen;
+
+    public static int getInvoiceId() {
+        return userInvoiceList.get(positionChosen).getInvoiceId();
+    }
 
 
     @Override
@@ -83,12 +89,14 @@ public class CustomerHomeActivity extends AppCompatActivity {
         // recycleView
         recyclerView = findViewById(R.id.invoiceRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
-        // adapter
-        eAdapter = new CustomerHomeAdapter(userInvoiceList);
-        recyclerView.setAdapter(eAdapter);
+
 
         // connect api call
         connect();
+
+        // adapter
+        eAdapter = new CustomerHomeAdapter(userInvoiceList, this);
+        recyclerView.setAdapter(eAdapter);
 
 
     }
@@ -147,7 +155,8 @@ public class CustomerHomeActivity extends AppCompatActivity {
                     Timestamp transactionDate = (Timestamp) invoiceList.get(i).get("transactionDate");
                     userInvoiceList.add(new Invoice(invoiceId, storeName, totalCost, transactionDate));
                 }
-                recyclerView.setAdapter(new CustomerHomeAdapter(userInvoiceList));
+//                eAdapter = new CustomerHomeAdapter(userInvoiceList, this);
+//                recyclerView.setAdapter(eAdapter);
 
             }
 
@@ -158,6 +167,13 @@ public class CustomerHomeActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onInvoiceClick(int position) {
+        positionChosen = position;
+        Intent intent = new Intent(edu.rentals.frontend.CustomerHomeActivity.this, CustomerHomeInvoiceActivity.class);
+        startActivity(intent);
     }
 
     public static class Invoice {

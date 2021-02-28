@@ -64,7 +64,6 @@ public class EquipmentListActivity extends AppCompatActivity {
         });
 
 
-
         // equipment list
         equipmentList = new ArrayList<>();
         equipmentList.add(new Equipment("Bike", 50, R.drawable.bike, 0));
