@@ -33,7 +33,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/c_signup_email"
+                android:id="@+id/s_signup_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -42,7 +42,7 @@
                 android:inputType="textEmailAddress" />
 
             <EditText
-                android:id="@+id/c_signup_password"
+                android:id="@+id/s_signup_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -51,7 +51,7 @@
                 android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/c_signup_firstname"
+                android:id="@+id/s_signup_firstname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -60,7 +60,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/c_signup_phonenumber"
+                android:id="@+id/s_signup_phonenumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -69,7 +69,7 @@
                 android:inputType="number" />
 
             <Button
-                android:id="@+id/submitCInfo"
+                android:id="@+id/submitSInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginTop="40dp"

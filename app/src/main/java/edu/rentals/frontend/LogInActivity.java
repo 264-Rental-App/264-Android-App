@@ -112,6 +112,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
@@ -121,10 +122,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
     private void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -138,6 +141,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -150,6 +154,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
     private void updateUI(GoogleSignInAccount account) {
         System.out.println("Google account name: " + account);
         if(account != null) {
@@ -161,19 +166,33 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this,"Sign In Failed", Toast.LENGTH_LONG).show();
         }
     }
-//
-//    @Override
-//    protected void onStart() {
-//
-//        super.onStart();
-//
-//        // Check for existing Google Sign In account, if the user is already signed in
-//        // the GoogleSignInAccount will be non-null.
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//
-//        // TODO: Need to define this .updateUI()
-//         updateUI(account);
-//
-//    }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            reload();
+        }
+
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        if(account != null) {
+            // TODO: Need to define this .updateUI()
+            updateUI(account);
+        }
+    }
+
+
+    // TODO: Gotta finish this auto-redirecting
+    private void reload() {
+
+        // TODO: Redirect straight into Customer / Store manager's page
+        //  if account is already logged in
+
+    }
 }

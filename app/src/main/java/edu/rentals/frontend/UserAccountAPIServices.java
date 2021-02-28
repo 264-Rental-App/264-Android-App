@@ -7,10 +7,14 @@ import retrofit2.http.Query;
 
 public interface UserAccountAPIServices {
 
-    // TODO: Need to figure out what to do with password
     // http://localhost:8080/users
     @POST("users")
-    Call<User> createUser(@Query("&email=") String email, @Query("&firstname=") String firstName,
+    Call<User> createClient(@Query("&email=") String email, @Query("&firstname=") String firstName,
+                          @Query("&phonenumber=") String phoneNumber);
+
+    // http://localhost:8080/users
+    @POST("owners")
+    Call<User> createOwner(@Query("&email=") String email, @Query("&firstname=") String firstName,
                           @Query("&phonenumber=") String phoneNumber);
 
 }

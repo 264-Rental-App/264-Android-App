@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,8 +16,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,10 +41,10 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cutomer_sign_up);
 
-        c_email = findViewById(R.id.c_signup_email);
-        c_password = findViewById(R.id.c_signup_password);
-        c_firstname = findViewById(R.id.c_signup_firstname);
-        c_phonenumber = findViewById(R.id.c_signup_phonenumber);
+        c_email = findViewById(R.id.s_signup_email);
+        c_password = findViewById(R.id.s_signup_password);
+        c_firstname = findViewById(R.id.s_signup_firstname);
+        c_phonenumber = findViewById(R.id.s_signup_phonenumber);
 
         Button backToMain = findViewById(R.id.backToMainFromCSignUp);
         backToMain.setOnClickListener(view -> {
@@ -60,7 +57,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // just take email & password & first name & phone number?
-        Button submitCInfo = findViewById(R.id.submitCInfo);
+        Button submitCInfo = findViewById(R.id.submitSInfo);
         submitCInfo.setOnClickListener(v -> createNewUser());
     }
 
@@ -89,7 +86,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 // these information will be stored in the database
-//                                createNewUserInDataBase(email, firstName, phoneNumber);
+//                                createNewClientInDataBase(email, firstName, phoneNumber);
 
                                 startActivity(new Intent(CustomerSignUpActivity.this, MainActivity.class));
                                 finish();
@@ -119,7 +116,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
 
 
     // Might not need this
-    private void createNewUserInDataBase(String email, String firstname, String phonenumber) {
+    private void createNewClientInDataBase(String email, String firstname, String phonenumber) {
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -128,7 +125,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         }
 
         UserAccountAPIServices userAccountService = retrofit.create(UserAccountAPIServices.class);
-        Call<User> call = userAccountService.createUser(email, firstname, phonenumber);
+        Call<User> call = userAccountService.createClient(email, firstname, phonenumber);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
