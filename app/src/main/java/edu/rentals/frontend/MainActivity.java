@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        Button loginButton = findViewById(R.id.logInBtnMain);
+        Button loginButton = findViewById(R.id.logInBtn_login_page);
 
         loginButton.setOnClickListener(view -> {
 

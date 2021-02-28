@@ -42,14 +42,21 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'com.google.maps:google-maps-services:0.17.0'
     implementation 'org.slf4j:slf4j-simple:1.7.30'
+    implementation platform('com.google.firebase:firebase-bom:26.5.0')
+    implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.google.firebase:firebase-auth:20.0.2'
+    implementation 'com.google.firebase:firebase-core:18.0.2'
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    testImplementation 'org.mockito:mockito-core:2.6.8'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    testImplementation 'org.mockito:mockito-core:3.7.7'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

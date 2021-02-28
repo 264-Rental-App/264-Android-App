@@ -3,11 +3,13 @@ package edu.rentals.frontend;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -15,7 +17,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.maps.errors.ApiException;
 
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
@@ -24,18 +30,18 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "GoogleActivity";
 
+    FirebaseAuth mAuth;
+    EditText mEmail;
+    EditText mPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        EditText usrNameBox = findViewById(R.id.userName);
-        EditText pwBox = findViewById(R.id.userPassword);
-
-        String usrName = usrNameBox.getText().toString();
-        String pw = pwBox.getText().toString();
-
+        mAuth = FirebaseAuth.getInstance();
+        mEmail = findViewById(R.id.userName);
+        mPass = findViewById(R.id.userPassword);
 
         Button customerSignUpBtn = findViewById(R.id.customerSignUp);
         customerSignUpBtn.setOnClickListener(view -> {
@@ -57,8 +63,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         });
 
-
+        Button signIn = findViewById(R.id.logInBtn_login_page);
         // TODO: Set up authentication
+        signIn.setOnClickListener(v -> loginUser());
 
         // TODO: Google sign in option
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -71,16 +78,50 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void loginUser() {
+        String email = mEmail.getText().toString();
+        String pw = mPass.getText().toString();
+
+        if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if(!email.isEmpty()) {
+                mAuth.signInWithEmailAndPassword(email, pw)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "signInWithEmail:success");
+                                    Toast.makeText(LogInActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(LogInActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+            else {
+                mEmail.setError("Please enter email");
+            }
+        }
+        else if(pw.isEmpty()) {
+            mPass.setError("Please enter password");
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.google_sign_in_button:
-                signIn();
+                googleSignIn();
                 break;
         }
     }
 
-    private void signIn() {
+    private void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -120,19 +161,19 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this,"Sign In Failed", Toast.LENGTH_LONG).show();
         }
     }
-
-    @Override
-    protected void onStart() {
-
-        super.onStart();
-
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
-        // TODO: Need to define this .updateUI()
-         updateUI(account);
-
-    }
+//
+//    @Override
+//    protected void onStart() {
+//
+//        super.onStart();
+//
+//        // Check for existing Google Sign In account, if the user is already signed in
+//        // the GoogleSignInAccount will be non-null.
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//
+//        // TODO: Need to define this .updateUI()
+//         updateUI(account);
+//
+//    }
 
 }

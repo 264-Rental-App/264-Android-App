@@ -33,13 +33,13 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/c_signup_username"
+                android:id="@+id/c_signup_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="Username"
-                android:inputType="textPersonName" />
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/c_signup_password"
@@ -58,33 +58,6 @@
                 android:ems="10"
                 android:hint="First Name"
                 android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/c_signup_lastname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="Last Name"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/c_signup_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="Address"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/c_signup_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="Email"
-                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/c_signup_phonenumber"

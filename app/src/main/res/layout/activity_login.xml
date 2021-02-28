@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/logInBtnMain"
+        android:id="@+id/logInBtn_login_page"
         android:layout_width="81dp"
         android:layout_height="33dp"
         android:layout_marginTop="40dp"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logInBtnMain" />
+        app:layout_constraintTop_toBottomOf="@+id/logInBtn_login_page" />
 
     <Button
         android:id="@+id/customerSignUp"
