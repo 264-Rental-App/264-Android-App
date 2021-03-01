@@ -41,6 +41,8 @@ public class EquipmentListActivity extends AppCompatActivity {
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
 
+    // info that this view should hold onto
+    private String usrAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +53,18 @@ public class EquipmentListActivity extends AppCompatActivity {
 
         connect();
 
+        Intent intent = getIntent();
+        usrAddress = intent.getStringExtra("userAddress");
+
         // back
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.EquipmentListActivity.this, MainActivity.class);
-//                Intent intent = new Intent(edu.rentals.frontend.EquipmentListActivity.this, SearchStoreActivity.class);
+
+                Intent intent = new Intent(getApplicationContext(), SearchStoreActivity.class);
+                intent.putExtra("userAddress", usrAddress);
+
                 startActivity(intent);
 
             }

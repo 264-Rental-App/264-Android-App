@@ -4,17 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    FirebaseAuth mAuth;
+    Button srcButton;
+    EditText inputField;
+    Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
 
         // setting up Google Places Client --> this is more for current location
         // currently don't need this service but can be a potential for future development
@@ -22,17 +32,10 @@ public class MainActivity extends AppCompatActivity {
 //        PlacesClient placesClient = Places.createClient(this);
 
         // Button & EditText
-        Button srcButton = findViewById(R.id.srcButton);
-        EditText inputField = findViewById(R.id.inputAddress);
+        srcButton = findViewById(R.id.srcButton);
+        inputField = findViewById(R.id.inputAddress);
+        loginButton = findViewById(R.id.logInBtn_login_page);
 
-        // after button click
-        // -> get user address
-        // -> send to google API
-        // -> get data from google API
-        // -> modify data received from google API
-        // -> send request to server
-        // -> get response from server
-        // -> load data into recycler view
 
         // Search Button onClick
         srcButton.setOnClickListener(view -> {
@@ -47,15 +50,53 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-
-            // don't start this until hearing back from google api
-            // need to put extra for user's original address as well
-             Intent intent = new Intent(getApplicationContext(), SearchStoreActivity.class);
-             intent.putExtra("userAddress", usrAddress);
-             startActivity(intent);
-
+            Intent intent = new Intent(getApplicationContext(), SearchStoreActivity.class);
+            intent.putExtra("userAddress", usrAddress);
+            startActivity(intent);
 
         });
+
+        loginButton.setOnClickListener(view -> {
+
+            Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+            startActivity(intent);
+
+        });
+
+        // TODO: This is temporary, should delete after everything is set up and Google map service
+        //  is reactivated
+        Button failPageButton = findViewById(R.id.temp_fail);
+
+        failPageButton.setOnClickListener(view -> {
+
+            Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
+            startActivity(intent);
+
+        });
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            System.out.println("MainActivity --- User already logged in");
+//            reload();
+            loginButton.setText("Hello!");
+
+            loginButton.setOnClickListener(v -> logout());
+        }
+
+    }
+
+
+    private void logout() {
+        mAuth.signOut();
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
 }
