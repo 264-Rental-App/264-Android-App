@@ -31,6 +31,10 @@
         <activity android:name=".SummaryActivity" />
         <activity android:name=".AgreementActivity" />
 
+        <activity android:name=".CustomerHomeActivity"></activity>
+        <activity android:name=".CustomerHomeInvoiceActivity"></activity>
+        <activity android:name=".CustomerEditActivity"></activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

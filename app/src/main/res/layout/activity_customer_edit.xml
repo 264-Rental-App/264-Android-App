@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c2d6d6"
+    tools:context=".CustomerHomeActivity">
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="back"
+        android:background="@drawable/back_rounded_corner"/>
+
+
+    <TextView
+        android:id="@+id/personalInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:textSize="30sp"
+        android:text="PERSONAL INFO"
+        android:textStyle="bold"
+        android:layout_below="@id/back"/>
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/personalInfo"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="Username : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/userNameCurr"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="username "
+        android:layout_below="@+id/personalInfo"
+        android:layout_toRightOf="@id/userName"/>
+
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userName"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="Password : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/passwordCurr"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="********"
+        android:layout_below="@+id/userName"
+        android:layout_toRightOf="@id/password"/>
+
+    <TextView
+        android:id="@+id/firstName"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="First Name : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/firstNameCurr"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="firstName"
+        android:layout_below="@+id/password"
+        android:layout_toRightOf="@id/firstName"/>
+
+    <TextView
+        android:id="@+id/lastName"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstName"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="Last Name : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lastNameCurr"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="lastName"
+        android:layout_below="@+id/firstName"
+        android:layout_toRightOf="@id/lastName"/>
+
+    <TextView
+        android:id="@+id/userEmail"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lastName"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="Email : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/userEmailCurr"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="userEmail"
+        android:layout_below="@+id/lastName"
+        android:layout_toRightOf="@id/userEmail"/>
+
+    <TextView
+        android:id="@+id/phoneNumber"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userEmail"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="Phone : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/phoneNumberCurr"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="phoneNumber"
+        android:layout_below="@+id/userEmail"
+        android:layout_toRightOf="@id/phoneNumber"/>
+
+    <TextView
+        android:id="@+id/updateInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:text="INFO UPDATE"
+        android:textStyle="bold"
+        android:layout_below="@id/phoneNumber"/>
+
+    <TextView
+        android:id="@+id/userNameUpdate"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/updateInfo"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="Username : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/userNameEdit"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/updateInfo"
+        android:layout_toRightOf="@id/userNameUpdate"/>
+
+    <TextView
+        android:id="@+id/passwordUpdate"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userNameUpdate"
+        android:layout_marginTop="9dp"
+        android:gravity="right"
+        android:text="Password : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/passwordEdit"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/userNameUpdate"
+        android:layout_toRightOf="@id/passwordUpdate"/>
+
+    <TextView
+        android:id="@+id/firstNameUpdate"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordUpdate"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="First Name : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/firstNameEdit"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/passwordUpdate"
+        android:layout_toRightOf="@id/firstNameUpdate"/>
+
+    <TextView
+        android:id="@+id/lastNameUpdate"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstNameUpdate"
+        android:layout_marginTop="12dp"
+        android:gravity="right"
+        android:text="Last Name : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/lastNameEdit"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/firstNameUpdate"
+        android:layout_toRightOf="@id/lastNameUpdate"/>
+
+    <TextView
+        android:id="@+id/userEmailUpdate"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lastNameUpdate"
+        android:layout_marginTop="9dp"
+        android:gravity="right"
+        android:text="Email : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/userEmailEditUpdate"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/lastNameUpdate"
+        android:layout_toRightOf="@id/userEmailUpdate"/>
+
+    <TextView
+        android:id="@+id/phoneNumberUpdate"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userEmailUpdate"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="Phone : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/phoneNumberEdit"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/userEmailUpdate"
+        android:layout_toRightOf="@id/phoneNumberUpdate"/>
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10sp"
+        android:layout_below="@+id/phoneNumberUpdate"
+        android:backgroundTint="@color/teal_700"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="update"
+        android:background="@drawable/search_button_rounded_corner"/>
+
+    </RelativeLayout>

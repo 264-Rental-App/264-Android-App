@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.internal.LinkedTreeMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +33,9 @@ public class EquipmentListActivity extends AppCompatActivity {
     Button checkOut;
     Button back;
     TextView totalSum;
-    private int storeId = 0; // get from StoreList.java
-    private String storeName, storeAddress, storeNumber; // get from previous activity
+    TextView tvStoreName, tvStoreAddress, tvStoreNumber;
+    private int storeId = 0;
+    private String storeName, storeAddress, storeNumber;
     private static int total = 0;
 
     static final String BASE_URL = "http://localhost:8080/";
@@ -44,6 +48,9 @@ public class EquipmentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_list);
+        // get storeId from StoreList.java
+        storeId = 0;
+
         connect();
 
         Intent intent = getIntent();
@@ -54,32 +61,23 @@ public class EquipmentListActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getApplicationContext(), SearchStoreActivity.class);
                 intent.putExtra("userAddress", usrAddress);
+
                 startActivity(intent);
 
             }
         });
 
-        // store name and info
-        // use get methods from searching flow
-        storeName = "Shop Name";
-        storeAddress = "";
-        storeNumber = "";
-        TextView tvStoreName = findViewById(R.id.shopName);
-        TextView tvStoreAddress = findViewById(R.id.shopAddress);
-        TextView tvStoreNumber = findViewById(R.id.shopPhone);
-//        tvStoreName.setText("");
-//        tvStoreAddress.setText("");
-//        tvStoreNumber.setText("");
 
         // equipment list
         equipmentList = new ArrayList<>();
-        equipmentList.add(new Equipment("Bike", 50, R.drawable.bike, 0));
-        equipmentList.add(new Equipment("Ski", 100, R.drawable.ski, 0));
-        equipmentList.add(new Equipment("Snowboard", 150, R.drawable.snowboard, 0));
-        equipmentList.add(new Equipment("Helmet", 10, 0, 0));
-        equipmentList.add(new Equipment("Snow Pants", 30, 0, 0));
+        equipmentList.add(new Equipment(1, "Bike", 50, R.drawable.bike, 0));
+        equipmentList.add(new Equipment(2, "Ski", 100, R.drawable.ski, 0));
+        equipmentList.add(new Equipment(3, "Snowboard", 150, R.drawable.snowboard, 0));
+        equipmentList.add(new Equipment(4, "Helmet", 10, 0, 0));
+        equipmentList.add(new Equipment(5, "Snow Pants", 30, 0, 0));
 
         // recycleView
         recyclerView = findViewById(R.id.equipmentListRecycleView);
@@ -88,6 +86,7 @@ public class EquipmentListActivity extends AppCompatActivity {
         // adapter
         eAdapter = new EquipmentListAdapter(equipmentList);
         recyclerView.setAdapter(eAdapter);
+
 
         // total sum
         totalSum = findViewById(R.id.priceSum);
@@ -123,7 +122,43 @@ public class EquipmentListActivity extends AppCompatActivity {
         }
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
 
+
         // api call store info
+        Call<StoreInfo> storeInfoCall = shoppingApiService.getStoreInfo(String.valueOf(storeId));
+        storeInfoCall.enqueue(new Callback<StoreInfo>() {
+
+            @Override
+            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
+                // Set store info
+                JSONObject storeInfo = response.body().getStoreInfo();
+
+                //store info
+                tvStoreName = findViewById(R.id.shopName);
+                tvStoreAddress = findViewById(R.id.shopAddress);
+                tvStoreNumber = findViewById(R.id.shopPhone);
+
+                // set store info
+                try {
+                    storeName = storeInfo.get("name").toString();
+                    storeAddress = storeInfo.get("commonAddress").toString();
+                    storeNumber = storeInfo.get("phoneNumber").toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // set text
+                tvStoreName.setText(storeName);
+                tvStoreAddress.setText(storeAddress);
+                tvStoreNumber.setText(storeNumber);
+            }
+
+            @Override
+            public void onFailure(Call< StoreInfo > call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+
+        // api call store equipment list
         Call<StoreEquipmentList> call = shoppingApiService.getEquipmentList(String.valueOf(storeId));
         call.enqueue(new Callback<StoreEquipmentList>() {
 
@@ -132,9 +167,10 @@ public class EquipmentListActivity extends AppCompatActivity {
                 // Set equipment list name and price
                 List<LinkedTreeMap> storeEquipmentList = response.body().getStoreEquipmentList();
                 for (int i = 0; i < storeEquipmentList.size(); i++) {
+                    int id = (int) storeEquipmentList.get(i).get("id");
                     String equipmentName = storeEquipmentList.get(i).get("name").toString();
                     int equipmentPrice = (int) storeEquipmentList.get(i).get("price");
-                    equipmentList.add(new Equipment(equipmentName, equipmentPrice, 0, 0));
+                    equipmentList.add(new Equipment(id, equipmentName, equipmentPrice, 0, 0));
                 }
                 recyclerView.setAdapter(new EquipmentListAdapter(equipmentList));
             }

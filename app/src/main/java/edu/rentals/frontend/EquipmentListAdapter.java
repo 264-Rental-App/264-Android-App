@@ -133,6 +133,7 @@ public class EquipmentListAdapter extends RecyclerView.Adapter<edu.rentals.front
     }
 
 
+
 }
 
 

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c2d6d6"
+    tools:context=".CustomerHomeActivity">
+
+    <Button
+        android:id="@+id/searchPage"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Search"
+        android:background="@drawable/back_rounded_corner"/>
+
+    <Button
+        android:id="@+id/editCustomer"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="24dp"
+        android:layout_alignParentRight="true"
+        android:backgroundTint="#808080"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Edit Info"
+        android:background="@drawable/back_rounded_corner"/>
+
+
+    <TextView
+        android:id="@+id/customerHomePage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:text="CUSTOMER PAGE"
+        android:textStyle="bold"
+        android:layout_below="@id/searchPage"/>
+
+    <TextView
+        android:id="@+id/hello"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Hello, "
+        android:layout_below="@+id/customerHomePage"/>
+
+    <TextView
+        android:id="@+id/userFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="#819BA2"
+        android:text="userFirstName"
+        android:layout_below="@+id/hello"/>
+
+    <TextView
+        android:id="@+id/active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#f2f2f2"
+        android:text="ORDER HISTORY"
+        android:layout_below="@+id/userFirstName"/>
+
+    <TextView
+        android:id="@+id/due"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:text="DATE"
+        android:layout_below="@+id/userFirstName"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/invoiceRecycleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_below="@+id/active"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/history"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="20sp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="HISTORY"-->
+<!--        android:layout_below="@+id/invoiceRecycleView"-->
+<!--        />-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/hitoryItems"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_below="@+id/history"/>-->
+
+
+
+
+
+</RelativeLayout>

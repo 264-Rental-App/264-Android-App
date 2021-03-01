@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c2d6d6"
+    tools:context=".CustomerHomeActivity">
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="back"
+        android:background="@drawable/back_rounded_corner"/>
+
+
+    <TextView
+        android:id="@+id/invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:textSize="30sp"
+        android:text="INVOICE INFO"
+        android:textStyle="bold"
+        android:layout_below="@id/back"/>
+
+    <TextView
+        android:id="@+id/storeName"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:text="Store name:"
+        android:layout_below="@+id/invoice"/>
+
+    <TextView
+        android:id="@+id/iStoreName"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="storeName"
+        android:layout_below="@+id/invoice"
+        android:layout_toRightOf="@id/storeName"/>
+
+    <TextView
+        android:id="@+id/rentalStartDate"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:text="Rental Start Date:"
+        android:layout_below="@+id/storeName"/>
+
+    <TextView
+        android:id="@+id/iStartDate"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="startDate"
+        android:layout_below="@+id/storeName"
+        android:layout_toRightOf="@id/rentalStartDate"/>
+
+    <TextView
+        android:id="@+id/dueDate"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:text="Rental Due Date:"
+        android:layout_below="@+id/rentalStartDate"/>
+
+    <TextView
+        android:id="@+id/iDueDate"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="dueDate"
+        android:layout_below="@+id/rentalStartDate"
+        android:layout_toRightOf="@id/dueDate"/>
+
+    <TextView
+        android:id="@+id/totalCost"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:text="Total Cost:"
+        android:layout_below="@+id/dueDate"/>
+
+    <TextView
+        android:id="@+id/iTotalCost"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="totalCost"
+        android:layout_below="@+id/dueDate"
+        android:layout_toRightOf="@id/totalCost"/>
+
+    <TextView
+        android:id="@+id/equipmentList"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:text="Equipment List:"
+        android:layout_below="@+id/totalCost"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rentalRecycleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_below="@+id/equipmentList"/>
+
+
+
+
+
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package edu.rentals.frontend;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,20 +19,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class SummaryActivity extends AppCompatActivity {
+    static final String TAG = EquipmentListActivity.class.getSimpleName();
     DatePickerDialog picker;
     EditText etStartDate, etEndDate;
     TextView tvStartDate, tvEndDate;
-    Button back;
+    Button back, checkOut;
     TextView subTotal, duration, totalSum;
     private RecyclerView recyclerView;
     private List<Equipment> equipmentList;
     private edu.rentals.frontend.SummaryAdapter eAdapter;
+    private int storeId, userId;
+    static final String BASE_URL = "http://localhost:8080/";
+    static Retrofit retrofit = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
+
+        // get storeId, userId;
+        storeId = 1;
+        userId = 1;
 
         // back
         back = findViewById(R.id.back);
@@ -128,6 +143,42 @@ public class SummaryActivity extends AppCompatActivity {
                         }, year, month, day);
                 picker.show();
 
+            }
+        });
+
+
+        // done button
+        checkOut = findViewById(R.id.checkOut);
+        checkOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                processCheckOut();
+                Intent intent = new Intent(edu.rentals.frontend.SummaryActivity.this, CustomerHomeActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void processCheckOut() {
+
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
+        Rental rental = new Rental(storeId, userId, SummaryAdapter.getEquipmentSummaryList());
+        Call<Rental> call = shoppingApiService.createRental(rental);
+        call.enqueue(new Callback<Rental>() {
+            @Override
+            public void onResponse(Call<Rental> call, Response<Rental> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Rental> call, Throwable t) {
+                Log.e(TAG, t.toString());
             }
         });
     }
