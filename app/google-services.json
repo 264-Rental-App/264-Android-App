@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "427604042780",
+    "project_id": "sportequipmentrentalapp",
+    "storage_bucket": "sportequipmentrentalapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427604042780:android:09b1c0c05adbe0398eabd9",
+        "android_client_info": {
+          "package_name": "UCI.MSWE.SportEquipRentalApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427604042780-393ijfaksr5t0f9su9ul9de6c6bb76hm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRixSjy9bncxn3DyBuuHaHw9tCBFzabDU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427604042780-393ijfaksr5t0f9su9ul9de6c6bb76hm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427604042780:android:bea74695bae3d6de8eabd9",
+        "android_client_info": {
+          "package_name": "edu.rentals.frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427604042780-393ijfaksr5t0f9su9ul9de6c6bb76hm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRixSjy9bncxn3DyBuuHaHw9tCBFzabDU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427604042780-393ijfaksr5t0f9su9ul9de6c6bb76hm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

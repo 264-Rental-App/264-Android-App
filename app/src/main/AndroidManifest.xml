@@ -21,9 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EquipmentListActivity"></activity>
-        <activity android:name=".SummaryActivity"></activity>
-        <activity android:name=".AgreementActivity"></activity>
+
+        <activity android:name=".SearchFailPage" />
+        <activity android:name=".LogInActivity" />
+        <activity android:name=".CustomerSignUpActivity" />
+        <activity android:name=".StoreOwnerSignUpActivity" />
+
+        <activity android:name=".EquipmentListActivity" />
+        <activity android:name=".SummaryActivity" />
+        <activity android:name=".AgreementActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
