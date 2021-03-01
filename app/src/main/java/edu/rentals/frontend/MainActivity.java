@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    
+
     private void logout() {
         mAuth.signOut();
         startActivity(new Intent(this, MainActivity.class));
