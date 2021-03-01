@@ -1,7 +1,9 @@
 package edu.rentals.frontend;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ShoppingApiService {
@@ -17,5 +19,13 @@ public interface ShoppingApiService {
     // http://localhost:8080/rental/forms/{storeId}
     @GET("rental/forms/{storeId}")
     Call<AgreementForm> getAgreementForm(@Path("storeId") String storeId);
+
+    // http://localhost:8080/rental
+    @POST("/rental")
+    Call<Rental> createRental(@Body Rental rental);
+
+    // http://localhost:8080/invoices
+
+
 
 }

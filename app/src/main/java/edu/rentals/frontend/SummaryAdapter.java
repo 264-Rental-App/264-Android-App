@@ -1,6 +1,5 @@
 package edu.rentals.frontend;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +20,15 @@ public class SummaryAdapter extends RecyclerView.Adapter<edu.rentals.frontend.Su
         List<Equipment> equipmentSummaryList = new ArrayList<>() ;
         for (int i=0; i< equipmentList.size(); i++) {
             if (equipmentList.get(i).getQuantity() > 0) {
-                equipmentSummaryList.add(new Equipment(equipmentList.get(i).geteName(), equipmentList.get(i).getePrice(), equipmentList.get(i).getePhoto(), equipmentList.get(i).getQuantity()));
+                equipmentSummaryList.add(new Equipment(equipmentList.get(i).getEquipmentId(), equipmentList.get(i).geteName(), equipmentList.get(i).getePrice(), equipmentList.get(i).getePhoto(), equipmentList.get(i).getQuantity()));
             }
         }
 
         this.equipmentSummaryList = equipmentSummaryList;
+    }
+
+    public static List<Equipment> getEquipmentSummaryList() {
+        return equipmentSummaryList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

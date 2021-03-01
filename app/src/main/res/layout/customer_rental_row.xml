@@ -27,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="5dp"
-                android:textStyle="italic"
+                android:textColor="#819BA2"
+                android:textStyle="bold"
                 android:textSize="26sp"
                 tools:text="equipment name"/>
 
@@ -40,6 +41,7 @@
                 android:layout_toRightOf="@+id/storeName"
                 android:gravity="right"
                 android:layout_alignParentRight="true"
+                android:textStyle="bold"
                 android:textSize="26sp"
                 tools:text="Qty: 0" />
         </RelativeLayout>

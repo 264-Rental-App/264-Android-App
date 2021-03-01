@@ -66,11 +66,11 @@ public class EquipmentListActivity extends AppCompatActivity {
 
         // equipment list
         equipmentList = new ArrayList<>();
-        equipmentList.add(new Equipment("Bike", 50, R.drawable.bike, 0));
-        equipmentList.add(new Equipment("Ski", 100, R.drawable.ski, 0));
-        equipmentList.add(new Equipment("Snowboard", 150, R.drawable.snowboard, 0));
-        equipmentList.add(new Equipment("Helmet", 10, 0, 0));
-        equipmentList.add(new Equipment("Snow Pants", 30, 0, 0));
+        equipmentList.add(new Equipment(1, "Bike", 50, R.drawable.bike, 0));
+        equipmentList.add(new Equipment(2, "Ski", 100, R.drawable.ski, 0));
+        equipmentList.add(new Equipment(3, "Snowboard", 150, R.drawable.snowboard, 0));
+        equipmentList.add(new Equipment(4, "Helmet", 10, 0, 0));
+        equipmentList.add(new Equipment(5, "Snow Pants", 30, 0, 0));
 
         // recycleView
         recyclerView = findViewById(R.id.equipmentListRecycleView);
@@ -160,9 +160,10 @@ public class EquipmentListActivity extends AppCompatActivity {
                 // Set equipment list name and price
                 List<LinkedTreeMap> storeEquipmentList = response.body().getStoreEquipmentList();
                 for (int i = 0; i < storeEquipmentList.size(); i++) {
+                    int id = (int) storeEquipmentList.get(i).get("id");
                     String equipmentName = storeEquipmentList.get(i).get("name").toString();
                     int equipmentPrice = (int) storeEquipmentList.get(i).get("price");
-                    equipmentList.add(new Equipment(equipmentName, equipmentPrice, 0, 0));
+                    equipmentList.add(new Equipment(id, equipmentName, equipmentPrice, 0, 0));
                 }
                 recyclerView.setAdapter(new EquipmentListAdapter(equipmentList));
             }
