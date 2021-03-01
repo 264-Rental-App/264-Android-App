@@ -1,7 +1,9 @@
 package edu.rentals.frontend;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.Path;
 
 public interface CustomerApiService {
@@ -18,4 +20,7 @@ public interface CustomerApiService {
     @GET("users/{userId}")
     Call<Customer> getUserInfo(@Path("userId") String userId);
 
+    // http://localhost:8080/users/{userId}
+//    @PATCH("users/{userId}")
+//    Call<User> updateUser(@Path("userId") String userId, @Body User user);
 }
