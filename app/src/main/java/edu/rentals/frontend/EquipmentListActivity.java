@@ -203,7 +203,7 @@ public class EquipmentListActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser == null){
             checkOut.setEnabled(false);
-            checkOut.setBackgroundColor(Color.GRAY);
+            checkOut.setBackgroundColor(Color.LTGRAY);
         }
     }
 
