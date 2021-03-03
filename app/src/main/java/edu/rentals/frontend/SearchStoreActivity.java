@@ -66,6 +66,15 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
         usrAddressView.setText(userAddress);
 
 
+        login.setOnClickListener(view -> {
+
+            Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
+            startActivity(loginIntent);
+
+        });
+
+
+
         // but need to remember that it is asynchronous
         // need to do a check to make sure result is received
 //        connectToGoogleAPI(userAddress);

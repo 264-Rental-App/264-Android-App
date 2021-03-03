@@ -1,6 +1,7 @@
 package edu.rentals.frontend;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -40,6 +43,7 @@ public class EquipmentListActivity extends AppCompatActivity {
 
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
+    FirebaseAuth mAuth;
 
     // info that this view should hold onto
     private String usrAddress;
@@ -48,6 +52,9 @@ public class EquipmentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_list);
+
+        mAuth = FirebaseAuth.getInstance();
+
         // get storeId from StoreList.java
         storeId = 0;
 
@@ -185,5 +192,21 @@ public class EquipmentListActivity extends AppCompatActivity {
     public static List<Equipment> getEquipmentList() {
         return equipmentList;
     }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            checkOut.setEnabled(false);
+            checkOut.setBackgroundColor(Color.GRAY);
+        }
+    }
+
+
 
 }
