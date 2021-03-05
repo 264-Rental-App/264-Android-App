@@ -4,15 +4,20 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Rental {
-    private int storeId, userId;
+    private int storeId;
+    private String userId;
     private List<Equipment> equipment;
+    private Timestamp startTimestamp, endTimestamp;
 
-    public Rental(int storeId, int userId, List<Equipment> equipment) {
+    public Rental(int storeId, String userId, Timestamp startTimestamp, Timestamp endTimestamp, List<Equipment> equipment) {
         this.storeId = storeId;
         this.userId = userId;
         this.equipment = equipment;
+        this.startTimestamp = startTimestamp;
+        this.endTimestamp = endTimestamp;
     }
 }

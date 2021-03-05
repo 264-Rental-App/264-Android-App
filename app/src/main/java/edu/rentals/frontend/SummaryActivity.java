@@ -3,6 +3,10 @@ package edu.rentals.frontend;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -11,11 +15,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
@@ -35,9 +41,13 @@ public class SummaryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Equipment> equipmentList;
     private edu.rentals.frontend.SummaryAdapter eAdapter;
-    private int storeId, userId;
+    private int storeId;
+    private String userId;
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
+    Calendar startDay, endDay;
+    private SQLiteDatabase db;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +56,7 @@ public class SummaryActivity extends AppCompatActivity {
 
         // get storeId, userId;
         storeId = 1;
-        userId = 1;
+        userId = "1";
 
         // back
         back = findViewById(R.id.back);
@@ -79,8 +89,8 @@ public class SummaryActivity extends AppCompatActivity {
         totalSum.setText("Total : $" + String.valueOf(edu.rentals.frontend.SummaryAdapter.totalSum()));
 
         // set initial start date as today and end date as today + 1
-        Calendar startDay = Calendar.getInstance();
-        Calendar endDay = Calendar.getInstance();
+        startDay = Calendar.getInstance();
+        endDay = Calendar.getInstance();
 
         // select and set start date
         tvStartDate = findViewById(R.id.startDateDisplay);
@@ -152,11 +162,47 @@ public class SummaryActivity extends AppCompatActivity {
         checkOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addToLocalDB(v);
                 processCheckOut();
                 Intent intent = new Intent(edu.rentals.frontend.SummaryActivity.this, CustomerHomeActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+    private void addToLocalDB(View view) {
+        Timestamp endTimestamp = new Timestamp(endDay.getTimeInMillis());
+
+        RentalDatabaseHelper rentalDatabaseHelper = new RentalDatabaseHelper(this);
+        db = rentalDatabaseHelper.getWritableDatabase();
+        int count = SummaryAdapter.getRentalCount();
+        try {
+            rentalDatabaseHelper.add(db, userId, count, String.valueOf(endTimestamp));
+            Log.d("Database addind: ", "userId: " + userId + ", count: "+ String.valueOf(count) + ", dueDate: " + String.valueOf(endTimestamp));
+//            Toast toast = Toast.makeText(view.getContext(),
+//                    "Database available, adding userId: " + userId + ", count: "+ String.valueOf(count) + " dueDate: " + String.valueOf(endTimestamp),
+//                    Toast.LENGTH_SHORT);
+//            toast.show();
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(view.getContext(),
+                    "Database unavailable",
+                    Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        // select * from db where userId == current userId
+        db = rentalDatabaseHelper.getReadableDatabase();
+        cursor = db.query("rentalDue",
+                            new String[] {"userId", "count", "dueDate"},
+                            "userId = ?",
+                            new String[] {userId},
+                            null, null, null);
+        if (cursor.moveToFirst()) {
+            Log.d("Database query: ",  "userId: " + cursor.getString(0) + ", count: "+ cursor.getString(1) + ", dueDate: " + cursor.getString(2));
+            while (cursor.moveToNext()) {
+                Log.d("Database query: ",  "userId: " + cursor.getString(0) + ", count: "+ cursor.getString(1) + ", dueDate: " + cursor.getString(2));
+            }
+        }
     }
 
     private void processCheckOut() {
@@ -167,8 +213,13 @@ public class SummaryActivity extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+        Log.d("hi", "hi");
+        Timestamp startTimestamp = new Timestamp(startDay.getTimeInMillis());
+        Timestamp endTimestamp = new Timestamp(endDay.getTimeInMillis());
+        Log.d("startDate", String.valueOf(startTimestamp));
+        Log.d("endDate", String.valueOf(endTimestamp));
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
-        Rental rental = new Rental(storeId, userId, SummaryAdapter.getEquipmentSummaryList());
+        Rental rental = new Rental(storeId, userId, startTimestamp, endTimestamp, SummaryAdapter.getRentalSummaryList());
         Call<Rental> call = shoppingApiService.createRental(rental);
         call.enqueue(new Callback<Rental>() {
             @Override
@@ -178,7 +229,7 @@ public class SummaryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Rental> call, Throwable t) {
-                Log.e(TAG, t.toString());
+
             }
         });
     }

@@ -14,22 +14,39 @@ import java.util.List;
 public class SummaryAdapter extends RecyclerView.Adapter<edu.rentals.frontend.SummaryAdapter.ViewHolder> {
 
     private static List<Equipment> equipmentSummaryList;
+    private static List<Equipment> rentalSummaryList;
+    private static int count;
 
 
     public SummaryAdapter(List<Equipment> equipmentList) {
-        List<Equipment> equipmentSummaryList = new ArrayList<>() ;
+        List<Equipment> equipmentSummaryList = new ArrayList<>();
+        List<Equipment> rentalSummaryList = new ArrayList<>();
+        int count = 0;
         for (int i=0; i< equipmentList.size(); i++) {
             if (equipmentList.get(i).getQuantity() > 0) {
                 equipmentSummaryList.add(new Equipment(equipmentList.get(i).getEquipmentId(), equipmentList.get(i).geteName(), equipmentList.get(i).getePrice(), equipmentList.get(i).getePhoto(), equipmentList.get(i).getQuantity()));
+                rentalSummaryList.add(new Equipment(equipmentList.get(i).getEquipmentId(), equipmentList.get(i).getQuantity()));
+                count += equipmentList.get(i).getQuantity();
             }
         }
 
         this.equipmentSummaryList = equipmentSummaryList;
+        this.rentalSummaryList = rentalSummaryList;
+        this.count = count;
     }
 
     public static List<Equipment> getEquipmentSummaryList() {
         return equipmentSummaryList;
     }
+
+    public static List<Equipment> getRentalSummaryList() {
+        return rentalSummaryList;
+    }
+
+    public static int getRentalCount() {
+        return count;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
@@ -40,7 +57,6 @@ public class SummaryAdapter extends RecyclerView.Adapter<edu.rentals.frontend.Su
             super(itemView);
             tvName = itemView.findViewById(R.id.eName);
             tvQuantity = itemView.findViewById(R.id.eQuantity);
-
 
         }
     }

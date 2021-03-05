@@ -27,7 +27,7 @@ public class CustomerEditActivity extends AppCompatActivity {
     private int userId;
     private String userName, firstName, lastName, email, phoneNumber;
 
-    TextView tvUserName, tvFirstName, tvLastName, tvEmail, tvPhone;
+    TextView tvFirstName, tvEmail, tvPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +48,13 @@ public class CustomerEditActivity extends AppCompatActivity {
         });
 
         //text view customer info
-        tvUserName = findViewById(R.id.userNameCurr);
+        tvEmail = findViewById(R.id.emailCurr);
         tvFirstName = findViewById(R.id.firstNameCurr);
-        tvLastName = findViewById(R.id.lastNameCurr);
-        tvEmail = findViewById(R.id.userEmailCurr);
         tvPhone = findViewById(R.id.phoneNumberCurr);
 
         // mock set
-        tvUserName.setText("adamHa");
-        tvFirstName.setText("Adam");
-        tvLastName.setText("Ha");
         tvEmail.setText("a@gmail.com");
+        tvFirstName.setText("Adam");
         tvPhone.setText("8888888888");
 
         // get customer info
@@ -87,9 +83,9 @@ public class CustomerEditActivity extends AppCompatActivity {
 
                 // set customer info
                 try {
-                    userName = customerInfo.get("userName").toString();
+//                    userName = customerInfo.get("userName").toString();
                     firstName = customerInfo.get("firstName").toString();
-                    lastName = customerInfo.get("lastName").toString();
+//                    lastName = customerInfo.get("lastName").toString();
                     email = customerInfo.get("email").toString();
                     phoneNumber = customerInfo.get("phoneNumber").toString();
                 } catch (JSONException e) {
@@ -97,10 +93,8 @@ public class CustomerEditActivity extends AppCompatActivity {
                 }
 
                 // set text
-                tvUserName.setText(userName);
-                tvFirstName.setText(firstName);
-                tvLastName.setText(lastName);
                 tvEmail.setText(email);
+                tvFirstName.setText(firstName);
                 tvPhone.setText(phoneNumber);
 
             }
