@@ -85,10 +85,17 @@ public class CustomerSignUpActivity extends AppCompatActivity {
                                 Toast.makeText(CustomerSignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-                                // these information will be stored in the database
-//                                createNewClientInDataBase(email, firstName, phoneNumber);
+                                String uid = user.getUid();
 
+                                // these information will be stored in the database
+                                User newUser = new User(uid, firstName, email, phoneNumber);
+                                createNewClientInDatabase(newUser);
+
+                                // TODO: start Store Owner Home page, but probably from createNewClientDatabase
                                 startActivity(new Intent(CustomerSignUpActivity.this, MainActivity.class));
+
+                                // TODO: send token to the back --> or just add a header section in the createNewClientInDatabase Request?
+
                                 finish();
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -115,8 +122,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
     }
 
 
-    // Might not need this
-    private void createNewClientInDataBase(String email, String firstname, String phonenumber) {
+    private void createNewClientInDatabase(User user) {
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -125,7 +131,8 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         }
 
         UserAccountAPIServices userAccountService = retrofit.create(UserAccountAPIServices.class);
-        Call<User> call = userAccountService.createClient(email, firstname, phonenumber);
+
+        Call<User> call = userAccountService.createClient(user);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

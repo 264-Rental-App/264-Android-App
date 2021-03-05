@@ -62,10 +62,6 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
     }
 
     private void createNewUser() {
-        System.out.println("Here?");
-
-        // TODO-1: Gather all user information and build HTTP request
-        // TODO-2: Need to verify each EditText box
 
         String email = s_email.getText().toString();
         String password = s_password.getText().toString();
@@ -85,8 +81,12 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
                                     Toast.makeText(StoreOwnerSignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = mAuth.getCurrentUser();
 
+                                    String uid = user.getUid();
+
                                     // these information will be stored in the database
-                                createNewOwnerInDataBase(email, firstName, phoneNumber);
+                                    // TODO: create a head in the createNewOwnerInDatabaserequest?
+                                    User newOwner = new User(uid, firstName, email, phoneNumber);
+                                    createNewOwnerInDatabase(newOwner);
 //
                                     // TODO: The redirected page should be store owner's personal page not MainActivity, need to change
                                     startActivity(new Intent(StoreOwnerSignUpActivity.this, MainActivity.class));
@@ -117,7 +117,7 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
 
 
     // Might not need this
-    private void createNewOwnerInDataBase(String email, String firstname, String phonenumber) {
+    private void createNewOwnerInDatabase(User user) {
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -126,12 +126,12 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         }
 
         UserAccountAPIServices userAccountService = retrofit.create(UserAccountAPIServices.class);
-        Call<User> call = userAccountService.createOwner(email, firstname, phonenumber);
+        Call<User> call = userAccountService.createOwner(user);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 // TODO: idk, start customer page activity?
-
+                startActivity(new Intent(StoreOwnerSignUpActivity.this, LogInActivity.class));
             }
 
             @Override

@@ -94,6 +94,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                                     Toast.makeText(LogInActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     startActivity(new Intent(LogInActivity.this, CustomerHomeActivity.class));
+
+                                    // TODO: send the user token to the back
+
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -195,4 +199,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         //  if account is already logged in
 
     }
+
+
 }

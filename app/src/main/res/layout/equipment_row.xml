@@ -56,10 +56,10 @@
 
         <ImageButton
             android:id="@+id/addquantity"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_toRightOf="@+id/quantity"
-            android:background="@drawable/plus"
+            android:background="@drawable/plus_sign"
             android:layout_below="@+id/ePrice"/>
 
             <TextView
@@ -76,13 +76,14 @@
                 android:textStyle="bold" />
 
             <ImageButton
-            android:id="@+id/subquantity"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="130dp"
-            android:background="@drawable/minus"
-            android:layout_toRightOf="@+id/ePhoto"
-            android:layout_below="@+id/ePrice"/>
+                android:id="@+id/subquantity"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_below="@+id/ePrice"
+                android:layout_marginLeft="130dp"
+                android:layout_toRightOf="@+id/ePhoto"
+                android:background="@drawable/minus_sign"
+                android:tint="#A1A1A1" />
 
 
         </RelativeLayout>
