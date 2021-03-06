@@ -7,6 +7,6 @@ import retrofit2.http.POST;
 public interface StoreAPIService {
 
     @POST("stores")
-    Call<Store> createStore(@Body Store store);
+    Call<Store> createStore(@Body PostNewStore newStore);
 
 }

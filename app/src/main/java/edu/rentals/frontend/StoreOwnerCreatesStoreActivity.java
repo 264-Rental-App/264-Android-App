@@ -118,8 +118,8 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
                 latLngFromGoogle = result[0].geometry.location;
 
                 // Once receive response from google, create a Store object, pass to server
-                Store store = new Store(storeNameStr, latLngFromGoogle.lat, latLngFromGoogle.lng,
-                                        ownerId, address, category);
+                PostNewStore store = new PostNewStore(storeNameStr, latLngFromGoogle.lat, latLngFromGoogle.lng,
+                                        ownerId, address, category,storeContactNum);
                 createStore(store);
             }
 
@@ -137,7 +137,7 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
         });
     }
 
-    private void createStore(Store store) {
+    private void createStore(PostNewStore store) {
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

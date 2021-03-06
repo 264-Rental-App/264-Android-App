@@ -81,12 +81,12 @@
 
             <EditText
                 android:id="@+id/s_zip_code"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Zip Code"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#CDCDCD"
                 android:textSize="14sp" />
