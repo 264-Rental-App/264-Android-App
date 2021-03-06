@@ -13,13 +13,13 @@ public interface UserAccountAPIServices {
 //    Call<User> createClient(@Query("userId") String uid, @Query("&userFirstName=") String firstName, @Query("&userEmail=") String email,
 //                            @Query("&userPhoneNumber=") String phoneNumber);
     @POST("users")
-    Call<User> createClient(@Body User user);
+    Call<NewUserResponse> createClient(@Body User user);
 
     // http://localhost:8080/users
 //    @POST("owners")
 //    Call<User> createOwner(@Query("userId") String uid, @Query("&userFirstName=") String firstName, @Query("&userEmail=") String email,
 //                           @Query("&userPhoneNumber=") String phoneNumber);
     @POST("owners")
-    Call<User> createOwner(@Body User user);
+    Call<NewUserResponse> createOwner(@Body User user);
 
 }

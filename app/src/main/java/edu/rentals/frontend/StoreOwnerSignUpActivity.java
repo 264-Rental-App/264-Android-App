@@ -41,10 +41,10 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_owner_reg);
 
-        s_email = findViewById(R.id.s_signup_email);
+        s_email = findViewById(R.id.s_store_name);
         s_password = findViewById(R.id.s_signup_password);
         s_firstname = findViewById(R.id.s_signup_firstname);
-        s_phonenumber = findViewById(R.id.s_signup_phonenumber);
+        s_phonenumber = findViewById(R.id.s_store_contact);
 
 
         Button backToHome = findViewById(R.id.backToMainFromSSignUp);
@@ -56,7 +56,7 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // just take email & password & first name & phone number?
-        Button submitSInfo = findViewById(R.id.submitSInfo);
+        Button submitSInfo = findViewById(R.id.createStoreInfoBtn);
         submitSInfo.setOnClickListener(v -> createNewUser());
 
     }
@@ -126,23 +126,34 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         }
 
         UserAccountAPIServices userAccountService = retrofit.create(UserAccountAPIServices.class);
-        Call<User> call = userAccountService.createOwner(user);
-        call.enqueue(new Callback<User>() {
+        Call<NewUserResponse> call = userAccountService.createOwner(user);
+        call.enqueue(new Callback<NewUserResponse>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                // TODO: idk, start customer page activity?
-                startActivity(new Intent(StoreOwnerSignUpActivity.this, LogInActivity.class));
+            public void onResponse(Call<NewUserResponse> call, Response<NewUserResponse> response) {
+
+                if(response.body() != null) {
+                    goCreateNewStore(response.body().getUserId());
+                }
+                else {
+                    // TODO: There should be a better way to handle this
+                    Toast.makeText(StoreOwnerSignUpActivity.this, "Could not create account", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable throwable) {
+            public void onFailure(Call<NewUserResponse> call, Throwable throwable) {
                 Log.e(TAG, throwable.toString());
 
-                // TODO: idk, maybe not this page
                 Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
                 startActivity(intent);
             }
         });
+    }
+
+    private void goCreateNewStore(String ownerId) {
+        Intent intent = new Intent(getApplicationContext(), StoreOwnerCreatesStoreActivity.class);
+        intent.putExtra("ownerId", ownerId);
+        startActivity(intent);
     }
 
 }

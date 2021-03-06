@@ -41,10 +41,10 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cutomer_sign_up);
 
-        c_email = findViewById(R.id.s_signup_email);
+        c_email = findViewById(R.id.s_store_name);
         c_password = findViewById(R.id.s_signup_password);
         c_firstname = findViewById(R.id.s_signup_firstname);
-        c_phonenumber = findViewById(R.id.s_signup_phonenumber);
+        c_phonenumber = findViewById(R.id.s_store_contact);
 
         Button backToMain = findViewById(R.id.backToMainFromCSignUp);
         backToMain.setOnClickListener(view -> {
@@ -57,7 +57,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // just take email & password & first name & phone number?
-        Button submitCInfo = findViewById(R.id.submitSInfo);
+        Button submitCInfo = findViewById(R.id.createStoreInfoBtn);
         submitCInfo.setOnClickListener(v -> createNewUser());
     }
 
