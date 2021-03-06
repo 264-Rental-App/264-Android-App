@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -59,6 +60,13 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         // just take email & password & first name & phone number?
         Button submitCInfo = findViewById(R.id.submitSInfo);
         submitCInfo.setOnClickListener(v -> createNewUser());
+        submitCInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(edu.rentals.frontend.CustomerSignUpActivity.this, CustomerHomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void createNewUser() {

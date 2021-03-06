@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#c2d6d6"
+    android:background="#7D7D7D"
     tools:context=".CustomerHomeActivity">
 
     <Button
@@ -26,7 +26,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="#808080"
+        android:backgroundTint="#FFD59E"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:text="Store"
@@ -40,7 +40,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
         android:layout_alignParentRight="true"
-        android:backgroundTint="#808080"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:text="Edit Info"
@@ -56,6 +55,7 @@
         android:textSize="20sp"
         android:text="SHOP OWNER"
         android:textStyle="bold"
+        android:textColor="#FFD59E"
         android:layout_below="@id/searchPage"/>
 
     <TextView
@@ -102,6 +102,7 @@
         android:layout_marginRight="20dp"
         android:layout_alignParentRight="true"
         android:textStyle="bold"
+        android:textColor="#FFD59E"
         android:textSize="20sp"
         android:gravity="center"
         android:text="DATE"
