@@ -132,16 +132,16 @@ public class CustomerSignUpActivity extends AppCompatActivity {
 
         UserAccountAPIServices userAccountService = retrofit.create(UserAccountAPIServices.class);
 
-        Call<User> call = userAccountService.createClient(user);
-        call.enqueue(new Callback<User>() {
+        Call<NewUserResponse> call = userAccountService.createClient(user);
+        call.enqueue(new Callback<NewUserResponse>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<NewUserResponse> call, Response<NewUserResponse> response) {
                 // TODO: idk, start customer page activity?
 
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable throwable) {
+            public void onFailure(Call<NewUserResponse> call, Throwable throwable) {
                 Log.e(TAG, throwable.toString());
 
                 // TODO: idk, maybe not this page

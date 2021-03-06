@@ -70,6 +70,26 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
         storeContact = findViewById(R.id.s_store_contact);
         storeCategory = findViewById(R.id.s_category_spinner);
 
+        createStoreBtn = findViewById(R.id.createStoreInfoBtn);
+        // TODO: call google to get lat & long, then relay to sending request to server
+        createStoreBtn.setOnClickListener(v -> getLatLong());
+
+//        Button test = findViewById(R.id.createStoreInfoBtn_test2);
+//        test.setOnClickListener(v -> {
+//
+//            System.out.println("Store name: " + storeNameStr);
+//            System.out.println("Street address: " + street);
+//            System.out.println("city: " + city);
+//            System.out.println("State: " + state);
+//            System.out.println("zip code: " + zipCode);
+//            System.out.println("contact number: " + storeContactNum);
+//            System.out.println("category: " + category);
+//        });
+        
+    }
+
+    private void getLatLong() {
+
         storeNameStr = storeName.getText().toString();
         street = storeStreet.getText().toString();
         city = storeCity.getText().toString();
@@ -80,13 +100,6 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
 
         address = street + ", " + city + ", " + state + " " + zipCode;
 
-        createStoreBtn = findViewById(R.id.createStoreInfoBtn);
-        // TODO: call google to get lat & long, then relay to sending request to server
-        createStoreBtn.setOnClickListener(v -> getLatLong(address));
-        
-    }
-
-    private void getLatLong(String address) {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(googleAPIKey)
                 .build();

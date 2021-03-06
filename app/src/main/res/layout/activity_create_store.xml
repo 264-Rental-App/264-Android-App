@@ -120,6 +120,16 @@
                 android:background="@drawable/search_button_rounded_corner"
                 android:text="CREATE"
                 android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/createStoreInfoBtn_test2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/search_button_rounded_corner"
+                android:text="CREATE"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

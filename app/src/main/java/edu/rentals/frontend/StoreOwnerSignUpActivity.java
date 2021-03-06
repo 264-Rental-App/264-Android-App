@@ -46,6 +46,13 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         s_firstname = findViewById(R.id.s_signup_firstname);
         s_phonenumber = findViewById(R.id.s_store_contact);
 
+        Button test = findViewById(R.id.createStoreInfoBtn_test);
+        test.setOnClickListener(v -> {
+           Intent intent = new Intent(getApplicationContext(), StoreOwnerCreatesStoreActivity.class);
+           intent.putExtra("ownerId", "aabbccdd");
+           startActivity(intent);
+        });
+
 
         Button backToHome = findViewById(R.id.backToMainFromSSignUp);
         backToHome.setOnClickListener(view -> {
