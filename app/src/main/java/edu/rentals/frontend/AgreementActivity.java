@@ -25,12 +25,13 @@ public class AgreementActivity extends AppCompatActivity {
     TextView tvForm;
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
-    private int storeId = 0;
+    private long storeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
+
 
         // back
         back = findViewById(R.id.back);
@@ -43,8 +44,9 @@ public class AgreementActivity extends AppCompatActivity {
             }
         });
 
-        // get storeId from StoreList.java
-        storeId = 0;
+        // get storeId
+        Intent intent = getIntent();
+        storeId = intent.getLongExtra("storeId", 0);
 
         // api call form
         connect();
@@ -55,6 +57,7 @@ public class AgreementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(edu.rentals.frontend.AgreementActivity.this, SummaryActivity.class);
+                intent.putExtra("storeId", storeId);
                 startActivity(intent);
             }
         });

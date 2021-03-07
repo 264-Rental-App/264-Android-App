@@ -39,7 +39,7 @@ public class SummaryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Equipment> equipmentList;
     private edu.rentals.frontend.SummaryAdapter eAdapter;
-    private int storeId;
+    private long storeId;
     private String userId;
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
@@ -53,7 +53,8 @@ public class SummaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_summary);
 
         // get storeId, userId;
-        storeId = 1;
+        Intent intent = getIntent();
+        storeId = intent.getLongExtra("storeId", 0);
         userId = "1";
 
         // back

@@ -34,7 +34,7 @@ public class EquipmentListActivity extends AppCompatActivity {
     Button back;
     TextView totalSum;
     TextView tvStoreName, tvStoreAddress, tvStoreNumber;
-    private int storeId = 0;
+    private long storeId = 0;
     private String storeName, storeAddress, storeNumber;
     private static int total = 0;
 
@@ -48,12 +48,12 @@ public class EquipmentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_list);
-        // get storeId from StoreList.java
-        storeId = 0;
+        // get storeId from SearchStoreActivity
+        Intent intent = getIntent();
+        storeId = (long) intent.getIntExtra("storeID", 0);
 
         connect();
 
-        Intent intent = getIntent();
         usrAddress = intent.getStringExtra("userAddress");
 
         // back
@@ -105,6 +105,7 @@ public class EquipmentListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(edu.rentals.frontend.EquipmentListActivity.this, AgreementActivity.class);
+                intent.putExtra("storeId", storeId);
                 startActivity(intent);
             }
         });
