@@ -80,7 +80,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
         // text view user first name
         tvFirstName = findViewById(R.id.userFirstName);
-        firstName = "User";
+//        firstName = "yoo";
         tvFirstName.setText(firstName + "!");
 
         // invoice list
@@ -214,5 +214,14 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         public Timestamp getTransactionDate() {
             return transactionDate;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        String name = mAuth.getCurrentUser().getDisplayName();
+        System.out.println("@@@@@@@@@" + name);
+        tvFirstName.setText(name);
     }
 }
