@@ -177,7 +177,7 @@ public class SummaryActivity extends AppCompatActivity {
         int count = SummaryAdapter.getRentalCount();
         try {
             rentalDatabaseHelper.add(db, userId, count, String.valueOf(endTimestamp));
-            Log.d("Database addind: ", "userId: " + userId + ", count: "+ String.valueOf(count) + ", dueDate: " + String.valueOf(endTimestamp));
+            Log.d("Database adding: ", "userId: " + userId + ", count: "+ String.valueOf(count) + ", dueDate: " + String.valueOf(endTimestamp));
 //            Toast toast = Toast.makeText(view.getContext(),
 //                    "Database available, adding userId: " + userId + ", count: "+ String.valueOf(count) + " dueDate: " + String.valueOf(endTimestamp),
 //                    Toast.LENGTH_SHORT);

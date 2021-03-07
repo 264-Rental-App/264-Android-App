@@ -167,6 +167,8 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
 
 
         // api call for invoice list
+        tmpOwnerInvoiceList = new ArrayList<>();
+
         Call<InvoiceList> invoiceListCall = ownerApiService.getInvoiceList(String.valueOf(storeId));
         invoiceListCall.enqueue(new Callback<InvoiceList>() {
 
@@ -176,7 +178,6 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                 List<LinkedTreeMap> invoiceList = response.body().getInvoiceList();
 
                 // set invoice list
-                tmpOwnerInvoiceList = new ArrayList<>();
                 for (int i = 0; i < invoiceList.size(); i++) {
                     int invoiceId = (int) invoiceList.get(i).get("id");
                     invoiceIdList.add(invoiceId);
@@ -201,16 +202,81 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
             }
         });
 
-        // use customerIdList to put {userId, userFirstName} pair to customerIdNameMap hashmap
-        for (String customerUserId: customerIdList) {
-            Call<Customer> userInfoCall = ownerApiService.getUserInfo(customerUserId);
+//        // use customerIdList to put {userId, userFirstName} pair to customerIdNameMap hashmap
+//        for (String customerUserId: customerIdList) {
+//            Call<Customer> userInfoCall = ownerApiService.getUserInfo(customerUserId);
+//            userInfoCall.enqueue(new Callback<Customer>() {
+//                @Override
+//                public void onResponse(Call<Customer> call, Response<Customer> response) {
+//                    // get user
+//                    JSONObject user = response.body().getCustomerInfo();
+//                    try {
+//                        customerIdNameMap.put(customerUserId, user.get("userFirstName").toString());
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Customer> call, Throwable t) {
+//                    Log.e(TAG, t.toString());
+//                }
+//            });
+//        }
+
+//        // use invoiceIdList to put {invoiceId, [rentalStartDate, dueDate]} pair to invoiceIdRentalDate HashMap
+//        for (int invoiceId: invoiceIdList) {
+//            Call<CustomerRental> rentalInfoCall =  ownerApiService.getRentalInfo(invoiceId);
+//            rentalInfoCall.enqueue(new Callback<CustomerRental>() {
+//
+//                @Override
+//                public void onResponse(Call<CustomerRental> call, Response<CustomerRental> response) {
+//                    // get rentalInfo
+//                    JSONObject invoiceInfo = response.body().getCustomerRental();
+//                    // get info
+//                    Timestamp rentalStartDate = null;
+//                    Timestamp dueDate = null;
+//
+//                    try {
+//                        rentalStartDate = (Timestamp) invoiceInfo.get("rentalStartDate");
+//                        dueDate = (Timestamp) invoiceInfo.get("dueDate");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    // date transform
+//                    Date dateStartDate = new Date(rentalStartDate.getTime());
+//                    String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
+//                    Date dateDueDate = new Date(dueDate.getTime());
+//                    String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
+//
+//                    // put to hash map
+//                    invoiceIdDateMap.put(invoiceId, new String[]{toStartDate, toDueDate});
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Call<CustomerRental> call, Throwable t) {
+//                    Log.e(TAG, t.toString());
+//                }
+//            });
+//        }
+
+        // loop through tmpOwnerInvoiceList
+        for (int i=0; i < tmpOwnerInvoiceList.size(); i++) {
+            // get invoiceId and tmpUserId
+            int tmpInvoiceId = tmpOwnerInvoiceList.get(i).getInvoiceId();
+            String tmpUserId = tmpOwnerInvoiceList.get(i).getUserId();
+
+            // use customerIdList to put {userId, userFirstName} pair to customerIdNameMap hashmap
+            Call<Customer> userInfoCall = ownerApiService.getUserInfo(tmpUserId);
             userInfoCall.enqueue(new Callback<Customer>() {
                 @Override
                 public void onResponse(Call<Customer> call, Response<Customer> response) {
                     // get user
                     JSONObject user = response.body().getCustomerInfo();
                     try {
-                        customerIdNameMap.put(customerUserId, user.get("userFirstName").toString());
+                        customerIdNameMap.put(tmpUserId, user.get("userFirstName").toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -221,11 +287,8 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                     Log.e(TAG, t.toString());
                 }
             });
-        }
-
-        // use invoiceIdList to put {invoiceId, [rentalStartDate, dueDate]} pair to invoiceIdRentalDate HashMap
-        for (int invoiceId: invoiceIdList) {
-            Call<CustomerRental> rentalInfoCall =  ownerApiService.getRentalInfo(invoiceId);
+            // use invoiceIdList to put {invoiceId, [rentalStartDate, dueDate]} pair to invoiceIdRentalDate HashMap
+            Call<CustomerRental> rentalInfoCall =  ownerApiService.getRentalInfo(tmpInvoiceId);
             rentalInfoCall.enqueue(new Callback<CustomerRental>() {
 
                 @Override
@@ -250,7 +313,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                     String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
 
                     // put to hash map
-                    invoiceIdDateMap.put(invoiceId, new String[]{toStartDate, toDueDate});
+                    invoiceIdDateMap.put(tmpInvoiceId, new String[]{toStartDate, toDueDate});
 
                 }
 
@@ -260,22 +323,20 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                 }
             });
 
-            // loop through tmpOwnerInvoiceList
-            for (int i=0; i < tmpOwnerInvoiceList.size(); i++) {
-                int tmpInvoiceId = tmpOwnerInvoiceList.get(i).getInvoiceId();
-                String impUserId = tmpOwnerInvoiceList.get(i).getUserId();
-                ownerInvoiceList.add(new OwnerInvoice(tmpInvoiceId,
-                                                        impUserId,
-                                                        tmpOwnerInvoiceList.get(i).getTotalCost(),
-                                                        tmpOwnerInvoiceList.get(i).getTransactionDate(),
-                                                        customerIdNameMap.get(impUserId),
-                                                        invoiceIdDateMap.get(tmpInvoiceId)[0],
-                                                        invoiceIdDateMap.get(tmpInvoiceId)[1]));
-            }
+            // append all data to ownerInvoiceList
 
-            eAdapter = new OwnerHomeAdapter(ownerInvoiceList, OwnerHomeActivity.this::onInvoiceClick);
-            recyclerView.setAdapter(eAdapter);
+            ownerInvoiceList.add(new OwnerInvoice(tmpInvoiceId,
+                    tmpUserId,
+                    tmpOwnerInvoiceList.get(i).getTotalCost(),
+                    tmpOwnerInvoiceList.get(i).getTransactionDate(),
+                    customerIdNameMap.get(tmpUserId),
+                    invoiceIdDateMap.get(tmpInvoiceId)[0],
+                    invoiceIdDateMap.get(tmpInvoiceId)[1]));
         }
+
+        eAdapter = new OwnerHomeAdapter(ownerInvoiceList, OwnerHomeActivity.this::onInvoiceClick);
+        recyclerView.setAdapter(eAdapter);
+
     }
 
     @Override
