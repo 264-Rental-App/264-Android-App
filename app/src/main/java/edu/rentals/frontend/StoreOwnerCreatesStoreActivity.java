@@ -74,17 +74,19 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
         // TODO: call google to get lat & long, then relay to sending request to server
         createStoreBtn.setOnClickListener(v -> getLatLong());
 
-//        Button test = findViewById(R.id.createStoreInfoBtn_test2);
-//        test.setOnClickListener(v -> {
-//
-//            System.out.println("Store name: " + storeNameStr);
-//            System.out.println("Street address: " + street);
-//            System.out.println("city: " + city);
-//            System.out.println("State: " + state);
-//            System.out.println("zip code: " + zipCode);
-//            System.out.println("contact number: " + storeContactNum);
-//            System.out.println("category: " + category);
-//        });
+        Button test = findViewById(R.id.createStoreInfoBtn_test2);
+        test.setOnClickListener(v -> {
+
+            System.out.println("Store name: " + storeNameStr);
+            System.out.println("Street address: " + street);
+            System.out.println("city: " + city);
+            System.out.println("State: " + state);
+            System.out.println("zip code: " + zipCode);
+            System.out.println("contact number: " + storeContactNum);
+            System.out.println("category: " + category);
+
+            startActivity(new Intent(this, OwnerHomeActivity.class));
+        });
         
     }
 

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -51,6 +52,8 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
 
     private static int positionChosen;
 
+    FirebaseAuth mAuth;
+
     public static int getInvoiceId() {
         return ownerInvoiceList.get(positionChosen).getInvoiceId();
     }
@@ -63,6 +66,8 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_home);
+
+        mAuth = FirebaseAuth.getInstance();
 
         // get userId
         userId = "1";
