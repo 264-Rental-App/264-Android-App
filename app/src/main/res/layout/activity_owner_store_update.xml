@@ -20,13 +20,13 @@
         android:background="@drawable/back_rounded_corner"/>
 
     <TextView
-        android:id="@+id/addNewItem"
+        android:id="@+id/equipmentInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:textSize="30sp"
-        android:text="Add New Item"
+        android:text="EQEUIPMENT INFO"
         android:textStyle="bold"
         android:layout_below="@id/back"/>
 
@@ -34,126 +34,108 @@
         android:id="@+id/equipmentName"
         android:layout_width="150sp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/addNewItem"
-        android:layout_marginTop="7dp"
+        android:layout_below="@+id/equipmentInfo"
+        android:layout_marginTop="10dp"
         android:gravity="right"
-        android:text="Name : "
+        android:text="Name: "
         android:textSize="20sp"
         android:textStyle="bold" />
 
 
-    <EditText
-        android:id="@+id/equipmentNameAdd"
+    <TextView
+        android:id="@+id/equipmentNameCurr"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text=""
-        android:layout_below="@+id/addNewItem"
+        android:text="equipmentName "
+        android:layout_below="@+id/equipmentInfo"
         android:layout_toRightOf="@id/equipmentName"/>
+
+    <TextView
+        android:id="@+id/stock"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/equipmentName"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="Stock : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/stockCurr"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="quantity"
+        android:layout_below="@+id/equipmentName"
+        android:layout_toRightOf="@id/stock"/>
 
     <TextView
         android:id="@+id/price"
         android:layout_width="150sp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/equipmentNameAdd"
-        android:layout_marginTop="2dp"
+        android:layout_below="@+id/stockCurr"
+        android:layout_marginTop="10dp"
         android:gravity="right"
         android:text="Price : "
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/priceAdd"
-        android:layout_width="200sp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/equipmentNameAdd"
-        android:layout_toRightOf="@id/price"
-        android:gravity="center"
-        android:text=""
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
     <TextView
-        android:id="@+id/imgLoc"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/priceAdd"
-        android:layout_marginTop="2dp"
-        android:gravity="right"
-        android:text="imgLoc : "
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/imgLocAdd"
+        android:id="@+id/priceCurr"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text=""
-        android:layout_below="@+id/priceAdd"
-        android:layout_toRightOf="@id/imgLoc"/>
+        android:text="$100"
+        android:layout_below="@+id/stockCurr"
+        android:layout_toRightOf="@id/price"/>
 
     <TextView
-        android:id="@+id/quantity"
+        android:id="@+id/desc"
         android:layout_width="150sp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgLocAdd"
-        android:layout_marginTop="2dp"
-        android:gravity="right"
-        android:text="Quantity : "
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/quantityAdd"
-        android:layout_width="200sp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:text=""
-        android:layout_below="@+id/imgLocAdd"
-        android:layout_toRightOf="@id/quantity"/>
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/quantityAdd"
-        android:layout_marginTop="2dp"
+        android:layout_below="@+id/priceCurr"
+        android:layout_marginTop="10dp"
         android:gravity="right"
         android:text="Description : "
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/descriptionAdd"
+    <TextView
+        android:id="@+id/descCurr"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text=""
-        android:layout_below="@+id/quantityAdd"
-        android:layout_toRightOf="@id/quantity"/>
+        android:text="desc"
+        android:layout_below="@+id/priceCurr"
+        android:layout_toRightOf="@id/price"/>
+
 
     <Button
-        android:id="@+id/update"
+        android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10sp"
-        android:layout_below="@+id/descriptionAdd"
-        android:backgroundTint="@color/teal_700"
+        android:layout_marginTop="20sp"
+        android:layout_below="@+id/descCurr"
+        android:backgroundTint="@color/quantum_googred400"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:text="Add"
+        android:text="Delete"
         android:background="@drawable/search_button_rounded_corner"/>
 
 </RelativeLayout>

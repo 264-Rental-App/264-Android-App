@@ -24,8 +24,8 @@ public class CustomerEditActivity extends AppCompatActivity {
     static Retrofit retrofit = null;
 
     Button back;
-    private int userId;
-    private String userName, firstName, lastName, email, phoneNumber;
+    private String userId;
+    private String firstName, email, phoneNumber;
 
     TextView tvFirstName, tvEmail, tvPhone;
 
@@ -35,7 +35,7 @@ public class CustomerEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_edit);
 
         // user id
-        userId = 1;
+        userId = "1";
 
         // back
         back = findViewById(R.id.back);
@@ -72,7 +72,7 @@ public class CustomerEditActivity extends AppCompatActivity {
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api call get customer info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(String.valueOf(userId));
+        Call<Customer> customerInfoCall = customerApiService.getUserInfo(userId);
         customerInfoCall.enqueue(new Callback<Customer>() {
 
             @Override
@@ -105,5 +105,8 @@ public class CustomerEditActivity extends AppCompatActivity {
             }
 
         });
+
+        /* TODO: patch update info */
+
     }
 }

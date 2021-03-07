@@ -1,12 +1,10 @@
 package edu.rentals.frontend;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -32,7 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SummaryActivity extends AppCompatActivity {
-    static final String TAG = EquipmentListActivity.class.getSimpleName();
+    static final String TAG = SummaryActivity.class.getSimpleName();
     DatePickerDialog picker;
     EditText etStartDate, etEndDate;
     TextView tvStartDate, tvEndDate;
@@ -219,17 +217,17 @@ public class SummaryActivity extends AppCompatActivity {
         Log.d("startDate", String.valueOf(startTimestamp));
         Log.d("endDate", String.valueOf(endTimestamp));
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
-        Rental rental = new Rental(storeId, userId, startTimestamp, endTimestamp, SummaryAdapter.getRentalSummaryList());
-        Call<Rental> call = shoppingApiService.createRental(rental);
-        call.enqueue(new Callback<Rental>() {
+        ShoppingCheckoutRental rental = new ShoppingCheckoutRental(storeId, userId, startTimestamp, endTimestamp, SummaryAdapter.getRentalSummaryList());
+        Call<ShoppingCheckoutRental> call = shoppingApiService.createRental(rental);
+        call.enqueue(new Callback<ShoppingCheckoutRental>() {
             @Override
-            public void onResponse(Call<Rental> call, Response<Rental> response) {
+            public void onResponse(Call<ShoppingCheckoutRental> call, Response<ShoppingCheckoutRental> response) {
 
             }
 
             @Override
-            public void onFailure(Call<Rental> call, Throwable t) {
-
+            public void onFailure(Call<ShoppingCheckoutRental> call, Throwable t) {
+                Log.e(TAG, t.toString());
             }
         });
     }

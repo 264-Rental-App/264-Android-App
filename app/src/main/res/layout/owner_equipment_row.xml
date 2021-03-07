@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="410dp"
     android:orientation="vertical"
     android:layout_height="wrap_content">
 
@@ -40,7 +40,7 @@
                 android:textSize="26sp"
                 android:layout_toRightOf="@+id/ePhoto"
                 android:textStyle="bold"
-                android:textColor="#FFD700"
+                android:textColor="#FFD59E"
                 tools:text="equipmentName"/>
 
             <TextView
@@ -101,15 +101,15 @@
 <!--                android:textSize="28sp"-->
 <!--                android:textStyle="bold" />-->
 
-            <ImageButton
-                android:id="@+id/deletItem"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_below="@+id/ePrice"
-                android:layout_marginLeft="241dp"
-                android:layout_marginTop="-13dp"
-                android:layout_toRightOf="@+id/ePhoto"
-                android:background="@drawable/minus" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/deletItem"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_below="@+id/ePrice"-->
+<!--                android:layout_marginLeft="241dp"-->
+<!--                android:layout_marginTop="-13dp"-->
+<!--                android:layout_toRightOf="@+id/ePhoto"-->
+<!--                android:background="@drawable/minus" />-->
 
 
         </RelativeLayout>

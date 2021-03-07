@@ -32,27 +32,27 @@
         android:layout_below="@id/back"/>
 
     <TextView
-        android:id="@+id/storeName"
+        android:id="@+id/customerName"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="right"
-        android:text="User name:"
+        android:text="Customer name:"
         android:layout_below="@+id/invoice"/>
 
     <TextView
-        android:id="@+id/iStoreName"
+        android:id="@+id/iCustomerName"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="userFirstName"
+        android:text="customerFirstName"
         android:layout_below="@+id/invoice"
-        android:layout_toRightOf="@id/storeName"/>
+        android:layout_toRightOf="@id/customerName"/>
 
     <TextView
         android:id="@+id/rentalStartDate"
@@ -63,7 +63,7 @@
         android:textSize="20sp"
         android:gravity="right"
         android:text="Rental Start Date:"
-        android:layout_below="@+id/storeName"/>
+        android:layout_below="@+id/customerName"/>
 
     <TextView
         android:id="@+id/iStartDate"
@@ -74,7 +74,7 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:text="startDate"
-        android:layout_below="@+id/storeName"
+        android:layout_below="@+id/customerName"
         android:layout_toRightOf="@id/rentalStartDate"/>
 
     <TextView

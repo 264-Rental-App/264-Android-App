@@ -32,7 +32,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
     static final String TAG = EquipmentListActivity.class.getSimpleName();
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
-    private int userId;
+    private String userId;
     private String firstName;
     private static List<Invoice> userInvoiceList;
     private RecyclerView recyclerView;
@@ -51,7 +51,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         setContentView(R.layout.activity_customer_home);
 
         // get userId
-        userId = 1;
+        userId = "1";
 
         // search
         search = findViewById(R.id.searchPage);
@@ -111,7 +111,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api call user info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(String.valueOf(userId));
+        Call<Customer> customerInfoCall = customerApiService.getUserInfo(userId);
         customerInfoCall.enqueue(new Callback<Customer>() {
 
             @Override
@@ -121,7 +121,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
                 // get first name
                 try {
-                    firstName = customerInfo.get("firstName").toString();
+                    firstName = customerInfo.get("userFirstName").toString();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -155,8 +155,8 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
                     Timestamp transactionDate = (Timestamp) invoiceList.get(i).get("transactionDate");
                     userInvoiceList.add(new Invoice(invoiceId, storeName, totalCost, transactionDate));
                 }
-//                eAdapter = new CustomerHomeAdapter(userInvoiceList, this);
-//                recyclerView.setAdapter(eAdapter);
+                eAdapter = new CustomerHomeAdapter(userInvoiceList, CustomerHomeActivity.this::onInvoiceClick);
+                recyclerView.setAdapter(eAdapter);
 
             }
 

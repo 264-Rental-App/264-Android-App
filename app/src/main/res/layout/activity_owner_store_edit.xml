@@ -73,7 +73,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="1234 College Av., Irvine, CA"
+        android:text="address"
         android:layout_below="@+id/storeName"
         android:layout_toRightOf="@id/address"/>
 

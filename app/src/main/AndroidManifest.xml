@@ -40,8 +40,8 @@
         <activity android:name=".OwnerHomeInvoiceActivity"></activity>
         <activity android:name=".OwnerStoreActivity"></activity>
         <activity android:name=".OwnerStoreAddActivity"></activity>
+        <activity android:name=".OwnerStoreUpdateActivity"></activity>
         <activity android:name=".OwnerStoreEditActivity"></activity>
-
 
         <meta-data
             android:name="preloaded_fonts"

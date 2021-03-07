@@ -91,7 +91,7 @@
         android:textSize="20sp"
         android:gravity="center"
         android:textColor="#f2f2f2"
-        android:text="ACTIVE ITEMS"
+        android:text="ACTIVE ORDERS"
         android:layout_below="@+id/userFirstName"/>
 
     <TextView
