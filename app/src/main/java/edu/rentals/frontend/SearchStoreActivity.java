@@ -172,27 +172,27 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
             "{\"stores\":" +
                 "[" +
                     "{\"name\":\"Bike Shop\",\"lat\":33.3," +
-                    "\"long\":50.5,\"id\":0, \"commonAddress\":\"1223 Blah Street, Some City, CA 93333\"," +
+                    "\"long\":50.5,\"id\":0,\"ownerId\":SHDFKJH35Sd,\"commonAddress\":\"1223 Blah Street, Some City, CA 93333\"," +
                     "\"category\":\"Bike\"}," +
                     "{\"name\":\"Random Shop\",\"lat\":40.3," +
-                    "\"long\":60.5,\"id\":1,\"commonAddress\":\"1400 Random Street, Some City, CA 93333\"," +
+                    "\"long\":60.5,\"id\":1,\"ownerId\":SERH35Sd,\"commonAddress\":\"1400 Random Street, Some City, CA 93333\"," +
                     "\"category\":\"Surfboard\"}," +
                     "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":2,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
+                    "\"long\":89.5,\"id\":2,\"ownerId\":ftyet35Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
                     "\"category\":\"Surfboard\"}," +
                     "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":3,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
+                    "\"long\":89.5,\"id\":3,\"ownerId\":zAf35Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
                     "\"category\":\"Surfboard\"}," +
                     "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":4,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
+                    "\"long\":89.5,\"id\":4,\"ownerId\":QWRJH35Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
                     "\"category\":\"Surfboard\"}," +
                     "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":5,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
+                    "\"long\":89.5,\"id\":5,\"ownerId\":SHDFKxfgd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
                     "\"category\":\"Surfboard\"}," +
                     "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":6,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
+                    "\"long\":89.5,\"id\":6,\"ownerId\":ASDFKJH35Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
                     "\"category\":\"Surfboard\"}," +            "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":7,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
+                    "\"long\":89.5,\"id\":7,\"ownerId\":AVDFSDF5Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
                     "\"category\":\"Surfboard\"}" +
                 "]" +
             "}";
@@ -235,17 +235,14 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            System.out.println("SearchStoreActicity --- User already logged in");
-            login.setText("Hello!");
-
-            login.setOnClickListener(v -> logout());
+            login.setText("HOME");
+            login.setOnClickListener(v -> goHome());
         }
     }
 
 
-    private void logout() {
-        mAuth.signOut();
-        startActivity(new Intent(this, SearchStoreActivity.class));
+    private void goHome() {
+        startActivity(new Intent(this, CustomerHomeActivity.class));
         finish();
     }
 

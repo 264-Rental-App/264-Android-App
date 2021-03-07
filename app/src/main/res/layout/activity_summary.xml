@@ -19,7 +19,7 @@
         android:background="@drawable/back_rounded_corner"/>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/equip_login"
         android:layout_width="70dp"
         android:layout_height="32dp"
         android:layout_marginTop="30dp"

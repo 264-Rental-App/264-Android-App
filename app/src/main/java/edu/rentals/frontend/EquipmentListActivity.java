@@ -35,6 +35,7 @@ public class EquipmentListActivity extends AppCompatActivity {
     private EquipmentListAdapter eAdapter;
     Button checkOut;
     Button back;
+    Button login;
     TextView totalSum;
     TextView tvStoreName, tvStoreAddress, tvStoreNumber;
     private int storeId = 0;
@@ -77,6 +78,9 @@ public class EquipmentListActivity extends AppCompatActivity {
             }
         });
 
+        login = findViewById(R.id.equip_login);
+        login.setOnClickListener(v -> startActivity(new Intent(EquipmentListActivity.this, LogInActivity.class)));
+
 
         // equipment list
         equipmentList = new ArrayList<>();
@@ -116,9 +120,8 @@ public class EquipmentListActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
+
 
     private void connect() {
         if (retrofit == null) {
@@ -204,6 +207,10 @@ public class EquipmentListActivity extends AppCompatActivity {
         if(currentUser == null){
             checkOut.setEnabled(false);
             checkOut.setBackgroundColor(Color.LTGRAY);
+        }
+        else {
+            login.setText("HOME");
+            login.setOnClickListener(v -> startActivity(new Intent(EquipmentListActivity.this, CustomerHomeActivity.class)));
         }
     }
 
