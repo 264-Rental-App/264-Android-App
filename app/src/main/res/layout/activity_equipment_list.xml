@@ -56,8 +56,8 @@
 
     <TextView
         android:id="@+id/shopName"
-        android:layout_width="147dp"
-        android:layout_height="121dp"
+        android:layout_width="261dp"
+        android:layout_height="124dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="22dp"
         android:autoSizeMaxTextSize="48sp"
