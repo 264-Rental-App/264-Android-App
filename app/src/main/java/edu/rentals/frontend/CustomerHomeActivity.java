@@ -221,7 +221,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         super.onStart();
 
         String name = mAuth.getCurrentUser().getDisplayName();
-        System.out.println("@@@@@@@@@" + name);
+//        System.out.println("@@@@@@@@@" + name);
         tvFirstName.setText(name);
     }
 }
