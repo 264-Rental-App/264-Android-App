@@ -18,36 +18,34 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CustomerEditActivity extends AppCompatActivity {
-    static final String TAG = EquipmentListActivity.class.getSimpleName();
+public class OwnerEditActivity extends AppCompatActivity {
+    static final String TAG = OwnerEditActivity.class.getSimpleName();
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
-
     Button back;
     private String userId;
     private String firstName, email, phoneNumber;
-
     TextView tvFirstName, tvEmail, tvPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_edit);
+        setContentView(R.layout.activity_owner_edit);
 
-        // user id
+        // get user id
         userId = "1";
 
-        // back
+        // back button
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.CustomerEditActivity.this, CustomerHomeActivity.class);
+                Intent intent = new Intent(edu.rentals.frontend.OwnerEditActivity.this, OwnerHomeActivity.class);
                 startActivity(intent);
             }
         });
 
-        //text view customer info
+        //text view owner info
         tvEmail = findViewById(R.id.emailCurr);
         tvFirstName = findViewById(R.id.firstNameCurr);
         tvPhone = findViewById(R.id.phoneNumberCurr);
@@ -59,7 +57,6 @@ public class CustomerEditActivity extends AppCompatActivity {
 
         // get customer info
         connect();
-
     }
 
     private void connect() {
@@ -83,9 +80,7 @@ public class CustomerEditActivity extends AppCompatActivity {
 
                 // set customer info
                 try {
-//                    userName = customerInfo.get("userName").toString();
                     firstName = customerInfo.get("firstName").toString();
-//                    lastName = customerInfo.get("lastName").toString();
                     email = customerInfo.get("email").toString();
                     phoneNumber = customerInfo.get("phoneNumber").toString();
                 } catch (JSONException e) {
@@ -105,8 +100,6 @@ public class CustomerEditActivity extends AppCompatActivity {
             }
 
         });
-
-        /* TODO: patch update info */
 
     }
 }

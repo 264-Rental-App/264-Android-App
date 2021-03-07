@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,48 +19,45 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CustomerEditActivity extends AppCompatActivity {
-    static final String TAG = EquipmentListActivity.class.getSimpleName();
+public class OwnerStoreEditActivity extends AppCompatActivity {
+    static final String TAG = OwnerStoreEditActivity.class.getSimpleName();
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
-
     Button back;
-    private String userId;
-    private String firstName, email, phoneNumber;
-
-    TextView tvFirstName, tvEmail, tvPhone;
+    private long storeId;
+    TextView tvStoreName, tvAddress, tvPhone;
+    private String storeName, address, phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_edit);
+        setContentView(R.layout.activity_owner_store_edit);
 
-        // user id
-        userId = "1";
+        // get storeId
+        storeId = 1;
 
         // back
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.CustomerEditActivity.this, CustomerHomeActivity.class);
+                Intent intent = new Intent(edu.rentals.frontend.OwnerStoreEditActivity.this, OwnerStoreActivity.class);
                 startActivity(intent);
             }
         });
 
-        //text view customer info
-        tvEmail = findViewById(R.id.emailCurr);
-        tvFirstName = findViewById(R.id.firstNameCurr);
+        //text view owner info
+        tvStoreName = findViewById(R.id.storeNameCurr);
+        tvAddress = findViewById(R.id.addressCurr);
         tvPhone = findViewById(R.id.phoneNumberCurr);
 
         // mock set
-        tvEmail.setText("a@gmail.com");
-        tvFirstName.setText("Adam");
+        tvStoreName.setText("Adam's Bike Shop");
+        tvAddress.setText("1234 College Av., Irvine, CA 91919");
         tvPhone.setText("8888888888");
 
         // get customer info
         connect();
-
     }
 
     private void connect() {
@@ -69,44 +67,42 @@ public class CustomerEditActivity extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
+        OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call get customer info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(userId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
+        Call<StoreInfo> storeInfoCall = ownerApiService.getStoreInfo(storeId);
+        storeInfoCall.enqueue(new Callback<StoreInfo>() {
 
             @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
+            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
                 // get customer info
-                JSONObject customerInfo = response.body().getCustomerInfo();
+                JSONObject customerInfo = response.body().getStoreInfo();
 
 
                 // set customer info
                 try {
-//                    userName = customerInfo.get("userName").toString();
-                    firstName = customerInfo.get("firstName").toString();
-//                    lastName = customerInfo.get("lastName").toString();
-                    email = customerInfo.get("email").toString();
+                    storeName = customerInfo.get("name").toString();
+                    address = customerInfo.get("commonAddress").toString();
                     phoneNumber = customerInfo.get("phoneNumber").toString();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 // set text
-                tvEmail.setText(email);
-                tvFirstName.setText(firstName);
+                tvStoreName.setText(storeName);
+                tvAddress.setText(address);
                 tvPhone.setText(phoneNumber);
 
             }
 
             @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
+            public void onFailure(Call<StoreInfo> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
 
         });
 
-        /* TODO: patch update info */
+        // Todo: update info patch
 
     }
 }

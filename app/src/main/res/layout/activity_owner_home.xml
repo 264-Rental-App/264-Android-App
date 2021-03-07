@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7D7D7D"
+    tools:context=".CustomerHomeActivity">
+
+    <Button
+        android:id="@+id/searchPage"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Search"
+        android:background="@drawable/back_rounded_corner"/>
+
+    <Button
+        android:id="@+id/manageStore"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="24dp"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#FFD59E"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Store"
+        android:background="@drawable/back_rounded_corner"/>
+<!--    android:layout_toLeftOf="@id/editOwner"-->
+
+    <Button
+        android:id="@+id/editOwner"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="24dp"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Edit Info"
+        android:background="@drawable/back_rounded_corner"/>
+
+
+    <TextView
+        android:id="@+id/OwnerHomePage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:text="SHOP OWNER"
+        android:textStyle="bold"
+        android:textColor="#FFD59E"
+        android:layout_below="@id/searchPage"/>
+
+    <TextView
+        android:id="@+id/hello"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Hello, "
+        android:layout_below="@+id/OwnerHomePage"/>
+
+    <TextView
+        android:id="@+id/userFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="#819BA2"
+        android:text="userFirstName"
+        android:layout_below="@+id/hello"/>
+
+    <TextView
+        android:id="@+id/active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#f2f2f2"
+        android:text="ACTIVE ORDERS"
+        android:layout_below="@+id/userFirstName"/>
+
+    <TextView
+        android:id="@+id/due"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:textColor="#FFD59E"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:text="DATE"
+        android:layout_below="@+id/userFirstName"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recordRecycleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_below="@+id/active"/>
+</RelativeLayout>

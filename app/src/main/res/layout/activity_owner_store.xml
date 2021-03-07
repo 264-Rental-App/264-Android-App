@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7D7D7D"
+    tools:context=".EquipmentListActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="70dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="Back"
+            android:background="@drawable/back_rounded_corner"/>
+        <!--        android:backgroundTint="#808080"-->
+
+        <Button
+            android:id="@+id/editStore"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="24dp"
+            android:layout_alignParentRight="true"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="Store Info"
+            android:background="@drawable/back_rounded_corner"/>
+
+        <TextView
+            android:id="@+id/myShop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_marginLeft="20sp"
+            android:layout_below="@+id/back"
+            android:text="MY SHOP"
+            android:gravity="center"
+            android:textColor="#FFD59E" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/equipmentListRecycleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_below="@+id/myShop"/>
+
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5sp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/editStore"
+            android:layout_marginEnd="24dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="Add"
+            android:backgroundTint="#FFD59E"
+            android:background="@drawable/search_button_rounded_corner"/>
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

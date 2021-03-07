@@ -22,7 +22,7 @@ public interface ShoppingApiService {
 
     // http://localhost:8080/rental
     @POST("/rental")
-    Call<Rental> createRental(@Body Rental rental);
+    Call<ShoppingCheckoutRental> createRental(@Body ShoppingCheckoutRental rental);
 
     // http://localhost:8080/invoices
 

@@ -15,6 +15,12 @@ public class Equipment {
         this.quantity = quantity;
     }
 
+    public Equipment(int equipmentId, int quantity) {
+        this.equipmentId = equipmentId;
+        this.quantity = quantity;
+    }
+
+
     public int getEquipmentId() {
         return equipmentId;
     }

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c2d6d6"
+    tools:context=".CustomerHomeActivity">
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="back"
+        android:background="@drawable/back_rounded_corner"/>
+
+    <TextView
+        android:id="@+id/addNewItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:text="Add New Item"
+        android:textStyle="bold"
+        android:layout_below="@id/back"/>
+
+    <TextView
+        android:id="@+id/equipmentName"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addNewItem"
+        android:layout_marginTop="7dp"
+        android:gravity="right"
+        android:text="Name : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/equipmentNameAdd"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/addNewItem"
+        android:layout_toRightOf="@id/equipmentName"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/equipmentNameAdd"
+        android:layout_marginTop="2dp"
+        android:gravity="right"
+        android:text="Price : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/priceAdd"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/equipmentNameAdd"
+        android:layout_toRightOf="@id/price"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/imgLoc"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/priceAdd"
+        android:layout_marginTop="2dp"
+        android:gravity="right"
+        android:text="imgLoc : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/imgLocAdd"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/priceAdd"
+        android:layout_toRightOf="@id/imgLoc"/>
+
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgLocAdd"
+        android:layout_marginTop="2dp"
+        android:gravity="right"
+        android:text="Quantity : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/quantityAdd"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/imgLocAdd"
+        android:layout_toRightOf="@id/quantity"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quantityAdd"
+        android:layout_marginTop="2dp"
+        android:gravity="right"
+        android:text="Description : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/descriptionAdd"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_below="@+id/quantityAdd"
+        android:layout_toRightOf="@id/quantity"/>
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10sp"
+        android:layout_below="@+id/descriptionAdd"
+        android:backgroundTint="@color/teal_700"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Add"
+        android:background="@drawable/search_button_rounded_corner"/>
+
+</RelativeLayout>

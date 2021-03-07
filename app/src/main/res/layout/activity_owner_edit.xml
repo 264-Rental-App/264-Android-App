@@ -237,4 +237,4 @@
         android:text="update"
         android:background="@drawable/search_button_rounded_corner"/>
 
-    </RelativeLayout>
+</RelativeLayout>
