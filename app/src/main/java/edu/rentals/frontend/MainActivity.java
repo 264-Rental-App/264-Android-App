@@ -83,19 +83,15 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            System.out.println("MainActivity --- User already logged in");
-//            reload();
-            loginButton.setText("Hello!");
-
-            loginButton.setOnClickListener(v -> logout());
+            loginButton.setText("HOME");
+            loginButton.setOnClickListener(v -> goHome());
         }
 
     }
 
 
-    private void logout() {
-        mAuth.signOut();
-        startActivity(new Intent(this, MainActivity.class));
+    private void goHome() {
+        startActivity(new Intent(this, CustomerHomeActivity.class));
         finish();
     }
 

@@ -4,60 +4,39 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    @SerializedName("username")
-    private String username;
+    @SerializedName("userId")
+    private String userId;
 
-    // TODO: figure out what to do with password
+    @SerializedName("userFirstName")
+    private String userFirstName;
 
-    @SerializedName("first_name")
-    private String first_name;
+    @SerializedName("userEmail")
+    private String userEmail;
 
-    @SerializedName("last_name")
-    private String last_name;
+    @SerializedName("userPhoneNumber")
+    private String userPhoneNumber;
 
-    @SerializedName("address")
-    private String address;
-
-    @SerializedName("email")
-    private String email;
-
-    @SerializedName("phone_number")
-    private int phone_number;
-
-    public User(String userName, String firstName, String lastName, String address, String email, int phoneNumber) {
-        this.username = userName;
-
-        // TODO: Figure out what to do with pw
-
-        this.first_name = firstName;
-        this.last_name = lastName;
-        this.address = address;
-        this.email = email;
-        this.phone_number = phoneNumber;
+    public User(String userId, String firstName, String email, String phoneNumber) {
+        this.userId = userId;
+        this.userFirstName = firstName;
+        this.userEmail = email;
+        this.userPhoneNumber = phoneNumber;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
     public String getFirst_name() {
-        return first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public String getAddress() {
-        return address;
+        return userFirstName;
     }
 
     public String getEmail() {
-        return email;
+        return userEmail;
     }
 
-    public int getPhoneNumber() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return userPhoneNumber;
     }
 
 }

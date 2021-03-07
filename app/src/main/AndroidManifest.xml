@@ -31,9 +31,10 @@
         <activity android:name=".SummaryActivity" />
         <activity android:name=".AgreementActivity" />
 
-        <activity android:name=".CustomerHomeActivity"></activity>
-        <activity android:name=".CustomerHomeInvoiceActivity"></activity>
-        <activity android:name=".CustomerEditActivity"></activity>
+        <activity android:name=".CustomerHomeActivity" />
+        <activity android:name=".CustomerHomeInvoiceActivity" />
+        <activity android:name=".CustomerEditActivity" />
+        <activity android:name=".StoreOwnerCreatesStoreActivity" />
 
         <activity android:name=".OwnerHomeActivity"></activity>
         <activity android:name=".OwnerEditActivity"></activity>

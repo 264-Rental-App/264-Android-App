@@ -1,7 +1,9 @@
 package edu.rentals.frontend;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -9,12 +11,10 @@ public interface UserAccountAPIServices {
 
     // http://localhost:8080/users
     @POST("users")
-    Call<User> createClient(@Query("&email=") String email, @Query("&firstname=") String firstName,
-                          @Query("&phonenumber=") String phoneNumber);
+    Call<NewUserResponse> createClient(@Body User user);
 
     // http://localhost:8080/users
     @POST("owners")
-    Call<User> createOwner(@Query("&email=") String email, @Query("&firstname=") String firstName,
-                          @Query("&phonenumber=") String phoneNumber);
+    Call<NewUserResponse> createOwner(@Body User user);
 
 }

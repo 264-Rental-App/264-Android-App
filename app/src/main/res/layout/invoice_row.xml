@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/storeName"
@@ -27,34 +27,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="5dp"
-                android:textStyle="bold"
                 android:textColor="#FFD59E"
                 android:textSize="26sp"
-                tools:text="Store Name"/>
+                android:textStyle="bold"
+                tools:text="Store Name" />
 
             <TextView
                 android:id="@+id/totalCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="3dp"
                 android:layout_below="@+id/storeName"
-                android:textStyle="bold"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="25dp"
                 android:textColor="#819BA2"
-                android:textSize="26sp"
-                tools:text="total cost"/>
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="total cost" />
 
             <TextView
                 android:id="@+id/transactionDate"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
+                android:layout_width="158dp"
+                android:layout_height="42dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="61dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="12dp"
                 android:layout_toRightOf="@+id/storeName"
                 android:gravity="right"
-                android:layout_alignParentRight="true"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textSize="26sp"
                 tools:text="transaction date" />
         </RelativeLayout>
 
