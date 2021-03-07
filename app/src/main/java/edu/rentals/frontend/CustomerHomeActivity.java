@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -28,7 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerHomeActivity extends AppCompatActivity implements CustomerHomeAdapter.InvoiceListClickListener {
-    Button search, editCustomer;
+    Button search, editCustomer, logoutBtn;
     static final String TAG = EquipmentListActivity.class.getSimpleName();
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
@@ -40,6 +41,8 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
     private CustomerHomeAdapter eAdapter;
     private static int positionChosen;
 
+    FirebaseAuth mAuth;
+
     public static int getInvoiceId() {
         return userInvoiceList.get(positionChosen).getInvoiceId();
     }
@@ -49,6 +52,8 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
+
+        mAuth = FirebaseAuth.getInstance();
 
         // get userId
         userId = 1;
@@ -75,7 +80,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
         // text view user first name
         tvFirstName = findViewById(R.id.userFirstName);
-        firstName = "User";
+//        firstName = "yoo";
         tvFirstName.setText(firstName + "!");
 
         // invoice list
@@ -98,6 +103,11 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         eAdapter = new CustomerHomeAdapter(userInvoiceList, this);
         recyclerView.setAdapter(eAdapter);
 
+        logoutBtn = findViewById(R.id.c_logout);
+        logoutBtn.setOnClickListener(v -> {
+            mAuth.signOut();
+            startActivity(new Intent(CustomerHomeActivity.this, MainActivity.class));
+        });
 
     }
 
@@ -204,5 +214,14 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         public Timestamp getTransactionDate() {
             return transactionDate;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        String name = mAuth.getCurrentUser().getDisplayName();
+//        System.out.println("@@@@@@@@@" + name);
+        tvFirstName.setText(name);
     }
 }

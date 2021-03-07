@@ -72,7 +72,7 @@
         android:layout_width="148dp"
         android:layout_height="37dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/rounded_border_button_general"
+        android:background="@drawable/rounded_border_button_light_grey"
         android:text="Customer Sign Up"
         android:textColor="#686868"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
         android:layout_width="187dp"
         android:layout_height="37dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_border_button_general"
+        android:background="@drawable/rounded_border_button_light_grey"
         android:text="Store Manager Sign Up"
         android:textColor="#686868"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +99,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/back_rounded_corner"
-        android:text="Home"
+        android:text="Main"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

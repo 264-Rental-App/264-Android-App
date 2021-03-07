@@ -1,60 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="match_parent">
+        android:layout_width="392dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="70dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:text="Back"
-        android:background="@drawable/back_rounded_corner"/>
+        <Button
+            android:id="@+id/back"
+            android:layout_width="70dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/back_rounded_corner"
+            android:text="Back"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
         <!--        android:backgroundTint="#808080"-->
 
-    <TextView
-        android:id="@+id/agreement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:layout_below="@+id/back"
-        android:gravity="center"
-        android:text="RENTAL AGREEMENT"
-        android:textColor="#ADD8E6" />
+        <TextView
+            android:id="@+id/agreement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/back"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center"
+            android:text="RENTAL"
+            android:textAlignment="textStart"
+            android:textColor="#819CA2"
+            android:textSize="36sp"
+            android:textStyle="bold" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="300sp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginRight="11dp"
-        android:layout_marginBottom="7dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        android:backgroundTint="#ADD8E6"
-        android:layout_below="@+id/agreement">
 
         <TextView
-            android:id="@+id/agreementDescription"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="description"/>
+            android:layout_below="@+id/agreement"
+            android:layout_marginLeft="24dp"
+            android:fontFamily="@font/montserrat"
+            android:text="AGREEMENT"
+            android:textColor="#819CA2"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="300sp"
+            android:layout_below="@+id/textView4"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#D4E0E2"
+            android:padding="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <TextView
+                android:id="@+id/agreementDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="description" />
 
 
-    </androidx.cardview.widget.CardView>
-
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/agree"
@@ -62,13 +83,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cardView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_border_button_rent_enabled"
+            android:fontFamily="@font/montserrat"
             android:text="Agree"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:background="@drawable/search_button_rounded_corner"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

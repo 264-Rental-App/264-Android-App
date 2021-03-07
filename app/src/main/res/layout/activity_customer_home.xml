@@ -1,133 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#c2d6d6"
+    android:background="#D2DDE0"
     tools:context=".CustomerHomeActivity">
 
     <Button
         android:id="@+id/searchPage"
         android:layout_width="70dp"
         android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
+        android:background="@drawable/back_rounded_corner"
         android:text="Search"
-        android:background="@drawable/back_rounded_corner"/>
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/editCustomer"
-        android:layout_width="70dp"
+        android:layout_width="80dp"
         android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
-        android:layout_alignParentRight="true"
+        android:background="@drawable/back_rounded_corner"
         android:backgroundTint="#808080"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
         android:text="Edit Info"
-        android:background="@drawable/back_rounded_corner"/>
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 
     <TextView
         android:id="@+id/customerHomePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/searchPage"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/montserrat"
         android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:textSize="20sp"
         android:text="CUSTOMER PAGE"
-        android:textStyle="bold"
-        android:layout_below="@id/searchPage"/>
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/hello"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/customerHomePage"
         android:layout_marginTop="3dp"
-        android:textStyle="bold"
-        android:textSize="30sp"
         android:gravity="center"
-        android:textColor="@color/white"
         android:text="Hello, "
-        android:layout_below="@+id/customerHomePage"/>
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/userFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="30sp"
+        android:layout_below="@+id/hello"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:textColor="#819BA2"
         android:text="userFirstName"
-        android:layout_below="@+id/hello"/>
+        android:textAlignment="center"
+        android:textColor="#819CA2"
+        android:textSize="48sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/userFirstName"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="3dp"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
         android:gravity="center"
-        android:textColor="#f2f2f2"
         android:text="ORDER HISTORY"
-        android:layout_below="@+id/userFirstName"/>
+        android:textColor="#F6F6F6"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/due"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginRight="20dp"
+        android:layout_below="@+id/userFirstName"
         android:layout_alignParentRight="true"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="24dp"
         android:gravity="center"
         android:text="DATE"
-        android:layout_below="@+id/userFirstName"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/invoiceRecycleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_below="@+id/active"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_below="@+id/active"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/history"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="3dp"-->
-<!--        android:layout_marginLeft="20dp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textSize="20sp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="HISTORY"-->
-<!--        android:layout_below="@+id/invoiceRecycleView"-->
-<!--        />-->
+    <Button
+        android:id="@+id/c_logout"
+        android:layout_width="80dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="6dp"
+        android:layout_toStartOf="@+id/editCustomer"
+        android:background="@drawable/search_button_rounded_corner"
+        android:text="Log out"
+        android:textColor="#FFFFFF" />
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/hitoryItems"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:layout_below="@+id/history"/>-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/history"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="3dp"-->
+    <!--        android:layout_marginLeft="20dp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        android:textSize="20sp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="HISTORY"-->
+    <!--        android:layout_below="@+id/invoiceRecycleView"-->
+    <!--        />-->
 
-
-
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/hitoryItems"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="8dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        android:layout_below="@+id/history"/>-->
 
 
 </RelativeLayout>

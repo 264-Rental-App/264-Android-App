@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,10 +42,17 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_owner_reg);
 
-        s_email = findViewById(R.id.s_signup_email);
+        s_email = findViewById(R.id.s_store_name);
         s_password = findViewById(R.id.s_signup_password);
         s_firstname = findViewById(R.id.s_signup_firstname);
-        s_phonenumber = findViewById(R.id.s_signup_phonenumber);
+        s_phonenumber = findViewById(R.id.s_store_contact);
+
+        Button test = findViewById(R.id.createStoreInfoBtn_test);
+        test.setOnClickListener(v -> {
+           Intent intent = new Intent(getApplicationContext(), StoreOwnerCreatesStoreActivity.class);
+           intent.putExtra("ownerId", "aabbccdd");
+           startActivity(intent);
+        });
 
 
         Button backToHome = findViewById(R.id.backToMainFromSSignUp);
@@ -56,16 +64,12 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // just take email & password & first name & phone number?
-        Button submitSInfo = findViewById(R.id.submitSInfo);
+        Button submitSInfo = findViewById(R.id.createStoreInfoBtn);
         submitSInfo.setOnClickListener(v -> createNewUser());
 
     }
 
     private void createNewUser() {
-        System.out.println("Here?");
-
-        // TODO-1: Gather all user information and build HTTP request
-        // TODO-2: Need to verify each EditText box
 
         String email = s_email.getText().toString();
         String password = s_password.getText().toString();
@@ -85,12 +89,27 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
                                     Toast.makeText(StoreOwnerSignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = mAuth.getCurrentUser();
 
-                                    // these information will be stored in the database
-                                createNewOwnerInDataBase(email, firstName, phoneNumber);
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(firstName).build();
+
+                                    user.updateProfile(profileUpdates)
+                                            .addOnCompleteListener(task1 -> {
+                                                if (task1.isSuccessful()) {
+                                                    Log.d(TAG, "User profile updated.");
+
+                                                    String uid = user.getUid();
+
+                                                    // these information will be stored in the database
+                                                    // TODO: create a head in the createNewOwnerInDatabaserequest?
+                                                    User newOwner = new User(uid, firstName, email, phoneNumber);
+                                                    createNewOwnerInDatabase(newOwner);
 //
-                                    // TODO: The redirected page should be store owner's personal page not MainActivity, need to change
-                                    startActivity(new Intent(StoreOwnerSignUpActivity.this, MainActivity.class));
-                                    finish();
+                                                    // TODO: The redirected page should be store owner's personal page not MainActivity, need to change
+                                                    startActivity(new Intent(StoreOwnerSignUpActivity.this, MainActivity.class));
+                                                    finish();
+                                                }
+                                            });
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -117,7 +136,7 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
 
 
     // Might not need this
-    private void createNewOwnerInDataBase(String email, String firstname, String phonenumber) {
+    private void createNewOwnerInDatabase(User user) {
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -126,23 +145,34 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         }
 
         UserAccountAPIServices userAccountService = retrofit.create(UserAccountAPIServices.class);
-        Call<User> call = userAccountService.createOwner(email, firstname, phonenumber);
-        call.enqueue(new Callback<User>() {
+        Call<NewUserResponse> call = userAccountService.createOwner(user);
+        call.enqueue(new Callback<NewUserResponse>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                // TODO: idk, start customer page activity?
+            public void onResponse(Call<NewUserResponse> call, Response<NewUserResponse> response) {
 
+                if(response.body() != null) {
+                    goCreateNewStore(response.body().getUserId());
+                }
+                else {
+                    // TODO: There should be a better way to handle this
+                    Toast.makeText(StoreOwnerSignUpActivity.this, "Could not create account", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable throwable) {
+            public void onFailure(Call<NewUserResponse> call, Throwable throwable) {
                 Log.e(TAG, throwable.toString());
 
-                // TODO: idk, maybe not this page
                 Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
                 startActivity(intent);
             }
         });
+    }
+
+    private void goCreateNewStore(String ownerId) {
+        Intent intent = new Intent(getApplicationContext(), StoreOwnerCreatesStoreActivity.class);
+        intent.putExtra("ownerId", ownerId);
+        startActivity(intent);
     }
 
 }
