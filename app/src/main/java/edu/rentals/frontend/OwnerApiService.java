@@ -20,7 +20,7 @@ public interface OwnerApiService {
 
     // http://localhost:8080/rental/{invoiceId}
     @GET("rental/{invoiceId}")
-    Call<CustomerRental> getRentalInfo(@Path("invoiceId") String invoiceId);
+    Call<CustomerRental> getRentalInfo(@Path("invoiceId") int invoiceId);
 
     // http://localhost:8080/stores/{storeId}
     @GET("stores/{storeId}")
@@ -41,6 +41,7 @@ public interface OwnerApiService {
     // http://localhost:8080/equipment
     @POST("equipment")
     Call<OwnerPublishEquipment> publishEquipment(@Body OwnerPublishEquipment equipment);
+
 
 
 }

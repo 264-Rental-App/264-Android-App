@@ -137,7 +137,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
         });
 
         // api rental info
-        Call<CustomerRental> ownerRenaltInfoCall = ownerApiService.getRentalInfo(String.valueOf(invoiceId));
+        Call<CustomerRental> ownerRenaltInfoCall = ownerApiService.getRentalInfo(invoiceId);
         ownerRenaltInfoCall.enqueue(new Callback<CustomerRental>() {
 
             @Override

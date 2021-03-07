@@ -26,6 +26,9 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<edu.rentals.frontend.
         TextView tvUserFirstName;
         TextView tvTotalPrice;
         TextView tvTransactionDate;
+        TextView tvRentalStartDate;
+        TextView tvDueDate;
+
 
 
         public ViewHolder(View itemView) {
@@ -34,6 +37,8 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<edu.rentals.frontend.
             tvUserFirstName = itemView.findViewById(R.id.customerFirstName);
             tvTotalPrice = itemView.findViewById(R.id.totalCost);
             tvTransactionDate = itemView.findViewById(R.id.transactionDate);
+            tvRentalStartDate = itemView.findViewById(R.id.startDate);
+            tvDueDate = itemView.findViewById(R.id.dueDate);
             itemView.setOnClickListener(this);
         }
 
@@ -54,14 +59,20 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<edu.rentals.frontend.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String userId = invoiceList.get(position).getUserId();
+        String customerFirstName = invoiceList.get(position).getUserFirstName();
         float totalCost = invoiceList.get(position).getTotalCost();
-        Timestamp transactionDate= invoiceList.get(position).getTransactionDate();
-        Date date = new Date(transactionDate.getTime());
-        String toDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
+        String transactionDate= invoiceList.get(position).getTransactionDate();
+        String rentalStartDate = invoiceList.get(position).getRentalStartDate();
+        String dueDate = invoiceList.get(position).getDueDate();
 
-        holder.tvUserFirstName.setText(userId);
+//        Date date = new Date(transactionDate.getTime());
+//        String toDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
+
+        holder.tvUserFirstName.setText(customerFirstName);
         holder.tvTotalPrice.setText("$ " + totalCost);
-        holder.tvTransactionDate.setText(toDate);
+        holder.tvTransactionDate.setText(transactionDate);
+        holder.tvRentalStartDate.setText("FROM: " + rentalStartDate);
+        holder.tvDueDate.setText("TO: " + dueDate);
     }
 
     @Override

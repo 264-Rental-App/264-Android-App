@@ -17,7 +17,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,12 +28,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
 
 public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAdapter.InvoiceListClickListener {
     Button search, manageStore, editInfo;
     TextView tvFirstName;
     String userId, firstName;
     private static List<OwnerInvoice> ownerInvoiceList;
+    private static List<OwnerInvoice> tmpOwnerInvoiceList;
     private RecyclerView recyclerView;
     private OwnerHomeAdapter eAdapter;
     private long storeId;
@@ -38,6 +43,11 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
     static final String TAG = OwnerHomeActivity.class.getSimpleName();
     static final String BASE_URL = "http://localhost:8080/";
     static Retrofit retrofit = null;
+
+    private List<String> customerIdList = new ArrayList<>();
+    private HashMap<String, String> customerIdNameMap = new HashMap<>();
+    private List<Integer> invoiceIdList = new ArrayList<>();
+    private HashMap<Integer, String[]> invoiceIdDateMap = new HashMap<>();
 
     private static int positionChosen;
 
@@ -97,13 +107,14 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
 
         // mock invoice list
         ownerInvoiceList = new ArrayList<>();
-        ownerInvoiceList.add(new OwnerInvoice(1, "1", 500, java.sql.Timestamp.valueOf("2020-09-23 10:10:10.0")));
-        ownerInvoiceList.add(new OwnerInvoice(2, "2", 250, java.sql.Timestamp.valueOf("2020-10-23 10:10:10.0")));
-        ownerInvoiceList.add(new OwnerInvoice(3, "3", 300, java.sql.Timestamp.valueOf("2020-11-23 10:10:10.0")));
-//        userInvoiceList.add(new Invoice(2, "Ski Shop", 100, java.sql.Timestamp.valueOf("2016-09-23 10:10:10.0")));
-//        userInvoiceList.add(new Invoice(3, "Surf Shop", 150, java.sql.Timestamp.valueOf("2015-09-23 10:10:10.0")));
-//        userInvoiceList.add(new Invoice(4, "Bear Shop", 1000, java.sql.Timestamp.valueOf("2014-09-23 10:10:10.0")));
-//        userInvoiceList.add(new Invoice(5, "Fish Shop", 1050, java.sql.Timestamp.valueOf("2013-09-25 10:10:10.0")));
+        ownerInvoiceList.add(new OwnerInvoice(1, "1", 500, "09/23/2020", "Debby", "10/24/2020", "10/25/2020"));
+        ownerInvoiceList.add(new OwnerInvoice(2, "3", 250, "11/23/2020", "Ken", "11/24/2020", "12/25/2020"));
+        ownerInvoiceList.add(new OwnerInvoice(3, "5", 300, "12/20/2020", "John", "12/29/2020", "01/25/2021"));
+
+//        ownerInvoiceList.add(new OwnerInvoice(1, "1", 500, java.sql.Timestamp.valueOf("2020-09-23 10:10:10.0")));
+//        ownerInvoiceList.add(new OwnerInvoice(2, "2", 250, java.sql.Timestamp.valueOf("2020-10-23 10:10:10.0")));
+//        ownerInvoiceList.add(new OwnerInvoice(3, "3", 300, java.sql.Timestamp.valueOf("2020-11-23 10:10:10.0")));
+
 
         // recycleView
         recyclerView = findViewById(R.id.recordRecycleView);
@@ -165,15 +176,22 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                 List<LinkedTreeMap> invoiceList = response.body().getInvoiceList();
 
                 // set invoice list
+                tmpOwnerInvoiceList = new ArrayList<>();
                 for (int i = 0; i < invoiceList.size(); i++) {
                     int invoiceId = (int) invoiceList.get(i).get("id");
+                    invoiceIdList.add(invoiceId);
                     String userId = invoiceList.get(i).get("userId").toString();
+                    customerIdList.add(userId);
                     float totalCost = (float) invoiceList.get(i).get("totalCost");
                     Timestamp transactionDate = (Timestamp) invoiceList.get(i).get("transactionDate");
-                    ownerInvoiceList.add(new OwnerInvoice(invoiceId, userId, totalCost, transactionDate));
+                    // date transform
+                    Date dateTransactionDate = new Date(transactionDate.getTime());
+                    String toTransactionDate = new SimpleDateFormat("MM/dd/yyyy").format(dateTransactionDate);
+
+                    // add to tmp OwnerInvoiceList
+                    tmpOwnerInvoiceList.add(new OwnerInvoice(invoiceId, userId, totalCost, toTransactionDate, "", "", ""));
                 }
-                eAdapter = new OwnerHomeAdapter(ownerInvoiceList, OwnerHomeActivity.this::onInvoiceClick);
-                recyclerView.setAdapter(eAdapter);
+
 
             }
 
@@ -182,6 +200,82 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                 Log.e(TAG, t.toString());
             }
         });
+
+        // use customerIdList to put {userId, userFirstName} pair to customerIdNameMap hashmap
+        for (String customerUserId: customerIdList) {
+            Call<Customer> userInfoCall = ownerApiService.getUserInfo(customerUserId);
+            userInfoCall.enqueue(new Callback<Customer>() {
+                @Override
+                public void onResponse(Call<Customer> call, Response<Customer> response) {
+                    // get user
+                    JSONObject user = response.body().getCustomerInfo();
+                    try {
+                        customerIdNameMap.put(customerUserId, user.get("userFirstName").toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Customer> call, Throwable t) {
+                    Log.e(TAG, t.toString());
+                }
+            });
+        }
+
+        // use invoiceIdList to put {invoiceId, [rentalStartDate, dueDate]} pair to invoiceIdRentalDate HashMap
+        for (int invoiceId: invoiceIdList) {
+            Call<CustomerRental> rentalInfoCall =  ownerApiService.getRentalInfo(invoiceId);
+            rentalInfoCall.enqueue(new Callback<CustomerRental>() {
+
+                @Override
+                public void onResponse(Call<CustomerRental> call, Response<CustomerRental> response) {
+                    // get rentalInfo
+                    JSONObject invoiceInfo = response.body().getCustomerRental();
+                    // get info
+                    Timestamp rentalStartDate = null;
+                    Timestamp dueDate = null;
+
+                    try {
+                        rentalStartDate = (Timestamp) invoiceInfo.get("rentalStartDate");
+                        dueDate = (Timestamp) invoiceInfo.get("dueDate");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // date transform
+                    Date dateStartDate = new Date(rentalStartDate.getTime());
+                    String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
+                    Date dateDueDate = new Date(dueDate.getTime());
+                    String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
+
+                    // put to hash map
+                    invoiceIdDateMap.put(invoiceId, new String[]{toStartDate, toDueDate});
+
+                }
+
+                @Override
+                public void onFailure(Call<CustomerRental> call, Throwable t) {
+                    Log.e(TAG, t.toString());
+                }
+            });
+
+            // loop through tmpOwnerInvoiceList
+            for (int i=0; i < tmpOwnerInvoiceList.size(); i++) {
+                int tmpInvoiceId = tmpOwnerInvoiceList.get(i).getInvoiceId();
+                String impUserId = tmpOwnerInvoiceList.get(i).getUserId();
+                ownerInvoiceList.add(new OwnerInvoice(tmpInvoiceId,
+                                                        impUserId,
+                                                        tmpOwnerInvoiceList.get(i).getTotalCost(),
+                                                        tmpOwnerInvoiceList.get(i).getTransactionDate(),
+                                                        customerIdNameMap.get(impUserId),
+                                                        invoiceIdDateMap.get(tmpInvoiceId)[0],
+                                                        invoiceIdDateMap.get(tmpInvoiceId)[1]));
+            }
+
+            eAdapter = new OwnerHomeAdapter(ownerInvoiceList, OwnerHomeActivity.this::onInvoiceClick);
+            recyclerView.setAdapter(eAdapter);
+        }
     }
 
     @Override
@@ -196,13 +290,19 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         private int invoiceId;
         private String userId;
         private float totalCost;
-        private Timestamp transactionDate;
+        private String transactionDate;
+        private String userFirstName;
+        private String rentalStartDate;
+        private String dueDate;
 
-        public OwnerInvoice(int invoiceId, String userId, float totalCost, Timestamp transactionDate) {
+        public OwnerInvoice(int invoiceId, String userId, float totalCost, String transactionDate, String userFirstName, String rentalStartDate, String dueDate) {
             this.invoiceId = invoiceId;
             this.userId = userId;
             this.totalCost = totalCost;
             this.transactionDate = transactionDate;
+            this.userFirstName = userFirstName;
+            this.rentalStartDate = rentalStartDate;
+            this.dueDate = dueDate;
         }
 
         public int getInvoiceId() {
@@ -217,8 +317,20 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
             return totalCost;
         }
 
-        public Timestamp getTransactionDate() {
+        public String getTransactionDate() {
             return transactionDate;
+        }
+
+        public String getUserFirstName() {
+            return userFirstName;
+        }
+
+        public String getRentalStartDate() {
+            return rentalStartDate;
+        }
+
+        public String getDueDate() {
+            return dueDate;
         }
     }
 
