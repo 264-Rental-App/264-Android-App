@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,9 +65,6 @@ public class CustomerSignUpActivity extends AppCompatActivity {
     private void createNewUser() {
         System.out.println("Here?");
 
-        // TODO-1: Gather all user information and build HTTP request
-        // TODO-2: Need to verify each EditText box
-
         String email = c_email.getText().toString();
         String password = c_password.getText().toString();
         String firstName = c_firstname.getText().toString();
@@ -85,18 +83,26 @@ public class CustomerSignUpActivity extends AppCompatActivity {
                                 Toast.makeText(CustomerSignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-                                String uid = user.getUid();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(firstName).build();
 
-                                // these information will be stored in the database
-                                User newUser = new User(uid, firstName, email, phoneNumber);
-                                createNewClientInDatabase(newUser);
+                                user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            Log.d(TAG, "User profile updated.");
 
-                                // TODO: start Store Owner Home page, but probably from createNewClientDatabase
-                                startActivity(new Intent(CustomerSignUpActivity.this, MainActivity.class));
+                                            String uid = user.getUid();
 
-                                // TODO: send token to the back --> or just add a header section in the createNewClientInDatabase Request?
+                                            // these information will be stored in the database
+                                            User newUser = new User(uid, firstName, email, phoneNumber);
+                                            createNewClientInDatabase(newUser);
 
-                                finish();
+                                            startActivity(new Intent(CustomerSignUpActivity.this, CustomerHomeActivity.class));
+
+                                            finish();
+                                        }
+                                    });
+
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());

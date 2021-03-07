@@ -7,139 +7,138 @@
     android:layout_height="match_parent">
     tools:context=".EquipmentListActivity">
 
-    <RelativeLayout
-        android:layout_width="394dp"
-        android:layout_height="829dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp">
+    <TextView
+        android:id="@+id/shopAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMinTextSize="18sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center"
+        android:text="shop address"
+        android:textAlignment="textStart"
+        android:textColor="#819CA2"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopName" />
 
-        <Button
-            android:id="@+id/back"
-            android:layout_width="70dp"
-            android:layout_height="32dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/back_rounded_corner"
-            android:text="Back"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-        <!--        android:backgroundTint="#808080"-->
+    <Button
+        android:id="@+id/checkOut"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_button_rounded_corner"
+        android:fontFamily="@font/montserrat"
+        android:text="Rent"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priceSum" />
 
-        <Button
-            android:id="@+id/equip_login"
-            android:layout_width="70dp"
-            android:layout_height="32dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/back_rounded_corner"
-            android:backgroundTint="#808080"
-            android:text="Log In"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:text="Total"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/equipmentListRecycleView" />
 
-        <TextView
-            android:id="@+id/shopName"
-            android:layout_width="147dp"
-            android:layout_height="121dp"
-            android:layout_below="@+id/back"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="20sp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="222dp"
-            android:layout_marginBottom="15dp"
-            android:gravity="center"
-            android:text="SHOP NAME"
-            android:textAlignment="textStart"
-            android:textColor="#F2BB44"
-            android:textSize="48sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/shopName"
+        android:layout_width="147dp"
+        android:layout_height="121dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="22dp"
+        android:autoSizeMaxTextSize="48sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:text="SHOP NAME"
+        android:textAlignment="textStart"
+        android:textColor="#F2BB44"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back" />
 
-        <TextView
-            android:id="@+id/shopAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/shopName"
-            android:layout_marginStart="30sp"
-            android:layout_marginEnd="30sp"
-            android:fontFamily="sans-serif-thin"
-            android:gravity="center"
-            android:text="shop address"
-            android:textAlignment="textStart"
-            android:textColor="#819CA2"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/equipmentListRecycleView"
+        android:layout_width="0dp"
+        android:layout_height="280sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopPhone" />
 
-        <TextView
-            android:id="@+id/shopPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/shopAddress"
-            android:layout_marginStart="30sp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="30sp"
-            android:fontFamily="sans-serif-thin"
-            android:gravity="center"
-            android:text="shop phone number"
-            android:textAlignment="textStart"
-            android:textColor="#819CA2"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/back"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/back_rounded_corner"
+        android:text="Back"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/equipmentListRecycleView"
-            android:layout_width="wrap_content"
-            android:layout_height="340sp"
-            android:layout_below="@+id/shopPhone"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/priceSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="1dp"
+        android:text=" $0"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalPrice" />
 
-        <TextView
-            android:id="@+id/totalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/equipmentListRecycleView"
-            android:layout_marginLeft="26sp"
-            android:layout_marginTop="5dp"
-            android:text="Total : "
-            android:textSize="26sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/shopPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMinTextSize="18sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center"
+        android:text="shop phone number"
+        android:textAlignment="textStart"
+        android:textColor="#819CA2"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopAddress" />
 
-        <TextView
-            android:id="@+id/priceSum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/equipmentListRecycleView"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/totalPrice"
-            android:text=" $0"
-            android:textSize="26sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/checkOut"
-            android:layout_width="96dp"
-            android:layout_height="35dp"
-            android:layout_below="@+id/priceSum"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5sp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/search_button_rounded_corner"
-            android:text="Rent"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-        <!--        android:backgroundTint="@color/teal_700"-->
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/equip_login"
+        android:layout_width="70dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/back_rounded_corner"
+        android:backgroundTint="#808080"
+        android:text="Log In"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

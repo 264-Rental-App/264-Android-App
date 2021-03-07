@@ -3,6 +3,7 @@ package edu.rentals.frontend;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +30,7 @@ public class EquipmentListAdapter extends RecyclerView.Adapter<edu.rentals.front
         ImageView ivPhoto;
         TextView tvName;
         TextView tvPrice;
-        ImageButton ivAdd, ivSub;
+        Button ivAdd, ivSub;
         TextView tvQuantity;
 
 

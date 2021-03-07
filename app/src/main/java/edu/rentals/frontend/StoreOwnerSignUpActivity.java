@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -88,16 +89,27 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
                                     Toast.makeText(StoreOwnerSignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = mAuth.getCurrentUser();
 
-                                    String uid = user.getUid();
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(firstName).build();
 
-                                    // these information will be stored in the database
-                                    // TODO: create a head in the createNewOwnerInDatabaserequest?
-                                    User newOwner = new User(uid, firstName, email, phoneNumber);
-                                    createNewOwnerInDatabase(newOwner);
+                                    user.updateProfile(profileUpdates)
+                                            .addOnCompleteListener(task1 -> {
+                                                if (task1.isSuccessful()) {
+                                                    Log.d(TAG, "User profile updated.");
+
+                                                    String uid = user.getUid();
+
+                                                    // these information will be stored in the database
+                                                    // TODO: create a head in the createNewOwnerInDatabaserequest?
+                                                    User newOwner = new User(uid, firstName, email, phoneNumber);
+                                                    createNewOwnerInDatabase(newOwner);
 //
-                                    // TODO: The redirected page should be store owner's personal page not MainActivity, need to change
-                                    startActivity(new Intent(StoreOwnerSignUpActivity.this, MainActivity.class));
-                                    finish();
+                                                    // TODO: The redirected page should be store owner's personal page not MainActivity, need to change
+                                                    startActivity(new Intent(StoreOwnerSignUpActivity.this, MainActivity.class));
+                                                    finish();
+                                                }
+                                            });
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());

@@ -167,7 +167,6 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
     }
 
     private void returningFakeInformationToUser(double latitude, double longitude) {
-        System.out.println("Hello?");
         String fakeStrInfo =
             "{\"stores\":" +
                 "[" +
