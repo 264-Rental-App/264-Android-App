@@ -31,7 +31,7 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/search_button_rounded_corner"
+        android:background="@drawable/rounded_border_button_rent_enabled"
         android:fontFamily="@font/montserrat"
         android:text="Rent"
         android:textColor="@android:color/white"
