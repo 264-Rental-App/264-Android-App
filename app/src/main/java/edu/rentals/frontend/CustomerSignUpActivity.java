@@ -35,6 +35,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
     EditText c_password;
     EditText c_firstname;
     EditText c_phonenumber;
+    static final String ACCOUNT_TYPE = "customer";
 
     private FirebaseAuth mAuth;
 
@@ -102,7 +103,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
                                             String uid = user.getUid();
 
                                             // these information will be stored in the database
-                                            User newUser = new User(uid, firstName, email, phoneNumber);
+                                            User newUser = new User(uid, firstName, email, phoneNumber, ACCOUNT_TYPE);
                                             createNewClientInDatabase(newUser);
 
                                             startActivity(new Intent(CustomerSignUpActivity.this, CustomerHomeActivity.class));

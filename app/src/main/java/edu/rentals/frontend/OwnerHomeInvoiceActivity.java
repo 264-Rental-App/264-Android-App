@@ -7,9 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +44,8 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
     OwnerHomeInvoiceAdapter eAdapter;
     private RecyclerView recyclerView;
     List<OwnerRental> invoiceRental;
+
+    private String idToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +118,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // get user firstName
-        Call<Customer> customerInfoCall = ownerApiService.getUserInfo(customerUserId);
+        Call<Customer> customerInfoCall = ownerApiService.getUserInfo(idToken, customerUserId);
         customerInfoCall.enqueue(new Callback<Customer>() {
 
             @Override
@@ -137,7 +146,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
         });
 
         // api rental info
-        Call<CustomerRental> ownerRenaltInfoCall = ownerApiService.getRentalInfo(invoiceId);
+        Call<CustomerRental> ownerRenaltInfoCall = ownerApiService.getRentalInfo(idToken, invoiceId);
         ownerRenaltInfoCall.enqueue(new Callback<CustomerRental>() {
 
             @Override
@@ -199,6 +208,27 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // TODO: Get current user's idToken
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+        System.out.println("idToken: " + idToken);
+    }
+
 
 
     public class OwnerRental {

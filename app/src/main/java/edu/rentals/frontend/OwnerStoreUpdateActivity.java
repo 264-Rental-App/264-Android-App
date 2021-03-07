@@ -7,7 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +37,7 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
     TextView tvName, tvStock, tvPrice, tvDesc;
     private String name, desc;
     private int stock, price;
+    private String idToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +87,7 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call to get equipment info
-        Call<EquipmentInfo> equipmentInfoCall = ownerApiService.getEquipmentInfo(equipmentId);
+        Call<EquipmentInfo> equipmentInfoCall = ownerApiService.getEquipmentInfo(idToken, equipmentId);
         equipmentInfoCall.enqueue(new Callback<EquipmentInfo>() {
 
             @Override
@@ -122,7 +130,7 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call to delete equipment
-        Call<Void> deleteEquipment = ownerApiService.deleteEquipment(equipmentId);
+        Call<Void> deleteEquipment = ownerApiService.deleteEquipment(idToken, equipmentId);
         deleteEquipment.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -135,4 +143,27 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
             }
         });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // TODO: Get current user's idToken
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                            // Send token to your backend via HTTPS
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+        System.out.println("idToken: " + idToken);
+    }
+
 }

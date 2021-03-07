@@ -7,9 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +43,7 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
     CustomerHomeInvoiceAdapter eAdapter;
     private RecyclerView recyclerView;
     List<Rental> invoiceRental;
-
+    private String idToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +112,7 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api rental info
-        Call<CustomerRental> customerInfoCall = customerApiService.getRentalInfo(String.valueOf(invoiceId));
+        Call<CustomerRental> customerInfoCall = customerApiService.getRentalInfo(idToken, String.valueOf(invoiceId));
         customerInfoCall.enqueue(new Callback<CustomerRental>() {
 
             @Override
@@ -168,6 +175,29 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // TODO: Get current user's idToken
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                            // Send token to your backend via HTTPS
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+        System.out.println("idToken: " + idToken);
+    }
+
 
     public class Rental {
         private String name;

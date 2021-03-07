@@ -8,7 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +29,8 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
     static Retrofit retrofit = null;
     Button back, update;
     private long storeId;
+
+    private String idToken;
 
     EditText etName, etCost, etImgLoc, etQuantity, etDesc;
 
@@ -91,7 +100,7 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
 
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
         OwnerPublishEquipment equipment = new OwnerPublishEquipment(storeId, name, cost, imgLoc, quantity, description);
-        Call<OwnerPublishEquipment> call = ownerApiService.publishEquipment(equipment);
+        Call<OwnerPublishEquipment> call = ownerApiService.publishEquipment(idToken, equipment);
         call.enqueue(new Callback<OwnerPublishEquipment>() {
             @Override
             public void onResponse(Call<OwnerPublishEquipment> call, Response<OwnerPublishEquipment> response) {
@@ -104,4 +113,27 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // TODO: Get current user's idToken
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                            // Send token to your backend via HTTPS
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+        System.out.println("idToken: " + idToken);
+    }
+
 }

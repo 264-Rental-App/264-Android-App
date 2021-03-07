@@ -12,8 +12,8 @@ public class Store {
     private Double storeLat;
     @SerializedName("lon")
     private Double storeLong;
-//    @SerializedName("id")
-//    private UUID id;
+    @SerializedName("id")
+    private Long id;
     @SerializedName("ownerId")
     private String ownerId;
     @SerializedName("commonAddress")
@@ -23,11 +23,11 @@ public class Store {
     @SerializedName("phoneNumber")
     private String phoneNumber;
 
-    public Store(String name, Double lat, Double lon, String ownerId, String address, String category, String phoneNumber) {
+    public Store(String name, Double lat, Double lon, Long id, String ownerId, String address, String category, String phoneNumber) {
         this.storeName = name;
         this.storeLat = lat;
         this.storeLong = lon;
-//        this.id = id;
+        this.id = id;
         this.ownerId = ownerId;
         this.storeAddress = address;
         this.storeCategory = category;
@@ -40,7 +40,7 @@ public class Store {
 
     public Double getLongitude() { return storeLong; }
 
-//    public UUID getId() { return id; }
+    public Long getId() { return id; }
 
     public String getStoreId() { return ownerId; }
 
