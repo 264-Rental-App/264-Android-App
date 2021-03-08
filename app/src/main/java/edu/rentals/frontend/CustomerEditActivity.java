@@ -7,10 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +34,7 @@ public class CustomerEditActivity extends AppCompatActivity {
     Button back;
     private String userId;
     private String firstName, email, phoneNumber;
+    private String idToken;
 
     TextView tvFirstName, tvEmail, tvPhone;
 
@@ -36,12 +42,6 @@ public class CustomerEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_edit);
-
-        // get userId
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
-        userId = mUser.getUid();
-        Log.d("userId", userId);
 
         // back
         back = findViewById(R.id.back);
@@ -78,7 +78,7 @@ public class CustomerEditActivity extends AppCompatActivity {
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api call get customer info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(userId);
+        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
         customerInfoCall.enqueue(new Callback<Customer>() {
 
             @Override
@@ -115,4 +115,30 @@ public class CustomerEditActivity extends AppCompatActivity {
         /* TODO: patch update info */
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // TODO: Get current user's idToken
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        userId = mUser.getUid();
+        Log.d("userId", userId);
+
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                            // Send token to your backend via HTTPS
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+        System.out.println("idToken: " + idToken);
+    }
+
 }

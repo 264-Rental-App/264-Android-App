@@ -16,11 +16,14 @@ public class User {
     @SerializedName("userPhoneNumber")
     private String userPhoneNumber;
 
-    public User(String userId, String firstName, String email, String phoneNumber) {
+    private String accountType;
+
+    public User(String userId, String firstName, String email, String phoneNumber, String accountType) {
         this.userId = userId;
         this.userFirstName = firstName;
         this.userEmail = email;
         this.userPhoneNumber = phoneNumber;
+        this.accountType = accountType;
     }
 
     public String getUserId() {
@@ -39,4 +42,7 @@ public class User {
         return userPhoneNumber;
     }
 
+    public String getAccountType() {
+        return accountType;
+    }
 }

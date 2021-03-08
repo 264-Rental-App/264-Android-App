@@ -35,6 +35,7 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
     EditText s_password;
     EditText s_firstname;
     EditText s_phonenumber;
+    static final String ACCOUNT_TYPE = "owner";
 
     private FirebaseAuth mAuth;
 
@@ -109,7 +110,7 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
 
                                                     // these information will be stored in the database
                                                     // TODO: create a head in the createNewOwnerInDatabaserequest?
-                                                    User newOwner = new User(uid, firstName, email, phoneNumber);
+                                                    User newOwner = new User(uid, firstName, email, phoneNumber, ACCOUNT_TYPE);
                                                     createNewOwnerInDatabase(newOwner);
 //
                                                     // TODO: The redirected page should be store owner's personal page not MainActivity, need to change

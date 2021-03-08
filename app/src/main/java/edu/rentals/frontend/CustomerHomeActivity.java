@@ -8,12 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -42,7 +47,8 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
     private CustomerHomeAdapter eAdapter;
     private static int positionChosen;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
+    private String idToken;
 
     public static int getInvoiceId() {
         return userInvoiceList.get(positionChosen).getInvoiceId();
@@ -55,12 +61,6 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         setContentView(R.layout.activity_customer_home);
 
         mAuth = FirebaseAuth.getInstance();
-
-        // get userId
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
-        userId = mUser.getUid();
-        Log.d("userId", userId);
 
         // search
         search = findViewById(R.id.searchPage);
@@ -125,7 +125,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api call user info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(userId);
+        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
         customerInfoCall.enqueue(new Callback<Customer>() {
 
             @Override
@@ -153,7 +153,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
 
         // api call for invoice list
-        Call<InvoiceList> invoiceListCall = customerApiService.getInvoiceList();
+        Call<InvoiceList> invoiceListCall = customerApiService.getInvoiceList(idToken);
         invoiceListCall.enqueue(new Callback<InvoiceList>() {
 
             @Override
@@ -227,5 +227,26 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         String name = mAuth.getCurrentUser().getDisplayName();
 //        System.out.println("@@@@@@@@@" + name);
         tvFirstName.setText(name);
+
+        // TODO: Get current user's idToken
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        userId = mUser.getUid();
+        Log.d("userId", userId);
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                            // Send token to your backend via HTTPS
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+        System.out.println("idToken: " + idToken);
+
     }
+
 }

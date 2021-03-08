@@ -6,10 +6,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.sql.Timestamp;
@@ -31,6 +37,8 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
     static Retrofit retrofit = null;
     private RecyclerView recyclerView;
     private OwnerStoreAdapter eAdapter;
+
+    private String idToken;
 
     private static int positionChosen;
 
@@ -108,7 +116,7 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call for equipment list
-        Call<StoreEquipmentList> invoiceListCall = ownerApiService.getEquipmentList(storeId);
+        Call<StoreEquipmentList> invoiceListCall = ownerApiService.getEquipmentList(idToken, storeId);
         invoiceListCall.enqueue(new Callback<StoreEquipmentList>() {
 
             @Override
@@ -145,4 +153,27 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
         Intent intent = new Intent(edu.rentals.frontend.OwnerStoreActivity.this, OwnerStoreUpdateActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // TODO: Get current user's idToken
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                            // Send token to your backend via HTTPS
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+        System.out.println("idToken: " + idToken);
+    }
+
 }

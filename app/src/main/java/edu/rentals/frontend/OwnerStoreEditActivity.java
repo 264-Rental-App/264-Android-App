@@ -7,7 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +34,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
     private long storeId;
     TextView tvStoreName, tvAddress, tvPhone;
     private String storeName, address, phoneNumber;
+    private String idToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +78,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call get customer info
-        Call<StoreInfo> storeInfoCall = ownerApiService.getStoreInfo(storeId);
+        Call<StoreInfo> storeInfoCall = ownerApiService.getStoreInfo(idToken, storeId);
         storeInfoCall.enqueue(new Callback<StoreInfo>() {
 
             @Override
@@ -105,4 +113,25 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
         // Todo: update info patch
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // TODO: Get current user's idToken
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+        System.out.println("idToken: " + idToken);
+    }
+
 }

@@ -26,6 +26,10 @@ import com.google.maps.model.LatLng;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -167,39 +171,17 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
     }
 
     private void returningFakeInformationToUser(double latitude, double longitude) {
-        String fakeStrInfo =
-            "{\"stores\":" +
-                "[" +
-                    "{\"name\":\"Bike Shop\",\"lat\":33.3," +
-                    "\"long\":50.5,\"id\":0,\"ownerId\":SHDFKJH35Sd,\"commonAddress\":\"1223 Blah Street, Some City, CA 93333\"," +
-                    "\"category\":\"Bike\"}," +
-                    "{\"name\":\"Random Shop\",\"lat\":40.3," +
-                    "\"long\":60.5,\"id\":1,\"ownerId\":SERH35Sd,\"commonAddress\":\"1400 Random Street, Some City, CA 93333\"," +
-                    "\"category\":\"Surfboard\"}," +
-                    "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":2,\"ownerId\":ftyet35Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
-                    "\"category\":\"Surfboard\"}," +
-                    "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":3,\"ownerId\":zAf35Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
-                    "\"category\":\"Surfboard\"}," +
-                    "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":4,\"ownerId\":QWRJH35Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
-                    "\"category\":\"Surfboard\"}," +
-                    "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":5,\"ownerId\":SHDFKxfgd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
-                    "\"category\":\"Surfboard\"}," +
-                    "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":6,\"ownerId\":ASDFKJH35Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
-                    "\"category\":\"Surfboard\"}," +            "{\"name\":\"Surrey Shop\",\"lat\":100.3," +
-                    "\"long\":89.5,\"id\":7,\"ownerId\":AVDFSDF5Sd,\"commonAddress\":\"1500 Whatever Street, Some City, CA 93333\"," +
-                    "\"category\":\"Surfboard\"}" +
-                "]" +
-            "}";
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
 
-        Gson gson = builder.create();
-        storeList = gson.fromJson(fakeStrInfo, StoreList.class);
+        Store store1 = new Store("Bike Shop", 33.3, 50.5, (long)0, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
+        Store store2 = new Store("Random Shop", 33.3, 50.5, (long)1, "SHDFKJH35Sd", "1400 Random Street, Some City, CA 93333", "Bike", "1112223333");
+        Store store3 = new Store("Surrey Shop", 33.3, 50.5, (long)2, "SHDFKJH35Sd", "1500 Whatever Street, Some City, CA 93333", "Bike", "1112223333");
+        Store store4 = new Store("Surrey Shop", 33.3, 50.5, (long)3, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
+        Store store5 = new Store("Surfboard Shop", 33.3, 50.5, (long)4, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
+        Store store6 = new Store("Bike Shop", 33.3, 50.5, (long)5, "SHDFKJH35Sd", "1500 Whatever Street, Some City, CA 93333", "Bike", "1112223333");
+        Store store7 = new Store("Bike Shop", 33.3, 50.5, (long)6, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
+        List<Store> list = new ArrayList<>(Arrays.asList(store1, store2, store3, store4, store5, store6, store7));
+
+        storeList = new StoreList(list);
 
         recyclerView = findViewById(R.id.rvStoreList);
         recyclerView.setHasFixedSize(true);
