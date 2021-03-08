@@ -9,6 +9,10 @@ import retrofit2.http.Query;
 
 public interface UserAccountAPIServices {
 
+    // /users/{userId}
+    @GET("users/{userId}")
+    Call<GetUserById> getUserById(@Body String uid);
+
     // http://localhost:8080/users
     @POST("users")
     Call<NewUserResponse> createClient(@Body User user);

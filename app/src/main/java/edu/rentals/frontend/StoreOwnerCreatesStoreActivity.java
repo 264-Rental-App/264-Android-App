@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
 
     static final String TAG = StoreOwnerCreatesStoreActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76:80/";
     static Retrofit retrofit = null;
     static final String googleAPIKey = "AIza...";
     LatLng latLngFromGoogle;
@@ -153,8 +153,9 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Store> call, Response<Store> response) {
 
-                // TODO: connect to Owner's homepage
-//                Toast.makeText(StoreOwnerHomePageActivity.this, "Successfully Created Store!", Toast.LENGTH_SHORT).show();
+                // Redirecting to Owner's home page
+                Toast.makeText(StoreOwnerCreatesStoreActivity.this, "Successfully Created Store!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(StoreOwnerCreatesStoreActivity.this, OwnerHomeActivity.class));
 
             }
 

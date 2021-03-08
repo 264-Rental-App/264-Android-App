@@ -26,11 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // setting up Google Places Client --> this is more for current location
-        // currently don't need this service but can be a potential for future development
-//        Places.initialize(getApplicationContext(), googleAPIKey);
-//        PlacesClient placesClient = Places.createClient(this);
-
         // Button & EditText
         srcButton = findViewById(R.id.srcButton);
         inputField = findViewById(R.id.inputAddress);
@@ -59,17 +54,6 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(view -> {
 
             Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
-            startActivity(intent);
-
-        });
-
-        // TODO: This is temporary, should delete after everything is set up and Google map service
-        //  is reactivated
-        Button failPageButton = findViewById(R.id.temp_fail);
-
-        failPageButton.setOnClickListener(view -> {
-
-            Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
             startActivity(intent);
 
         });

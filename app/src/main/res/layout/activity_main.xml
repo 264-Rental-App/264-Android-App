@@ -37,21 +37,6 @@
         app:layout_constraintVertical_bias="0.118" />
 
 
-    <Button
-        android:id="@+id/temp_fail"
-        android:layout_width="146dp"
-        android:layout_height="38dp"
-        android:background="@drawable/search_button_rounded_corner"
-        android:text="Temp_Fail_Btn"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputAddress"
-        app:layout_constraintVertical_bias="0.246" />
-
     <EditText
         android:id="@+id/inputAddress"
         android:layout_width="221dp"
