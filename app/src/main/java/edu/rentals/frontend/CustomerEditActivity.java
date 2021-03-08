@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,8 +37,11 @@ public class CustomerEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_edit);
 
-        // user id
-        userId = "1";
+        // get userId
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        userId = mUser.getUid();
+        Log.d("userId", userId);
 
         // back
         back = findViewById(R.id.back);

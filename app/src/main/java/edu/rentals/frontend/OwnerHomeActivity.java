@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -68,9 +69,12 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         setContentView(R.layout.activity_owner_home);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
 
         // get userId
-        userId = "1";
+        userId = mUser.getUid();
+        Log.d("userId", userId);
+
         // get storeId
         storeId = 1;
 

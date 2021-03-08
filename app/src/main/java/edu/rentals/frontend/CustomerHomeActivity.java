@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -56,7 +57,10 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         mAuth = FirebaseAuth.getInstance();
 
         // get userId
-        userId = "1";
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        userId = mUser.getUid();
+        Log.d("userId", userId);
 
         // search
         search = findViewById(R.id.searchPage);
