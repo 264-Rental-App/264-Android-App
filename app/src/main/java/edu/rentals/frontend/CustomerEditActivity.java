@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerEditActivity extends AppCompatActivity {
     static final String TAG = EquipmentListActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
 
     Button back;
@@ -59,9 +59,9 @@ public class CustomerEditActivity extends AppCompatActivity {
         tvPhone = findViewById(R.id.phoneNumberCurr);
 
         // mock set
-        tvEmail.setText("a@gmail.com");
-        tvFirstName.setText("Adam");
-        tvPhone.setText("8888888888");
+//        tvEmail.setText("a@gmail.com");
+//        tvFirstName.setText("Adam");
+//        tvPhone.setText("8888888888");
 
         // get customer info
         connect();

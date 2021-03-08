@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
 
     static final String TAG = StoreOwnerCreatesStoreActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     static final String googleAPIKey = "AIza...";
     LatLng latLngFromGoogle;

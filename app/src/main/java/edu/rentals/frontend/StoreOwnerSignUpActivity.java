@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StoreOwnerSignUpActivity extends AppCompatActivity {
 
     static Retrofit retrofit;
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static final String TAG = CustomerSignUpActivity.class.getSimpleName();
 
     EditText s_email;
