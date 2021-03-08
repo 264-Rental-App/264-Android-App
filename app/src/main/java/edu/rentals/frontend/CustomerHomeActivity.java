@@ -37,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CustomerHomeActivity extends AppCompatActivity implements CustomerHomeAdapter.InvoiceListClickListener {
     Button search, editCustomer, logoutBtn;
     static final String TAG = CustomerHomeActivity.class.getSimpleName();
-    static final String BASE_URL = "http://35.222.193.76/";
+    static final String BASE_URL = "http://35.222.193.76:80/";
     static Retrofit retrofit = null;
     private String userId;
     private String firstName;
@@ -61,9 +61,8 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        userId = mUser.getUid();
+        System.out.println("oncreaaaaaaaaaate");
+
 
         // search
         search = findViewById(R.id.searchPage);
@@ -103,8 +102,6 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
 
 
-        // connect api call
-        connect();
 
         // adapter
         eAdapter = new CustomerHomeAdapter(userInvoiceList, this);
@@ -118,7 +115,10 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
     }
 
-    private void connect() {
+    private void connect(String idToken) {
+//        System.out.println("idToken inside connect() :" + idToken);
+//        System.out.println("userId inside connect() : " + userId);
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -226,13 +226,16 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
     @Override
     public void onStart() {
         super.onStart();
+        mAuth = FirebaseAuth.getInstance();
 
         String name = mAuth.getCurrentUser().getDisplayName();
 //        System.out.println("@@@@@@@@@" + name);
         tvFirstName.setText(name);
 
+        System.out.println("?@@@@@.e?@>fgdshfkjshdfkljhslfdsdf");
+
         // TODO: Get current user's idToken
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = mAuth.getCurrentUser();
         userId = mUser.getUid();
         Log.d("userId", userId);
         mUser.getIdToken(true)
@@ -240,6 +243,10 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            System.out.println("idToken 1 : " + idToken);
+                            // connect api call
+                            connect(idToken);
+
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
@@ -248,7 +255,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
                         }
                     }
                 });
-        System.out.println("idToken: " + idToken);
+        System.out.println("idToken 2 : " + idToken);
 
     }
 
