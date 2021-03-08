@@ -104,7 +104,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                                     Log.d(TAG, "signInWithEmail:success");
                                     Toast.makeText(LogInActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
                                     String uid = mAuth.getCurrentUser().getUid();
-                                    startActivity(new Intent(LogInActivity.this, CustomerHomeActivity.class));
 
                                     // TODO: send the user token to the back
                                     verifyAccountType(uid);
