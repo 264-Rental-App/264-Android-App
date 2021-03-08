@@ -17,6 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OwnerStoreAddActivity extends AppCompatActivity {
     static final String TAG = OwnerStoreAddActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     Button back, update;
     private long storeId;
@@ -40,7 +43,8 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_store_add);
 
         // get storeId
-        storeId = 1;
+//        storeId = 1;
+        storeId = getStoreIdCall();
 
         // back
         back = findViewById(R.id.back);
@@ -80,6 +84,7 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void addNewEquipment() {
 
@@ -134,6 +139,40 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
                     }
                 });
         System.out.println("idToken: " + idToken);
+    }
+
+    private long getStoreIdCall() {
+        final long[] storeId = new long[1];
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
+
+        // api call for storeId
+        Call<StoreInfo> storeIdCall = ownerApiService.getStoreId(idToken);
+        storeIdCall.enqueue(new Callback<StoreInfo>() {
+
+            @Override
+            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
+                // get store info
+                JSONObject customerInfo = response.body().getStoreInfo();
+                try {
+                    // get storeId
+                    storeId[0] = (long) customerInfo.get("storeId");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreInfo> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+        return storeId[0];
     }
 
 }

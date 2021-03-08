@@ -42,7 +42,7 @@ public class EquipmentListActivity extends AppCompatActivity {
     private String storeName, storeAddress, storeNumber;
     private static int total = 0;
 
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     FirebaseAuth mAuth;
 
@@ -87,11 +87,11 @@ public class EquipmentListActivity extends AppCompatActivity {
 
         // equipment list
         equipmentList = new ArrayList<>();
-        equipmentList.add(new Equipment(1, "Bike", 50, R.drawable.bike, 0));
-        equipmentList.add(new Equipment(2, "Ski", 100, R.drawable.ski, 0));
-        equipmentList.add(new Equipment(3, "Snowboard", 150, R.drawable.snowboard, 0));
-        equipmentList.add(new Equipment(4, "Helmet", 10, 0, 0));
-        equipmentList.add(new Equipment(5, "Snow Pants", 30, 0, 0));
+//        equipmentList.add(new Equipment(1, "Bike", 50, R.drawable.bike, 0));
+//        equipmentList.add(new Equipment(2, "Ski", 100, R.drawable.ski, 0));
+//        equipmentList.add(new Equipment(3, "Snowboard", 150, R.drawable.snowboard, 0));
+//        equipmentList.add(new Equipment(4, "Helmet", 10, 0, 0));
+//        equipmentList.add(new Equipment(5, "Snow Pants", 30, 0, 0));
 
         // recycleView
         recyclerView = findViewById(R.id.equipmentListRecycleView);
