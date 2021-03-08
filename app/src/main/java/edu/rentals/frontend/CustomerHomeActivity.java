@@ -36,8 +36,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerHomeActivity extends AppCompatActivity implements CustomerHomeAdapter.InvoiceListClickListener {
     Button search, editCustomer, logoutBtn;
-    static final String TAG = EquipmentListActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String TAG = CustomerHomeActivity.class.getSimpleName();
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     private String userId;
     private String firstName;
@@ -49,6 +49,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
     private FirebaseAuth mAuth;
     private String idToken;
+    FirebaseUser mUser;
 
     public static int getInvoiceId() {
         return userInvoiceList.get(positionChosen).getInvoiceId();
@@ -61,6 +62,8 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         setContentView(R.layout.activity_customer_home);
 
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        userId = mUser.getUid();
 
         // search
         search = findViewById(R.id.searchPage);
@@ -229,7 +232,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         tvFirstName.setText(name);
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         userId = mUser.getUid();
         Log.d("userId", userId);
         mUser.getIdToken(true)
