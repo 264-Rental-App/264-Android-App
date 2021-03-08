@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -72,8 +73,6 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_home);
 
-        // get userId
-        userId = "1";
         // get storeId
         storeId = 1;
 
@@ -412,6 +411,9 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
 
         // TODO: Get current user's idToken
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        // get userId
+        userId = mUser.getUid();
+        Log.d("userId", userId);
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {

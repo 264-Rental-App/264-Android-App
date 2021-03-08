@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,10 +40,7 @@ public class OwnerEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_edit);
-
-        // get user id
-        userId = "1";
-
+      
         // back button
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +115,9 @@ public class OwnerEditActivity extends AppCompatActivity {
 
         // TODO: Get current user's idToken
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        userId = mUser.getUid();
+        Log.d("userId", userId);
+
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {

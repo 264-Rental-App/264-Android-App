@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -60,9 +61,6 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         setContentView(R.layout.activity_customer_home);
 
         mAuth = FirebaseAuth.getInstance();
-
-        // get userId
-        userId = "1";
 
         // search
         search = findViewById(R.id.searchPage);
@@ -232,6 +230,8 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
         // TODO: Get current user's idToken
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        userId = mUser.getUid();
+        Log.d("userId", userId);
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
