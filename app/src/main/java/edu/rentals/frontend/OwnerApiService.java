@@ -23,6 +23,10 @@ public interface OwnerApiService {
     @GET("rental/{invoiceId}")
     Call<CustomerRental> getRentalInfo(@Header("Authorization") String idToken, @Path("invoiceId") int invoiceId);
 
+    // http://localhost:8080/stores
+    @GET("stores")
+    Call<StoreInfo> getStoreId(@Header("Authorization") String idToken);
+
     // http://localhost:8080/stores/{storeId}
     @GET("stores/{storeId}")
     Call<StoreInfo> getStoreInfo(@Header("Authorization") String idToken, @Path("storeId") long storeId);

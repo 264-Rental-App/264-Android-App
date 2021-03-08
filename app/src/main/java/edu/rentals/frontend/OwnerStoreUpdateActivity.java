@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OwnerStoreUpdateActivity extends AppCompatActivity{
     static final String TAG = OwnerStoreUpdateActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     Button back, delete;
     private int equipmentId;

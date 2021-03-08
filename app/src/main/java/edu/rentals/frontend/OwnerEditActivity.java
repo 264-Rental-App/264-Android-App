@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OwnerEditActivity extends AppCompatActivity {
     static final String TAG = OwnerEditActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     Button back;
     private String userId;
@@ -72,11 +72,11 @@ public class OwnerEditActivity extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
+        OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
-        // api call get customer info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
+        // api call get owner info
+        Call<Customer> ownerInfoCall = ownerApiService.getUserInfo(idToken, userId);
+        ownerInfoCall.enqueue(new Callback<Customer>() {
 
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
