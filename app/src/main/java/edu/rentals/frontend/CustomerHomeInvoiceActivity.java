@@ -43,12 +43,16 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
     CustomerHomeInvoiceAdapter eAdapter;
     private RecyclerView recyclerView;
     List<Rental> invoiceRental;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
     private String idToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home_invoice);
+        mAuth = FirebaseAuth.getInstance();
 
         // get invoiceId
         invoiceId = CustomerHomeActivity.getInvoiceId();
@@ -63,10 +67,6 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        // connect api call
-        connect();
-
 
         // text view
         tvStoreName = findViewById(R.id.iStoreName);
@@ -102,7 +102,7 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
         recyclerView.setAdapter(eAdapter);
     }
 
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -181,12 +181,16 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = mAuth.getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            System.out.println("idToken 1 : " + idToken);
+                            // connect api call
+                            connect(idToken);
+
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
@@ -195,7 +199,9 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
                         }
                     }
                 });
-        System.out.println("idToken: " + idToken);
+        System.out.println("idToken 2 : " + idToken);
+
+
     }
 
 

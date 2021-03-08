@@ -64,11 +64,15 @@ public class CustomerEditActivity extends AppCompatActivity {
 //        tvPhone.setText("8888888888");
 
         // get customer info
-        connect();
 
     }
 
-    private void connect() {
+    private void connect(String idToken) {
+
+        System.out.println("idToken inside connect() :" + idToken);
+        System.out.println("userId inside connect() : " + userId);
+
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -124,12 +128,12 @@ public class CustomerEditActivity extends AppCompatActivity {
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         userId = mUser.getUid();
         Log.d("userId", userId);
-
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            connect(idToken);
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
@@ -139,6 +143,7 @@ public class CustomerEditActivity extends AppCompatActivity {
                     }
                 });
         System.out.println("idToken: " + idToken);
+
     }
 
 }

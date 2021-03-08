@@ -54,6 +54,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
     private HashMap<String, String> customerIdNameMap = new HashMap<>();
     private List<Integer> invoiceIdList = new ArrayList<>();
     private HashMap<Integer, String[]> invoiceIdDateMap = new HashMap<>();
+    FirebaseUser mUser;
 
     private static int positionChosen;
 
@@ -127,10 +128,6 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         recyclerView = findViewById(R.id.recordRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
 
-
-        // connect api call
-        connect();
-
         // adapter
         eAdapter = new OwnerHomeAdapter(ownerInvoiceList, this);
         recyclerView.setAdapter(eAdapter);
@@ -172,7 +169,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
 
     // this is to retrieve the Owner's name to show on the home page
     // TODO: get rid of this. Just use the FirebaseAuth to get displayName
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -444,7 +441,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         // get userId
         userId = mUser.getUid();
         Log.d("userId", userId);
@@ -453,6 +450,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            connect(idToken);
                         } else {
                             // Handle error -> task.getException();
                             task.getException().printStackTrace();

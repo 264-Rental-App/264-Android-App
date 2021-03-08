@@ -34,6 +34,7 @@ public class OwnerEditActivity extends AppCompatActivity {
     private String userId;
     private String firstName, email, phoneNumber;
     TextView tvFirstName, tvEmail, tvPhone;
+    private FirebaseUser mUser;
     private String idToken;
 
     @Override
@@ -61,11 +62,9 @@ public class OwnerEditActivity extends AppCompatActivity {
         tvFirstName.setText("Adam");
         tvPhone.setText("8888888888");
 
-        // get customer info
-        connect();
     }
 
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -114,7 +113,7 @@ public class OwnerEditActivity extends AppCompatActivity {
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         userId = mUser.getUid();
         Log.d("userId", userId);
 
@@ -123,6 +122,7 @@ public class OwnerEditActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            connect(idToken);
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
