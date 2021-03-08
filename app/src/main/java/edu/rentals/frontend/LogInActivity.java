@@ -24,13 +24,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.maps.errors.ApiException;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "GoogleActivity";
 
-    FirebaseAuth mAuth;
+    static final String classTAG = MainActivity.class.getSimpleName();
+    static final String BASE_URL = "http://35.222.193.76:80/";
+    static Retrofit retrofit = null;
+
+
+    private FirebaseAuth mAuth;
     EditText mEmail;
     EditText mPass;
 
@@ -92,11 +103,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
                                     Toast.makeText(LogInActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
-                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    String uid = mAuth.getCurrentUser().getUid();
                                     startActivity(new Intent(LogInActivity.this, CustomerHomeActivity.class));
 
                                     // TODO: send the user token to the back
-
+                                    verifyAccountType(uid);
 
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -114,6 +125,39 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         else if(pw.isEmpty()) {
             mPass.setError("Please enter password");
         }
+    }
+
+    private void verifyAccountType(String uid) {
+        if(retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        UserAccountAPIServices userAccountApiServices = retrofit.create(UserAccountAPIServices.class);
+        Call<GetUserById> call = userAccountApiServices.getUserById(uid);
+        call.enqueue(new Callback<GetUserById>() {
+            @Override
+            public void onResponse(Call<GetUserById> call, Response<GetUserById> response) {
+                assert response.body() != null : "response.body() is null!";
+
+                if(response.body().getAccountType().equals("customer")) {
+                    startActivity(new Intent(LogInActivity.this, CustomerHomeActivity.class));
+                }
+                else if(response.body().getAccountType().equals("owner")) {
+                    startActivity(new Intent(LogInActivity.this, OwnerHomeActivity.class));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetUserById> call, Throwable throwable) {
+                Log.e(TAG, throwable.toString());
+
+                  startActivity(new Intent(LogInActivity.this, SearchFailPage.class));
+            }
+        });
+
     }
 
 
@@ -175,7 +219,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+
+        // Probably don't need to worry about this, there won't be login option if user is logged in
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             reload();

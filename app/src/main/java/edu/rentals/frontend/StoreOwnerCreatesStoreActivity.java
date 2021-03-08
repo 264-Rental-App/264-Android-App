@@ -153,8 +153,9 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Store> call, Response<Store> response) {
 
-                // TODO: connect to Owner's homepage
-//                Toast.makeText(StoreOwnerHomePageActivity.this, "Successfully Created Store!", Toast.LENGTH_SHORT).show();
+                // Redirecting to Owner's home page
+                Toast.makeText(StoreOwnerCreatesStoreActivity.this, "Successfully Created Store!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(StoreOwnerCreatesStoreActivity.this, OwnerHomeActivity.class));
 
             }
 

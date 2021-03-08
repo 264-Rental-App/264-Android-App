@@ -23,6 +23,7 @@ public class AgreementActivity extends AppCompatActivity {
     static final String TAG = EquipmentListActivity.class.getSimpleName();
     Button Agree, back;
     TextView tvForm;
+
     static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     private long storeId;

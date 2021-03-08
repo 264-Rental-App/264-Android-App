@@ -68,13 +68,13 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         // just take email & password & first name & phone number?
         Button submitSInfo = findViewById(R.id.createStoreInfoBtn);
         submitSInfo.setOnClickListener(v -> createNewUser());
-        submitSInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.StoreOwnerSignUpActivity.this, OwnerHomeActivity.class);
-                startActivity(intent);
-            }
-        });
+//        submitSInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(edu.rentals.frontend.StoreOwnerSignUpActivity.this, OwnerHomeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
