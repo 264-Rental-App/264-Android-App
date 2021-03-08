@@ -19,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
@@ -52,10 +55,15 @@ public class SummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
 
-        // get storeId, userId;
+        // get storeId;
         Intent intent = getIntent();
         storeId = intent.getLongExtra("storeId", 0);
-        userId = "1";
+
+        // get userId
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        userId = mUser.getUid();
+        Log.d("userId", userId);
 
         // back
         back = findViewById(R.id.back);
