@@ -35,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerHomeInvoiceActivity extends AppCompatActivity {
     static final String TAG = EquipmentListActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     private int invoiceId;
     Button back;
@@ -75,23 +75,23 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
         tvTotalCost = findViewById(R.id.iTotalCost);
 
         // mock date
-        Timestamp rentalStartDate = java.sql.Timestamp.valueOf("2020-12-23 10:10:10.0");
-        Timestamp dueDate = java.sql.Timestamp.valueOf("2021-01-23 10:10:10.0");
+//        Timestamp rentalStartDate = java.sql.Timestamp.valueOf("2020-12-23 10:10:10.0");
+//        Timestamp dueDate = java.sql.Timestamp.valueOf("2021-01-23 10:10:10.0");
         // date transform
-        Date dateStartDate = new Date(rentalStartDate.getTime());
-        String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
-        Date dateDueDate = new Date(dueDate.getTime());
-        String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
+//        Date dateStartDate = new Date(rentalStartDate.getTime());
+//        String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
+//        Date dateDueDate = new Date(dueDate.getTime());
+//        String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
         // set text
-        tvStoreName.setText("Big Shop");
-        tvStartDate.setText(toStartDate);
-        tvDueDate.setText(toDueDate);
-        tvTotalCost.setText("$500");
+//        tvStoreName.setText("Big Shop");
+//        tvStartDate.setText(toStartDate);
+//        tvDueDate.setText(toDueDate);
+//        tvTotalCost.setText("$500");
         //
         invoiceRental = new ArrayList<>();
         invoiceRental.add(new Rental("Ski", 1, 3));
-        invoiceRental.add(new Rental("Helmet", 2, 3));
-        invoiceRental.add(new Rental("Snow Pants", 3, 2));
+//        invoiceRental.add(new Rental("Helmet", 2, 3));
+//        invoiceRental.add(new Rental("Snow Pants", 3, 2));
 
 
         // recycleView

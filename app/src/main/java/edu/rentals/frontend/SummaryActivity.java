@@ -44,7 +44,7 @@ public class SummaryActivity extends AppCompatActivity {
     private edu.rentals.frontend.SummaryAdapter eAdapter;
     private long storeId;
     private String userId;
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     Calendar startDay, endDay;
     private SQLiteDatabase db;

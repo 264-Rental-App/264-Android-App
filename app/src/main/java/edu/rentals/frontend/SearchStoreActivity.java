@@ -44,7 +44,7 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
     private String userAddress;
 
     static final String TAG = MainActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     static final String googleAPIKey = "AIza...";
     LatLng latLngFromGoogle;
