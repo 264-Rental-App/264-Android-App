@@ -219,7 +219,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+
+        // Probably don't need to worry about this, there won't be login option if user is logged in
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             reload();
