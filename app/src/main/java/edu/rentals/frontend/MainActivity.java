@@ -1,9 +1,6 @@
 package edu.rentals.frontend;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,20 +18,11 @@ public class MainActivity extends AppCompatActivity {
     Button srcButton;
     EditText inputField;
     Button loginButton;
-    BroadcastReceiver broadcastReceiver;
-    BroadcastReceiver broadcastReceiver_t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Timer boardcast reciver
-        broadcastReceiver_t = new RentalTimerReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
-        registerReceiver(broadcastReceiver_t, intentFilter);
-
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -71,13 +59,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
-
-        //network connection status boardcast reciver
-        broadcastReceiver = new InternetstateReceiver();
-        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -88,26 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try{
-            unregisterReceiver(broadcastReceiver);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        try{
-            unregisterReceiver(broadcastReceiver_t);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
     private void goHome() {
         startActivity(new Intent(this, CustomerHomeActivity.class));
