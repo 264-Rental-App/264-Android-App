@@ -143,6 +143,8 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
                 Date dateDueDate = new Date(dueDate.getTime());
                 String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
 
+                //store duedate to rental time calculater
+                RentaltimeCalculater.setreturnTime(dueDate.getTime());
 
                 // set text
                 tvStoreName.setText(storeName);
