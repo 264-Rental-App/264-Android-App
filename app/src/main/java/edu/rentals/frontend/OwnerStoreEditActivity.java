@@ -35,6 +35,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
     TextView tvStoreName, tvAddress, tvPhone;
     private String storeName, address, phoneNumber;
     private String idToken;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
 
         // get storeId
 //        storeId = 1;
-        storeId = getStoreIdCall();
+//        storeId = getStoreIdCall();
 
         // back
         back = findViewById(R.id.back);
@@ -66,10 +67,10 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
 //        tvPhone.setText("8888888888");
 
         // get customer info
-        connect();
+//        connect();
     }
 
-    private long getStoreIdCall() {
+    private long getStoreIdCall(String idToken) {
         final long[] storeId = new long[1];
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
@@ -103,7 +104,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
         return storeId[0];
     }
 
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -154,12 +155,15 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            storeId = getStoreIdCall(idToken);
+                            connect(idToken);
+
                         } else {
                             // Handle error -> task.getException();
                             task.getException().printStackTrace();

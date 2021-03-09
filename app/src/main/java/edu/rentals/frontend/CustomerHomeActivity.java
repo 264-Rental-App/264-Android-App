@@ -61,8 +61,6 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
 
-        System.out.println("oncreaaaaaaaaaate");
-
 
         // search
         search = findViewById(R.id.searchPage);
@@ -231,8 +229,6 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         String name = mAuth.getCurrentUser().getDisplayName();
 //        System.out.println("@@@@@@@@@" + name);
         tvFirstName.setText(name);
-
-        System.out.println("?@@@@@.e?@>fgdshfkjshdfkljhslfdsdf");
 
         // TODO: Get current user's idToken
         mUser = mAuth.getCurrentUser();
