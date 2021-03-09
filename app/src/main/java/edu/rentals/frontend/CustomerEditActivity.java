@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerEditActivity extends AppCompatActivity {
     static final String TAG = EquipmentListActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
 
     Button back;
@@ -59,16 +59,20 @@ public class CustomerEditActivity extends AppCompatActivity {
         tvPhone = findViewById(R.id.phoneNumberCurr);
 
         // mock set
-        tvEmail.setText("a@gmail.com");
-        tvFirstName.setText("Adam");
-        tvPhone.setText("8888888888");
+//        tvEmail.setText("a@gmail.com");
+//        tvFirstName.setText("Adam");
+//        tvPhone.setText("8888888888");
 
         // get customer info
-        connect();
 
     }
 
-    private void connect() {
+    private void connect(String idToken) {
+
+        System.out.println("idToken inside connect() :" + idToken);
+        System.out.println("userId inside connect() : " + userId);
+
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -78,39 +82,39 @@ public class CustomerEditActivity extends AppCompatActivity {
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api call get customer info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
-
-            @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
-                // get customer info
-                JSONObject customerInfo = response.body().getCustomerInfo();
-
-
-                // set customer info
-                try {
-//                    userName = customerInfo.get("userName").toString();
-                    firstName = customerInfo.get("firstName").toString();
-//                    lastName = customerInfo.get("lastName").toString();
-                    email = customerInfo.get("email").toString();
-                    phoneNumber = customerInfo.get("phoneNumber").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                // set text
-                tvEmail.setText(email);
-                tvFirstName.setText(firstName);
-                tvPhone.setText(phoneNumber);
-
-            }
-
-            @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-
-        });
+//        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
+//        customerInfoCall.enqueue(new Callback<Customer>() {
+//
+//            @Override
+//            public void onResponse(Call<Customer> call, Response<Customer> response) {
+//                // get customer info
+//                JSONObject customerInfo = response.body().getCustomerInfo();
+//
+//
+//                // set customer info
+//                try {
+////                    userName = customerInfo.get("userName").toString();
+//                    firstName = customerInfo.get("firstName").toString();
+////                    lastName = customerInfo.get("lastName").toString();
+//                    email = customerInfo.get("email").toString();
+//                    phoneNumber = customerInfo.get("phoneNumber").toString();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // set text
+//                tvEmail.setText(email);
+//                tvFirstName.setText(firstName);
+//                tvPhone.setText(phoneNumber);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Customer> call, Throwable t) {
+//                Log.e(TAG, t.toString());
+//            }
+//
+//        });
 
         /* TODO: patch update info */
 
@@ -124,12 +128,12 @@ public class CustomerEditActivity extends AppCompatActivity {
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         userId = mUser.getUid();
         Log.d("userId", userId);
-
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            connect(idToken);
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
@@ -139,6 +143,7 @@ public class CustomerEditActivity extends AppCompatActivity {
                     }
                 });
         System.out.println("idToken: " + idToken);
+
     }
 
 }

@@ -28,12 +28,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OwnerEditActivity extends AppCompatActivity {
     static final String TAG = OwnerEditActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     Button back;
     private String userId;
     private String firstName, email, phoneNumber;
     TextView tvFirstName, tvEmail, tvPhone;
+    private FirebaseUser mUser;
     private String idToken;
 
     @Override
@@ -61,22 +62,20 @@ public class OwnerEditActivity extends AppCompatActivity {
         tvFirstName.setText("Adam");
         tvPhone.setText("8888888888");
 
-        // get customer info
-        connect();
     }
 
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
+        OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
-        // api call get customer info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
+        // api call get owner info
+        Call<Customer> ownerInfoCall = ownerApiService.getUserInfo(idToken, userId);
+        ownerInfoCall.enqueue(new Callback<Customer>() {
 
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
@@ -114,7 +113,7 @@ public class OwnerEditActivity extends AppCompatActivity {
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         userId = mUser.getUid();
         Log.d("userId", userId);
 
@@ -123,6 +122,7 @@ public class OwnerEditActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            connect(idToken);
                             // Send token to your backend via HTTPS
                             // ...
                         } else {

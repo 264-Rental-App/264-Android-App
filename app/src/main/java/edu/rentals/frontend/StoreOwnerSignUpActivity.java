@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StoreOwnerSignUpActivity extends AppCompatActivity {
 
     static Retrofit retrofit;
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static final String TAG = CustomerSignUpActivity.class.getSimpleName();
 
     EditText s_email;
@@ -68,13 +68,13 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         // just take email & password & first name & phone number?
         Button submitSInfo = findViewById(R.id.createStoreInfoBtn);
         submitSInfo.setOnClickListener(v -> createNewUser());
-        submitSInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.StoreOwnerSignUpActivity.this, OwnerHomeActivity.class);
-                startActivity(intent);
-            }
-        });
+//        submitSInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(edu.rentals.frontend.StoreOwnerSignUpActivity.this, OwnerHomeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -158,14 +158,10 @@ public class StoreOwnerSignUpActivity extends AppCompatActivity {
         call.enqueue(new Callback<NewUserResponse>() {
             @Override
             public void onResponse(Call<NewUserResponse> call, Response<NewUserResponse> response) {
+                System.out.println("HEEEEELLOOOOOO");
+                System.out.println(response.body());
+                goCreateNewStore(response.body().getUserId());
 
-                if(response.body() != null) {
-                    goCreateNewStore(response.body().getUserId());
-                }
-                else {
-                    // TODO: There should be a better way to handle this
-                    Toast.makeText(StoreOwnerSignUpActivity.this, "Could not create account", Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override

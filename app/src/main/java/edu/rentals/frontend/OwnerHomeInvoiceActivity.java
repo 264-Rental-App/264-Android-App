@@ -35,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OwnerHomeInvoiceActivity extends AppCompatActivity {
     static final String TAG = EquipmentListActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     Button back;
     private int invoiceId;
@@ -44,6 +44,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
     OwnerHomeInvoiceAdapter eAdapter;
     private RecyclerView recyclerView;
     List<OwnerRental> invoiceRental;
+    FirebaseUser mUser;
 
     private String idToken;
 
@@ -70,8 +71,8 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
             }
         });
 
-        // connect api call
-        connect();
+//        // connect api call
+//        connect();
 
 
         // text view
@@ -108,7 +109,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
         recyclerView.setAdapter(eAdapter);
     }
 
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -214,12 +215,13 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            connect(idToken);
                         } else {
                             // Handle error -> task.getException();
                             task.getException().printStackTrace();

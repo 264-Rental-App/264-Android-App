@@ -36,8 +36,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerHomeActivity extends AppCompatActivity implements CustomerHomeAdapter.InvoiceListClickListener {
     Button search, editCustomer, logoutBtn;
-    static final String TAG = EquipmentListActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String TAG = CustomerHomeActivity.class.getSimpleName();
+    static final String BASE_URL = "http://35.222.193.76:80/";
     static Retrofit retrofit = null;
     private String userId;
     private String firstName;
@@ -49,6 +49,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
     private FirebaseAuth mAuth;
     private String idToken;
+    FirebaseUser mUser;
 
     public static int getInvoiceId() {
         return userInvoiceList.get(positionChosen).getInvoiceId();
@@ -60,7 +61,6 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
 
-        mAuth = FirebaseAuth.getInstance();
 
         // search
         search = findViewById(R.id.searchPage);
@@ -90,18 +90,16 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         // invoice list
         userInvoiceList = new ArrayList<>();
         userInvoiceList.add(new Invoice(1, "Bike Shop", 500, java.sql.Timestamp.valueOf("2017-09-23 10:10:10.0")));
-        userInvoiceList.add(new Invoice(2, "Ski Shop", 100, java.sql.Timestamp.valueOf("2016-09-23 10:10:10.0")));
-        userInvoiceList.add(new Invoice(3, "Surf Shop", 150, java.sql.Timestamp.valueOf("2015-09-23 10:10:10.0")));
-        userInvoiceList.add(new Invoice(4, "Bear Shop", 1000, java.sql.Timestamp.valueOf("2014-09-23 10:10:10.0")));
-        userInvoiceList.add(new Invoice(5, "Fish Shop", 1050, java.sql.Timestamp.valueOf("2013-09-25 10:10:10.0")));
+//        userInvoiceList.add(new Invoice(2, "Ski Shop", 100, java.sql.Timestamp.valueOf("2016-09-23 10:10:10.0")));
+//        userInvoiceList.add(new Invoice(3, "Surf Shop", 150, java.sql.Timestamp.valueOf("2015-09-23 10:10:10.0")));
+//        userInvoiceList.add(new Invoice(4, "Bear Shop", 1000, java.sql.Timestamp.valueOf("2014-09-23 10:10:10.0")));
+//        userInvoiceList.add(new Invoice(5, "Fish Shop", 1050, java.sql.Timestamp.valueOf("2013-09-25 10:10:10.0")));
 
         // recycleView
         recyclerView = findViewById(R.id.invoiceRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
 
 
-        // connect api call
-        connect();
 
         // adapter
         eAdapter = new CustomerHomeAdapter(userInvoiceList, this);
@@ -115,7 +113,10 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
     }
 
-    private void connect() {
+    private void connect(String idToken) {
+//        System.out.println("idToken inside connect() :" + idToken);
+//        System.out.println("userId inside connect() : " + userId);
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -125,20 +126,21 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api call user info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
+        Call<GetUserById> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
+        customerInfoCall.enqueue(new Callback<GetUserById>() {
 
             @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
+            public void onResponse(Call<GetUserById> call, Response<GetUserById> response) {
                 // get customer info
-                JSONObject customerInfo = response.body().getCustomerInfo();
+//                JSONObject customerInfo = response.body().getCustomerInfo();
 
                 // get first name
-                try {
-                    firstName = customerInfo.get("userFirstName").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    firstName = customerInfo.get("userFirstName").toString();
+                    firstName = response.body().getUserFirstName();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
                 // set text
                 tvFirstName.setText(firstName + "!");
@@ -146,7 +148,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
             }
 
             @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
+            public void onFailure(Call<GetUserById> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
@@ -223,13 +225,14 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
     @Override
     public void onStart() {
         super.onStart();
+        mAuth = FirebaseAuth.getInstance();
 
         String name = mAuth.getCurrentUser().getDisplayName();
 //        System.out.println("@@@@@@@@@" + name);
         tvFirstName.setText(name);
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = mAuth.getCurrentUser();
         userId = mUser.getUid();
         Log.d("userId", userId);
         mUser.getIdToken(true)
@@ -237,6 +240,10 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            System.out.println("idToken 1 : " + idToken);
+                            // connect api call
+                            connect(idToken);
+
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
@@ -245,7 +252,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
                         }
                     }
                 });
-        System.out.println("idToken: " + idToken);
+        System.out.println("idToken 2 : " + idToken);
 
     }
 

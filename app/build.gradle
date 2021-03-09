@@ -42,11 +42,10 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'com.google.maps:google-maps-services:0.17.0'
     implementation 'org.slf4j:slf4j-simple:1.7.30'
-    implementation platform('com.google.firebase:firebase-bom:26.5.0')
-    implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
-    implementation 'com.google.firebase:firebase-auth:20.0.2'
-    implementation 'com.google.firebase:firebase-core:18.0.2'
+    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth:20.0.3'
 
 
     testImplementation 'junit:junit:4.13.2'
@@ -59,4 +58,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 }
 
+apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'

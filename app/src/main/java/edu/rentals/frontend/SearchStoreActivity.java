@@ -44,32 +44,33 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
     private String userAddress;
 
     static final String TAG = MainActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     static final String googleAPIKey = "AIza...";
     LatLng latLngFromGoogle;
 
+    private OnStoreListener mOnStoreListener;
+
     FirebaseAuth mAuth;
-    Button login;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_store);
 
-        mAuth = FirebaseAuth.getInstance();
-
-        login = findViewById(R.id.loginBtn_search_store);
-
+        // TODO: NEED TO VERIFY IF IT WORKS
+        mOnStoreListener = new SearchStoreActivity();
         linearLayoutManager = new LinearLayoutManager(this);
+        TextView usrAddressView = findViewById(R.id.userAddressView);
+        usrAddressView.setText(userAddress);
+
+        mAuth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
         userAddress = intent.getStringExtra("userAddress");
 
-        TextView usrAddressView = findViewById(R.id.userAddressView);
-        usrAddressView.setText(userAddress);
-
-
+        login = findViewById(R.id.loginBtn_search_store);
         login.setOnClickListener(view -> {
 
             Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
@@ -77,10 +78,6 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 
         });
 
-
-
-        // but need to remember that it is asynchronous
-        // need to do a check to make sure result is received
 //        connectToGoogleAPI(userAddress);
         fakeGoogleAPICall((userAddress));
 
@@ -89,11 +86,6 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
            Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
            startActivity(mainIntent);
         });
-
-
-        // TODO: this might not be the best way to handle, might need to create button
-        //  programmatically, either a login button or "Hello, xxx" text depending on
-        //  if the user has logged in or not
 
     }
 
@@ -153,7 +145,7 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 //                recyclerView = findViewById(R.id.rvStoreList);
 //                recyclerView.setHasFixedSize(true);
 //                recyclerView.setLayoutManager(linearLayoutManager);
-//                recyclerView.setAdapter(new StoreListAdapter(storeList));
+//                recyclerView.setAdapter(new StoreListAdapter(storeList, mOnStoreListener));
 //            }
 //
 //            @Override

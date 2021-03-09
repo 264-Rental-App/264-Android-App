@@ -8,8 +8,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
@@ -28,9 +34,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
 
     static final String TAG = StoreOwnerCreatesStoreActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
-    static final String googleAPIKey = "AIza...";
+    static final String googleAPIKey = "AIzaSyDawlfjDVj5dqOjeiOqkHg6D2WR2OkaQaI";
     LatLng latLngFromGoogle;
 
     EditText storeName;
@@ -52,6 +58,9 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
     String address;
 
     Button createStoreBtn;
+
+    private String idToken;
+    FirebaseUser mUser;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +131,23 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
                 // Once receive response from google, create a Store object, pass to server
                 PostNewStore store = new PostNewStore(storeNameStr, latLngFromGoogle.lat, latLngFromGoogle.lng,
                                         ownerId, address, category,storeContactNum);
-                createStore(store);
+
+                mUser = FirebaseAuth.getInstance().getCurrentUser();
+                mUser.getIdToken(true)
+                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                            public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                if (task.isSuccessful()) {
+                                    idToken = task.getResult().getToken();
+                                    createStore(idToken, store);
+                                    // Send token to your backend via HTTPS
+                                    // ...
+                                } else {
+                                    // Handle error -> task.getException();
+                                    task.getException().printStackTrace();
+                                }
+                            }
+                        });
+
             }
 
             @Override
@@ -139,7 +164,7 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
         });
     }
 
-    private void createStore(PostNewStore store) {
+    private void createStore(String idToken, PostNewStore store) {
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -148,13 +173,14 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
         }
 
         StoreAPIService storeService = retrofit.create(StoreAPIService.class);
-        Call<Store> call = storeService.createStore(store);
+        Call<Store> call = storeService.createStore(idToken, store);
         call.enqueue(new Callback<Store>() {
             @Override
             public void onResponse(Call<Store> call, Response<Store> response) {
 
-                // TODO: connect to Owner's homepage
-//                Toast.makeText(StoreOwnerHomePageActivity.this, "Successfully Created Store!", Toast.LENGTH_SHORT).show();
+                // Redirecting to Owner's home page
+                Toast.makeText(StoreOwnerCreatesStoreActivity.this, "Successfully Created Store!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(StoreOwnerCreatesStoreActivity.this, OwnerHomeActivity.class));
 
             }
 
@@ -167,5 +193,8 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 }

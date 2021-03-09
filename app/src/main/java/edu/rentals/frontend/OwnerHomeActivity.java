@@ -35,7 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Path;
 
 public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAdapter.InvoiceListClickListener {
     Button search, manageStore, editInfo;
@@ -48,13 +47,14 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
     private long storeId;
 
     static final String TAG = OwnerHomeActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
 
     private List<String> customerIdList = new ArrayList<>();
     private HashMap<String, String> customerIdNameMap = new HashMap<>();
     private List<Integer> invoiceIdList = new ArrayList<>();
     private HashMap<Integer, String[]> invoiceIdDateMap = new HashMap<>();
+    FirebaseUser mUser;
 
     private static int positionChosen;
 
@@ -74,7 +74,8 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         setContentView(R.layout.activity_owner_home);
 
         // get storeId
-        storeId = 1;
+//        storeId = 1;
+        storeId = getStoreIdCall();
 
         // search button
         search = findViewById(R.id.searchPage);
@@ -115,8 +116,8 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         // mock invoice list
         ownerInvoiceList = new ArrayList<>();
         ownerInvoiceList.add(new OwnerInvoice(1, "1", 500, "09/23/2020", "Debby", "10/24/2020", "10/25/2020"));
-        ownerInvoiceList.add(new OwnerInvoice(2, "3", 250, "11/23/2020", "Ken", "11/24/2020", "12/25/2020"));
-        ownerInvoiceList.add(new OwnerInvoice(3, "5", 300, "12/20/2020", "John", "12/29/2020", "01/25/2021"));
+//        ownerInvoiceList.add(new OwnerInvoice(2, "3", 250, "11/23/2020", "Ken", "11/24/2020", "12/25/2020"));
+//        ownerInvoiceList.add(new OwnerInvoice(3, "5", 300, "12/20/2020", "John", "12/29/2020", "01/25/2021"));
 
 //        ownerInvoiceList.add(new OwnerInvoice(1, "1", 500, java.sql.Timestamp.valueOf("2020-09-23 10:10:10.0")));
 //        ownerInvoiceList.add(new OwnerInvoice(2, "2", 250, java.sql.Timestamp.valueOf("2020-10-23 10:10:10.0")));
@@ -127,18 +128,49 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         recyclerView = findViewById(R.id.recordRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
 
-
-        // connect api call
-        connect();
-
         // adapter
         eAdapter = new OwnerHomeAdapter(ownerInvoiceList, this);
         recyclerView.setAdapter(eAdapter);
     }
 
+    private long getStoreIdCall() {
+        final long[] storeId = new long[1];
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
+
+        // api call for storeId
+        Call<StoreInfo> storeIdCall = ownerApiService.getStoreId(idToken);
+        storeIdCall.enqueue(new Callback<StoreInfo>() {
+
+            @Override
+            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
+                // get store info
+                System.out.println();
+                JSONObject customerInfo = response.body().getStoreInfo();
+                try {
+                    // get storeId
+                    storeId[0] = (long) customerInfo.get("storeId");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreInfo> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+        return storeId[0];
+    }
+
     // this is to retrieve the Owner's name to show on the home page
     // TODO: get rid of this. Just use the FirebaseAuth to get displayName
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -410,7 +442,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         // get userId
         userId = mUser.getUid();
         Log.d("userId", userId);
@@ -419,6 +451,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            connect(idToken);
                         } else {
                             // Handle error -> task.getException();
                             task.getException().printStackTrace();

@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CustomerSignUpActivity extends AppCompatActivity {
 
     static Retrofit retrofit;
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static final String TAG = CustomerSignUpActivity.class.getSimpleName();
 
     EditText c_email;
@@ -62,13 +62,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         // just take email & password & first name & phone number?
         Button submitCInfo = findViewById(R.id.createStoreInfoBtn);
         submitCInfo.setOnClickListener(v -> createNewUser());
-        submitCInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.CustomerSignUpActivity.this, CustomerHomeActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     private void createNewUser() {

@@ -31,6 +31,9 @@
         </receiver>
 
         <activity android:name=".SearchStoreActivity" />
+        android:theme="@style/Theme.Design.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".SearchStoreActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -35,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerHomeInvoiceActivity extends AppCompatActivity {
     static final String TAG = EquipmentListActivity.class.getSimpleName();
-    static final String BASE_URL = "http://localhost:8080/";
+    static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     private int invoiceId;
     Button back;
@@ -43,12 +43,16 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
     CustomerHomeInvoiceAdapter eAdapter;
     private RecyclerView recyclerView;
     List<Rental> invoiceRental;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
     private String idToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home_invoice);
+        mAuth = FirebaseAuth.getInstance();
 
         // get invoiceId
         invoiceId = CustomerHomeActivity.getInvoiceId();
@@ -64,10 +68,6 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
             }
         });
 
-        // connect api call
-        connect();
-
-
         // text view
         tvStoreName = findViewById(R.id.iStoreName);
         tvStartDate = findViewById(R.id.iStartDate);
@@ -75,23 +75,23 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
         tvTotalCost = findViewById(R.id.iTotalCost);
 
         // mock date
-        Timestamp rentalStartDate = java.sql.Timestamp.valueOf("2020-12-23 10:10:10.0");
-        Timestamp dueDate = java.sql.Timestamp.valueOf("2021-01-23 10:10:10.0");
+//        Timestamp rentalStartDate = java.sql.Timestamp.valueOf("2020-12-23 10:10:10.0");
+//        Timestamp dueDate = java.sql.Timestamp.valueOf("2021-01-23 10:10:10.0");
         // date transform
-        Date dateStartDate = new Date(rentalStartDate.getTime());
-        String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
-        Date dateDueDate = new Date(dueDate.getTime());
-        String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
+//        Date dateStartDate = new Date(rentalStartDate.getTime());
+//        String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
+//        Date dateDueDate = new Date(dueDate.getTime());
+//        String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
         // set text
-        tvStoreName.setText("Big Shop");
-        tvStartDate.setText(toStartDate);
-        tvDueDate.setText(toDueDate);
-        tvTotalCost.setText("$500");
+//        tvStoreName.setText("Big Shop");
+//        tvStartDate.setText(toStartDate);
+//        tvDueDate.setText(toDueDate);
+//        tvTotalCost.setText("$500");
         //
         invoiceRental = new ArrayList<>();
         invoiceRental.add(new Rental("Ski", 1, 3));
-        invoiceRental.add(new Rental("Helmet", 2, 3));
-        invoiceRental.add(new Rental("Snow Pants", 3, 2));
+//        invoiceRental.add(new Rental("Helmet", 2, 3));
+//        invoiceRental.add(new Rental("Snow Pants", 3, 2));
 
 
         // recycleView
@@ -102,7 +102,7 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
         recyclerView.setAdapter(eAdapter);
     }
 
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -183,12 +183,16 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = mAuth.getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            System.out.println("idToken 1 : " + idToken);
+                            // connect api call
+                            connect(idToken);
+
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
@@ -197,7 +201,9 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
                         }
                     }
                 });
-        System.out.println("idToken: " + idToken);
+        System.out.println("idToken 2 : " + idToken);
+
+
     }
 
 
