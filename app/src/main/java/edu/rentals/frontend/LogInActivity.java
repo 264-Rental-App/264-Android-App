@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.maps.errors.ApiException;
 
 import retrofit2.Call;
@@ -42,6 +43,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
 
     private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
     EditText mEmail;
     EditText mPass;
 
@@ -51,6 +53,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+
         mEmail = findViewById(R.id.userName);
         mPass = findViewById(R.id.userPassword);
 
@@ -103,10 +106,25 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
                                     Toast.makeText(LogInActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
-                                    String uid = mAuth.getCurrentUser().getUid();
+
+                                    mUser = mAuth.getCurrentUser();
+
+                                    String uid = mUser.getUid();
 
                                     // TODO: send the user token to the back
-                                    verifyAccountType(uid);
+                                    mUser.getIdToken(true)
+                                            .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                                public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                                    if (task.isSuccessful()) {
+                                                        String idToken = task.getResult().getToken();
+                                                        verifyAccountType(idToken, uid);
+
+                                                    } else {
+                                                        // Handle error -> task.getException();
+                                                        task.getException().printStackTrace();
+                                                    }
+                                                }
+                                            });
 
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -126,7 +144,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void verifyAccountType(String uid) {
+    private void verifyAccountType(String idToken, String uid) {
+
+        System.out.println("GOT HEREEREERREREE");
+
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -135,16 +156,20 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
 
         UserAccountAPIServices userAccountApiServices = retrofit.create(UserAccountAPIServices.class);
-        Call<GetUserById> call = userAccountApiServices.getUserById(uid);
+
+        System.out.println("idToken is: " + idToken);
+        System.out.println("uid is: " + uid);
+
+        Call<GetUserById> call = userAccountApiServices.getUserById(idToken, uid);
         call.enqueue(new Callback<GetUserById>() {
             @Override
             public void onResponse(Call<GetUserById> call, Response<GetUserById> response) {
                 assert response.body() != null : "response.body() is null!";
 
-                if(response.body().getAccountType().equals("customer")) {
+                if(response.body().getUserType().equals("customer")) {
                     startActivity(new Intent(LogInActivity.this, CustomerHomeActivity.class));
                 }
-                else if(response.body().getAccountType().equals("owner")) {
+                else if(response.body().getUserType().equals("owner")) {
                     startActivity(new Intent(LogInActivity.this, OwnerHomeActivity.class));
                 }
             }
@@ -153,7 +178,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             public void onFailure(Call<GetUserById> call, Throwable throwable) {
                 Log.e(TAG, throwable.toString());
 
-                  startActivity(new Intent(LogInActivity.this, SearchFailPage.class));
+                startActivity(new Intent(LogInActivity.this, SearchFailPage.class));
             }
         });
 
@@ -219,11 +244,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     public void onStart() {
         super.onStart();
 
-        // Probably don't need to worry about this, there won't be login option if user is logged in
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            reload();
-        }
+//        // Probably don't need to worry about this, there won't be login option if user is logged in
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(currentUser != null){
+//            reload();
+//        }
 
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.

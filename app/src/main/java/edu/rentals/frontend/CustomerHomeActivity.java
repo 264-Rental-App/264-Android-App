@@ -126,20 +126,21 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api call user info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
+        Call<GetUserById> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
+        customerInfoCall.enqueue(new Callback<GetUserById>() {
 
             @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
+            public void onResponse(Call<GetUserById> call, Response<GetUserById> response) {
                 // get customer info
-                JSONObject customerInfo = response.body().getCustomerInfo();
+//                JSONObject customerInfo = response.body().getCustomerInfo();
 
                 // get first name
-                try {
-                    firstName = customerInfo.get("userFirstName").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    firstName = customerInfo.get("userFirstName").toString();
+                    firstName = response.body().getUserFirstName();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
                 // set text
                 tvFirstName.setText(firstName + "!");
@@ -147,7 +148,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
             }
 
             @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
+            public void onFailure(Call<GetUserById> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
