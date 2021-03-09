@@ -82,39 +82,39 @@ public class CustomerEditActivity extends AppCompatActivity {
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api call get customer info
-        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
-
-            @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
-                // get customer info
-                JSONObject customerInfo = response.body().getCustomerInfo();
-
-
-                // set customer info
-                try {
-//                    userName = customerInfo.get("userName").toString();
-                    firstName = customerInfo.get("firstName").toString();
-//                    lastName = customerInfo.get("lastName").toString();
-                    email = customerInfo.get("email").toString();
-                    phoneNumber = customerInfo.get("phoneNumber").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                // set text
-                tvEmail.setText(email);
-                tvFirstName.setText(firstName);
-                tvPhone.setText(phoneNumber);
-
-            }
-
-            @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-
-        });
+//        Call<Customer> customerInfoCall = customerApiService.getUserInfo(idToken, userId);
+//        customerInfoCall.enqueue(new Callback<Customer>() {
+//
+//            @Override
+//            public void onResponse(Call<Customer> call, Response<Customer> response) {
+//                // get customer info
+//                JSONObject customerInfo = response.body().getCustomerInfo();
+//
+//
+//                // set customer info
+//                try {
+////                    userName = customerInfo.get("userName").toString();
+//                    firstName = customerInfo.get("firstName").toString();
+////                    lastName = customerInfo.get("lastName").toString();
+//                    email = customerInfo.get("email").toString();
+//                    phoneNumber = customerInfo.get("phoneNumber").toString();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // set text
+//                tvEmail.setText(email);
+//                tvFirstName.setText(firstName);
+//                tvPhone.setText(phoneNumber);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Customer> call, Throwable t) {
+//                Log.e(TAG, t.toString());
+//            }
+//
+//        });
 
         /* TODO: patch update info */
 

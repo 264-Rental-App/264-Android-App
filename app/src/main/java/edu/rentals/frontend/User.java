@@ -16,6 +16,7 @@ public class User {
     @SerializedName("userPhoneNumber")
     private String userPhoneNumber;
 
+    @SerializedName("accountType")
     private String accountType;
 
     public User(String userId, String firstName, String email, String phoneNumber, String accountType) {

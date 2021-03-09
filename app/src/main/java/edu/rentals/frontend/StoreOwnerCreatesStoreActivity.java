@@ -36,7 +36,7 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
     static final String TAG = StoreOwnerCreatesStoreActivity.class.getSimpleName();
     static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
-    static final String googleAPIKey = "AIza...";
+    static final String googleAPIKey = "AIzaSyDawlfjDVj5dqOjeiOqkHg6D2WR2OkaQaI";
     LatLng latLngFromGoogle;
 
     EditText storeName;

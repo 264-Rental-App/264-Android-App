@@ -12,14 +12,14 @@ public interface UserAccountAPIServices {
 
     // /users/{userId}
     @GET("users/{userId}")
-    Call<GetUserById> getUserById(@Path("userId") String uid);
+    Call<GetUserById> getUserById(@Header("Authorization") String idToken, @Path("userId") String uid);
 
     // http://localhost:8080/users
     @POST("users")
     Call<NewUserResponse> createClient(@Body User user);
 
     // http://localhost:8080/users
-    @POST("owners")
+    @POST("users")
     Call<NewUserResponse> createOwner(@Body User user);
 
 }

@@ -150,6 +150,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
             @Override
             public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
                 // get store info
+                System.out.println();
                 JSONObject customerInfo = response.body().getStoreInfo();
                 try {
                     // get storeId

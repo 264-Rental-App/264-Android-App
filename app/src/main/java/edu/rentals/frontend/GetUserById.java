@@ -7,12 +7,12 @@ public class GetUserById {
     @SerializedName("userFirstName")
     private String userFirstName;
 
-    @SerializedName("accountType")
-    private String accountType;
+    @SerializedName("userType")
+    private String userType;
 
     public GetUserById(String userFirstName, String accountType) {
         this.userFirstName = userFirstName;
-        this.accountType = accountType;
+        this.userType = accountType;
     }
 
     public void setUserFirstName(String userFirstName) {
@@ -23,11 +23,11 @@ public class GetUserById {
         return userFirstName;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
+    public void setUserType(String accountType) {
+        this.userType = accountType;
     }
 
-    public String getAccountType() {
-        return accountType;
+    public String getUserType() {
+        return userType;
     }
 }

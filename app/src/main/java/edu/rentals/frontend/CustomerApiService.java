@@ -19,7 +19,7 @@ public interface CustomerApiService {
 
     // http://localhost:8080/users/{userId}
     @GET("users/{userId}")
-    Call<Customer> getUserInfo(@Header("Authorization") String idToken, @Path("userId") String userId);
+    Call<GetUserById> getUserInfo(@Header("Authorization") String idToken, @Path("userId") String userId);
 
     // http://localhost:8080/users/{userId}
 //    @PATCH("users/{userId}")
