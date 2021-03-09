@@ -38,6 +38,7 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
     private String name, desc;
     private int stock, price;
     private String idToken;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
         setContentView(R.layout.activity_owner_store_update);
 
         // get equipmentId
-        equipmentId = 1;
+//        equipmentId = 1;
         equipmentId = OwnerStoreActivity.getEquipmentId();
         Log.d("equipmentId", String.valueOf(equipmentId));
 
@@ -61,23 +62,37 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
 
 
         // api call for equipment info
-        getEquipmentInfo();
+//        getEquipmentInfo();
 
         // delete
         delete = findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteEqeuipment();
-                Intent intent = new Intent(edu.rentals.frontend.OwnerStoreUpdateActivity.this, OwnerStoreActivity.class);
-                startActivity(intent);
+                mUser.getIdToken(true)
+                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                            public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                if (task.isSuccessful()) {
+                                    idToken = task.getResult().getToken();
+                                    deleteEquipment(idToken);
+                                    Intent intent = new Intent(edu.rentals.frontend.OwnerStoreUpdateActivity.this, OwnerStoreActivity.class);
+                                    startActivity(intent);
+
+                                    // Send token to your backend via HTTPS
+                                    // ...
+                                } else {
+                                    // Handle error -> task.getException();
+                                    task.getException().printStackTrace();
+                                }
+                            }
+                        });
             }
         });
 
         // ToDo: path update equipment info
     }
 
-    private void getEquipmentInfo() {
+    private void getEquipmentInfo(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -120,7 +135,7 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
 
     }
 
-    private void deleteEqeuipment() {
+    private void deleteEquipment(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -155,6 +170,8 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+
+                            getEquipmentInfo(idToken);
                             // Send token to your backend via HTTPS
                             // ...
                         } else {

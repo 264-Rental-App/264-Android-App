@@ -15,12 +15,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -50,6 +54,10 @@ public class SummaryActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private Cursor cursor;
 
+    private String idToken;
+    FirebaseUser mUser;
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +68,8 @@ public class SummaryActivity extends AppCompatActivity {
         storeId = intent.getLongExtra("storeId", 0);
 
         // get userId
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
         userId = mUser.getUid();
         Log.d("userId", userId);
 
@@ -170,7 +178,24 @@ public class SummaryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addToLocalDB(v);
-                processCheckOut();
+
+
+                mUser.getIdToken(true)
+                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                            public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                if (task.isSuccessful()) {
+                                    idToken = task.getResult().getToken();
+                                    processCheckOut(idToken);
+                                    System.out.println("idToken in done: " + idToken);
+
+                                } else {
+                                    // Handle error -> task.getException();
+                                    task.getException().printStackTrace();
+                                }
+                            }
+                        });
+                System.out.println("idToken: " + idToken);
+
                 Intent intent = new Intent(edu.rentals.frontend.SummaryActivity.this, CustomerHomeActivity.class);
                 startActivity(intent);
             }
@@ -212,7 +237,7 @@ public class SummaryActivity extends AppCompatActivity {
         }
     }
 
-    private void processCheckOut() {
+    private void processCheckOut(String idToken) {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
@@ -227,7 +252,7 @@ public class SummaryActivity extends AppCompatActivity {
         Log.d("endDate", String.valueOf(endTimestamp));
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
         ShoppingCheckoutRental rental = new ShoppingCheckoutRental(storeId, userId, startTimestamp, endTimestamp, SummaryAdapter.getRentalSummaryList());
-        Call<ShoppingCheckoutRental> call = shoppingApiService.createRental(rental);
+        Call<ShoppingCheckoutRental> call = shoppingApiService.createRental(idToken, rental);
         call.enqueue(new Callback<ShoppingCheckoutRental>() {
             @Override
             public void onResponse(Call<ShoppingCheckoutRental> call, Response<ShoppingCheckoutRental> response) {

@@ -40,6 +40,7 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
     static Retrofit retrofit = null;
     private RecyclerView recyclerView;
     private OwnerStoreAdapter eAdapter;
+    FirebaseUser mUser;
 
     private String idToken;
 
@@ -101,8 +102,8 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
 
 
-        // connect api call for store equipment list
-        connect();
+//        // connect api call for store equipment list
+//        connect();
 
         // adapter
         eAdapter = new OwnerStoreAdapter(ownerEquipmentList, this);
@@ -144,7 +145,7 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
         return storeId[0];
     }
 
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -197,12 +198,13 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
         super.onStart();
 
         // TODO: Get current user's idToken
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
+                            connect(idToken);
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
