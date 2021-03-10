@@ -57,6 +57,7 @@ public class EquipmentListActivity extends AppCompatActivity {
         // get storeId from SearchStoreActivity
         Intent intent = getIntent();
         storeId = intent.getIntExtra("storeID", 0);
+        System.out.println("StoreId in EquipementListActivity: " + storeId);
 
         mAuth = FirebaseAuth.getInstance();
 

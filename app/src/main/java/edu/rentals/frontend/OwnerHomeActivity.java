@@ -76,7 +76,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         mAuth = FirebaseAuth.getInstance();
         // get storeId
 //        storeId = 1;
-        storeId = getStoreIdCall();
+//        storeId = getStoreIdCall();
 
         // search button
         logOut = findViewById(R.id.s_logout);
@@ -125,40 +125,40 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         recyclerView.setAdapter(eAdapter);
     }
 
-    private long getStoreIdCall() {
-        final long[] storeId = new long[1];
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
-
-        // api call for storeId
-        Call<StoreInfo> storeIdCall = ownerApiService.getStoreId(idToken);
-        storeIdCall.enqueue(new Callback<StoreInfo>() {
-
-            @Override
-            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
-                // get store info
-                System.out.println();
-                JSONObject customerInfo = response.body().getStoreInfo();
-                try {
-                    // get storeId
-                    storeId[0] = (long) customerInfo.get("storeId");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<StoreInfo> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-        });
-        return storeId[0];
-    }
+//    private long getStoreIdCall() {
+//        final long[] storeId = new long[1];
+//        if (retrofit == null) {
+//            retrofit = new Retrofit.Builder()
+//                    .baseUrl(BASE_URL)
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .build();
+//        }
+//        OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
+//
+//        // api call for storeId
+//        Call<StoreInfo> storeIdCall = ownerApiService.getStoreId(idToken);
+//        storeIdCall.enqueue(new Callback<StoreInfo>() {
+//
+//            @Override
+//            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
+//                // get store info
+//                System.out.println();
+//                JSONObject customerInfo = response.body().getStoreInfo();
+//                try {
+//                    // get storeId
+//                    storeId[0] = (long) customerInfo.get("storeId");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<StoreInfo> call, Throwable t) {
+//                Log.e(TAG, t.toString());
+//            }
+//        });
+//        return storeId[0];
+//    }
 
     // this is to retrieve the Owner's name to show on the home page
     // TODO: get rid of this. Just use the FirebaseAuth to get displayName

@@ -50,10 +50,10 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
     static final String TAG = MainActivity.class.getSimpleName();
     static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
-    static final String googleAPIKey = "AIza...";
+    static final String googleAPIKey = "AIzaSyDawlfjDVj5dqOjeiOqkHg6D2WR2OkaQaI";
     LatLng latLngFromGoogle;
 
-    private OnStoreListener mOnStoreListener;
+//    private OnStoreListener mOnStoreListener;
 
     FirebaseAuth mAuth;
     private Button login;
@@ -64,7 +64,7 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
         setContentView(R.layout.activity_search_store);
 
         // TODO: NEED TO VERIFY IF IT WORKS
-        mOnStoreListener = new SearchStoreActivity();
+//        mOnStoreListener = new SearchStoreActivity();
         linearLayoutManager = new LinearLayoutManager(this);
         TextView usrAddressView = findViewById(R.id.userAddressView);
         usrAddressView.setText(userAddress);
@@ -82,8 +82,8 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 
         });
 
-//        connectToGoogleAPI(userAddress);
-        fakeGoogleAPICall((userAddress));
+        connectToGoogleAPI(userAddress);
+//        fakeGoogleAPICall((userAddress));
 
         Button backBtn = findViewById(R.id.backButton);
         backBtn.setOnClickListener(view -> {
@@ -96,70 +96,75 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 
     // Send Places request to Google Places API to get lat & long
     private void connectToGoogleAPI(String address) {
-//        GeoApiContext context = new GeoApiContext.Builder()
-//                .apiKey(googleAPIKey)
-//                .build();
-//
-//        GeocodingApiRequest req = GeocodingApi.newRequest(context).address(address);
-//        System.out.println("Request url: " + req);
-//        // Async
-//        req.setCallback(new PendingResult.Callback<GeocodingResult[]>() {
-//            @Override
-//            public void onResult(GeocodingResult[] result) {
-//                // Handle successful request.
-//
-//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                System.out.println(gson.toJson(result[0].geometry.location));
-//
-//                latLngFromGoogle = result[0].geometry.location;
-//
-//                // Once receive response from google, pass the latitude & longitude to server
-//                connectToGetShopsFromServer(latLngFromGoogle.lat, latLngFromGoogle.lng);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable e) {
-//                // Handle error
-//                Log.e(TAG, e.toString());
-//
-//                // Need to think of how to handle on failure
-//                // Blank page and tell user nothing is found? Try search again?
-//                Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
-//                startActivity(intent);
-//
-//            }
-//        });
+        GeoApiContext context = new GeoApiContext.Builder()
+                .apiKey(googleAPIKey)
+                .build();
+
+        GeocodingApiRequest req = GeocodingApi.newRequest(context).address(address);
+        System.out.println("Request url: " + req);
+        // Async
+        req.setCallback(new PendingResult.Callback<GeocodingResult[]>() {
+            @Override
+            public void onResult(GeocodingResult[] result) {
+                // Handle successful request.
+
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                System.out.println(gson.toJson(result[0].geometry.location));
+
+                latLngFromGoogle = result[0].geometry.location;
+
+                // Once receive response from google, pass the latitude & longitude to server
+                System.out.println("Latitude is : " + latLngFromGoogle.lat);
+                System.out.println("Longitude is : " + latLngFromGoogle.lng);
+
+                connectToGetShopsFromServer((float)latLngFromGoogle.lat, (float)latLngFromGoogle.lng);
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                // Handle error
+                Log.e(TAG, e.toString());
+
+                // Need to think of how to handle on failure
+                // Blank page and tell user nothing is found? Try search again?
+                Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     // Send request to localhost server to fetch shop list
-    private void connectToGetShopsFromServer(double latitude, double longitude) {
-//        if(retrofit == null) {
-//            retrofit = new Retrofit.Builder()
-//                    .baseUrl(BASE_URL)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .build();
-//        }
-//
-//        StoreListAPIService shopAPIService = retrofit.create(StoreListAPIService.class);
-//        Call<Store> call = shopAPIService.getShopList(latitude, longitude);
-//        call.enqueue(new Callback<Store>() {
-//            @Override
-//            public void onResponse(Call<Store> call, Response<Store> response) {
-//
-//                recyclerView = findViewById(R.id.rvStoreList);
-//                recyclerView.setHasFixedSize(true);
-//                recyclerView.setLayoutManager(linearLayoutManager);
-//                recyclerView.setAdapter(new StoreListAdapter(storeList, mOnStoreListener));
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Store> call, Throwable throwable) {
-//                Log.e(TAG, throwable.toString());
-//
-//                  Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
-//                  startActivity(intent);
-//            }
-//        });
+    private void connectToGetShopsFromServer(float latitude, float longitude) {
+        if(retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        StoreListAPIService shopAPIService = retrofit.create(StoreListAPIService.class);
+        Call<StoreList> call = shopAPIService.getShopList(latitude, longitude);
+        call.enqueue(new Callback<StoreList>() {
+            @Override
+            public void onResponse(Call<StoreList> call, Response<StoreList> response) {
+
+                storeList = response.body();
+
+                recyclerView = findViewById(R.id.rvStoreList);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setAdapter(new StoreListAdapter(storeList, SearchStoreActivity.this));
+            }
+
+            @Override
+            public void onFailure(Call<StoreList> call, Throwable throwable) {
+                Log.e(TAG, throwable.toString());
+
+                  Intent intent = new Intent(getApplicationContext(), SearchFailPage.class);
+                  startActivity(intent);
+            }
+        });
     }
 
     private void fakeGoogleAPICall(String address) {
@@ -168,39 +173,41 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 
     private void returningFakeInformationToUser(double latitude, double longitude) {
 
-        Store store1 = new Store("Bike Shop", 33.3, 50.5, (long)0, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
-        Store store2 = new Store("Random Shop", 33.3, 50.5, (long)1, "SHDFKJH35Sd", "1400 Random Street, Some City, CA 93333", "Bike", "1112223333");
-        Store store3 = new Store("Surrey Shop", 33.3, 50.5, (long)2, "SHDFKJH35Sd", "1500 Whatever Street, Some City, CA 93333", "Bike", "1112223333");
-        Store store4 = new Store("Surrey Shop", 33.3, 50.5, (long)3, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
-        Store store5 = new Store("Surfboard Shop", 33.3, 50.5, (long)4, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
-        Store store6 = new Store("Bike Shop", 33.3, 50.5, (long)5, "SHDFKJH35Sd", "1500 Whatever Street, Some City, CA 93333", "Bike", "1112223333");
-        Store store7 = new Store("Bike Shop", 33.3, 50.5, (long)6, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
-        List<Store> list = new ArrayList<>(Arrays.asList(store1, store2, store3, store4, store5, store6, store7));
-
-        storeList = new StoreList(list);
-
-        recyclerView = findViewById(R.id.rvStoreList);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new StoreListAdapter(storeList, this));
+//        Store store1 = new Store("Bike Shop", 33.3, 50.5, (long)0, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
+//        Store store2 = new Store("Random Shop", 33.3, 50.5, (long)1, "SHDFKJH35Sd", "1400 Random Street, Some City, CA 93333", "Bike", "1112223333");
+//        Store store3 = new Store("Surrey Shop", 33.3, 50.5, (long)2, "SHDFKJH35Sd", "1500 Whatever Street, Some City, CA 93333", "Bike", "1112223333");
+//        Store store4 = new Store("Surrey Shop", 33.3, 50.5, (long)3, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
+//        Store store5 = new Store("Surfboard Shop", 33.3, 50.5, (long)4, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
+//        Store store6 = new Store("Bike Shop", 33.3, 50.5, (long)5, "SHDFKJH35Sd", "1500 Whatever Street, Some City, CA 93333", "Bike", "1112223333");
+//        Store store7 = new Store("Bike Shop", 33.3, 50.5, (long)6, "SHDFKJH35Sd", "1223 Blah Street, Some City, CA 93333", "Bike", "1112223333");
+//        List<Store> list = new ArrayList<>(Arrays.asList(store1, store2, store3, store4, store5, store6, store7));
+//
+//        storeList = new StoreList(list);
+//
+//        recyclerView = findViewById(R.id.rvStoreList);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setAdapter(new StoreListAdapter(storeList, this));
 
     }
 
 
     @Override
-    public void onStoreClicked(int position) {
+    public void onStoreClicked(String storeId) {
 
-        // this gives a reference to the store that gets selected
-        Store selectedStore = storeList.storeList.get(position);
-        System.out.println("Selected: ");
-        System.out.println(selectedStore.getStoreName());
-        System.out.println("Store ID is : " + selectedStore.getStoreId());
 
-        // start shopping flow
-        Intent intent = new Intent(getApplicationContext(), EquipmentListActivity.class);
-        intent.putExtra("storeID", selectedStore.getStoreId());
-        intent.putExtra("userAddress", userAddress);
-        startActivity(intent);
+//            // this gives a reference to the store that gets selected
+//            System.out.println("Inside the onStoreClicked :" + storeList.storeList.size());
+//            Store selectedStore = storeList.storeList.get(position);
+//            System.out.println("Selected: ");
+//            System.out.println(selectedStore.getStoreName());
+//            System.out.println("Store ID is : " + selectedStore.getStoreId());
+
+            // start shopping flow
+            Intent intent = new Intent(this, EquipmentListActivity.class);
+            intent.putExtra("storeID", storeId);
+            intent.putExtra("userAddress", userAddress);
+            startActivity(intent);
 
     }
 
