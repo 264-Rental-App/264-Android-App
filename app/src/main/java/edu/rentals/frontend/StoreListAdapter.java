@@ -1,5 +1,6 @@
 package edu.rentals.frontend;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,15 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.View
         @Override
         public void onClick(View v) {
             System.out.println("Clicked in StoreListAdapter!");
-            onStoreListener.onStoreClicked(getAdapterPosition());
+
+            System.out.println("Inside the onStoreClicked :" + storeList.storeList.size());
+            Store selectedStore = storeList.storeList.get(getAdapterPosition());
+            System.out.println("Selected: ");
+            System.out.println(selectedStore.getStoreName());
+            System.out.println("Store ID is : " + selectedStore.getStoreId());
+
+            onStoreListener.onStoreClicked(selectedStore.getStoreId());
+
         }
     }
 

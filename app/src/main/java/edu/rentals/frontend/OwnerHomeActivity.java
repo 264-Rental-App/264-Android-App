@@ -76,7 +76,6 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         mAuth = FirebaseAuth.getInstance();
         // get storeId
 
-
         // search button
         logOut = findViewById(R.id.s_logout);
         logOut.setOnClickListener(v -> {
@@ -124,6 +123,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         recyclerView.setAdapter(eAdapter);
     }
 
+
     private void getStoreIdCall(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
@@ -151,6 +151,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
             }
         });
     }
+
 
     // this is to retrieve the Owner's name to show on the home page
     // TODO: get rid of this. Just use the FirebaseAuth to get displayName
