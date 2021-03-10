@@ -1,6 +1,5 @@
 package edu.rentals.frontend;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
 import com.google.gson.internal.LinkedTreeMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -63,7 +59,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
 
         // search
-        search = findViewById(R.id.searchPage);
+        search = findViewById(R.id.s_logout);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
