@@ -193,7 +193,7 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 
 
     @Override
-    public void onStoreClicked(String storeId) {
+    public void onStoreClicked(long storeId) {
 
 
 //            // this gives a reference to the store that gets selected
@@ -203,11 +203,12 @@ public class SearchStoreActivity extends AppCompatActivity implements OnStoreLis
 //            System.out.println(selectedStore.getStoreName());
 //            System.out.println("Store ID is : " + selectedStore.getStoreId());
 
-            // start shopping flow
-            Intent intent = new Intent(this, EquipmentListActivity.class);
-            intent.putExtra("storeID", storeId);
-            intent.putExtra("userAddress", userAddress);
-            startActivity(intent);
+        // start shopping flow
+        Intent intent = new Intent(this, EquipmentListActivity.class);
+        System.out.println("storeId in search" + storeId);
+        intent.putExtra("storeID", storeId);
+        intent.putExtra("userAddress", userAddress);
+        startActivity(intent);
 
     }
 

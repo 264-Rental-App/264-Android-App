@@ -86,7 +86,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Store> call, Response<Store> response) {
 
-                storeId = response.body().getId();
+                storeId = response.body().getStoreId();
                 System.out.println("storeId in getStoreId: " + storeId);
                 connect(idToken, storeId);
             }
