@@ -11,7 +11,7 @@ public interface ShoppingApiService {
 
     //http://localhost:8080/stores/{storeId}
     @GET("stores/{storeId}")
-    Call<StoreInfo> getStoreInfo(@Path("storeId") String storeId);
+    Call<StoreInfo> getStoreInfo(@Header("Authorization") String idToken, @Path("storeId") long storeId);
 
     // http://localhost:8080/equipment/{storeId}
     @GET("equipment/store/{storeId}")
@@ -19,7 +19,7 @@ public interface ShoppingApiService {
 
     // http://localhost:8080/rental/forms/{storeId}
     @GET("rental/forms/{storeId}")
-    Call<AgreementForm> getAgreementForm(@Path("storeId") String storeId);
+    Call<AgreementForm> getAgreementForm(@Path("storeId") long storeId);
 
     // http://localhost:8080/rental
     @POST("/rental")

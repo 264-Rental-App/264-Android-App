@@ -61,11 +61,33 @@ public class EquipmentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_list);
 
+
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        // call api
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                            connect(idToken);
+
+                            // Send token to your backend via HTTPS
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+
         // get storeId from SearchStoreActivity
         Intent intent = getIntent();
         storeId = intent.getLongExtra("storeID", 0);
 
-        System.out.println("StoreId in EquipementListActivity: " + storeId);
+        System.out.println("StoreId in Equipment ListActivity: " + storeId);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -92,8 +114,8 @@ public class EquipmentListActivity extends AppCompatActivity {
 
         // equipment list
         equipmentList = new ArrayList<>();
-//        equipmentList.add(new Equipment(1, "Bike", 50, R.drawable.bike, 0));
-//        equipmentList.add(new Equipment(2, "Ski", 100, R.drawable.ski, 0));
+//        equipmentList.add(new Equipment((long) 100, "Bike", 50, R.drawable.bike, 0));
+//        equipmentList.add(new Equipment((long) 101, "Ski", 100, R.drawable.ski, 0));
 //        equipmentList.add(new Equipment(3, "Snowboard", 150, R.drawable.snowboard, 0));
 //        equipmentList.add(new Equipment(4, "Helmet", 10, 0, 0));
 //        equipmentList.add(new Equipment(5, "Snow Pants", 30, 0, 0));
@@ -143,36 +165,46 @@ public class EquipmentListActivity extends AppCompatActivity {
 
 
         // api call store info
-        Call<StoreInfo> storeInfoCall = shoppingApiService.getStoreInfo(String.valueOf(storeId));
+        System.out.println("idToken: " + idToken + ", storeId: " + storeId);
+        Call<StoreInfo> storeInfoCall = shoppingApiService.getStoreInfo(idToken, storeId);
         storeInfoCall.enqueue(new Callback<StoreInfo>() {
 
             @Override
             public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
-                // Set store info
-                JSONObject storeInfo = response.body().getStoreInfo();
+
+//                System.out.println("testing: " + response.body());
+
+//                System.out.println("storeInfo response" + response.body());
+                storeName = response.body().getStoreInfo().getStoreName();
+                storeAddress = response.body().getStoreInfo().getStoreAddress();
+                storeNumber = response.body().getStoreInfo().getPhoneNumber();
+//                System.out.println("storeInfo name response: " + response.body().getStoreName());
+//                storeAddress = response.body().getStoreAddress();
+//                System.out.println("storeInfo address response: " + response.body().getStoreAddress());
+//                storeNumber = response.body().getPhoneNumber();
 
                 //store info
                 tvStoreName = findViewById(R.id.shopName);
                 tvStoreAddress = findViewById(R.id.shopAddress);
                 tvStoreNumber = findViewById(R.id.shopPhone);
 
-                // set store info
-                try {
-                    storeName = storeInfo.get("name").toString();
-                    storeAddress = storeInfo.get("commonAddress").toString();
-                    storeNumber = storeInfo.get("phoneNumber").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                // set store info
+//                try {
+//                    storeName = storeInfo.get("name").toString();
+//                    storeAddress = storeInfo.get("commonAddress").toString();
+//                    storeNumber = storeInfo.get("phoneNumber").toString();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
                 // set text
-                tvStoreName.setText(storeName);
+                tvStoreName.setText(storeName );
                 tvStoreAddress.setText(storeAddress);
                 tvStoreNumber.setText(storeNumber);
             }
 
             @Override
-            public void onFailure(Call< StoreInfo > call, Throwable t) {
+            public void onFailure(Call<StoreInfo> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
@@ -184,11 +216,12 @@ public class EquipmentListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<StoreEquipmentList> call, Response<StoreEquipmentList> response) {
                 // Set equipment list name and price
+                equipmentList = new ArrayList<>();
                 List<LinkedTreeMap> storeEquipmentList = response.body().getStoreEquipmentList();
                 for (int i = 0; i < storeEquipmentList.size(); i++) {
                     Long id = (Long) Math.round((Double) storeEquipmentList.get(i).get("id"));
                     String equipmentName = storeEquipmentList.get(i).get("name").toString();
-                    int equipmentPrice = (int) storeEquipmentList.get(i).get("price");
+                    int equipmentPrice = (int) Math.round((Double) storeEquipmentList.get(i).get("price"));
                     equipmentList.add(new Equipment(id, equipmentName, equipmentPrice, 0, 0));
                 }
                 recyclerView.setAdapter(new EquipmentListAdapter(equipmentList));
@@ -211,8 +244,30 @@ public class EquipmentListActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
+
+
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
+        // call api
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            idToken = task.getResult().getToken();
+                            connect(idToken);
+
+                            // Send token to your backend via HTTPS
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    }
+                });
+
         if(currentUser == null){
             checkOut.setEnabled(false);
             checkOut.setBackgroundColor(Color.LTGRAY);
@@ -226,7 +281,6 @@ public class EquipmentListActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String idToken = task.getResult().getToken();
-                            connect(idToken);
                             verifyAccountType(idToken, uid);
 
                         } else {

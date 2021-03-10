@@ -60,7 +60,7 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<edu.rentals.frontend.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String userId = invoiceList.get(position).getUserId();
         String customerFirstName = invoiceList.get(position).getUserFirstName();
-        float totalCost = invoiceList.get(position).getTotalCost();
+        Double totalCost = invoiceList.get(position).getTotalCost();
         String transactionDate= invoiceList.get(position).getTransactionDate();
         String rentalStartDate = invoiceList.get(position).getRentalStartDate();
         String dueDate = invoiceList.get(position).getDueDate();
@@ -68,11 +68,12 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<edu.rentals.frontend.
 //        Date date = new Date(transactionDate.getTime());
 //        String toDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
 
-        holder.tvUserFirstName.setText(customerFirstName);
+//        holder.tvUserFirstName.setText(customerFirstName);
+        holder.tvUserFirstName.setText("Mike");
         holder.tvTotalPrice.setText("$ " + totalCost);
         holder.tvTransactionDate.setText(transactionDate);
-        holder.tvRentalStartDate.setText("FROM: " + rentalStartDate);
-        holder.tvDueDate.setText("TO: " + dueDate);
+        holder.tvRentalStartDate.setText("" + rentalStartDate);
+        holder.tvDueDate.setText("" + dueDate);
     }
 
     @Override

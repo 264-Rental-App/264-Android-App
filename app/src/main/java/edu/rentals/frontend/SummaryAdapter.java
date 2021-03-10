@@ -40,6 +40,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<edu.rentals.frontend.Su
     }
 
     public static List<Equipment> getRentalSummaryList() {
+
         return rentalSummaryList;
     }
 

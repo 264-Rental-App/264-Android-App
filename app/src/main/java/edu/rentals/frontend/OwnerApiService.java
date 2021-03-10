@@ -17,11 +17,11 @@ public interface OwnerApiService {
 
     // http://localhost:8080/invoices/{storeId}
     @GET("invoices/{storeId}")
-    Call<InvoiceList> getInvoiceList(@Header("Authorization") String idToken, @Path("storeId") String storeId);
+    Call<InvoiceList> getInvoiceList(@Header("Authorization") String idToken, @Path("storeId") long storeId);
 
     // http://localhost:8080/rental/{invoiceId}
     @GET("rental/{invoiceId}")
-    Call<CustomerRental> getRentalInfo(@Header("Authorization") String idToken, @Path("invoiceId") int invoiceId);
+    Call<CustomerRental> getRentalInfo(@Header("Authorization") String idToken, @Path("invoiceId") Long invoiceId);
 
     // http://localhost:8080/stores
     @GET("stores")
