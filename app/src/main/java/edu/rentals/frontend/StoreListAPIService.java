@@ -10,6 +10,6 @@ public interface StoreListAPIService {
 
     // http://localhost:8080/search/stores?lat=x&long=y
     @GET("search/stores")
-    Call<Store> getShopList(@Path("lat=") double lat, @Path ("&long=") double lng);
+    Call<StoreList> getShopList(@Query("lat") float lat, @Query("long") float lng);
 
 }
