@@ -166,10 +166,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(Call<GetUserById> call, Response<GetUserById> response) {
                 assert response.body() != null : "response.body() is null!";
 
-                if(response.body().getUserType().equals("customer")) {
+                if(response.body().getAccountType().equals("customer")) {
                     startActivity(new Intent(LogInActivity.this, CustomerHomeActivity.class));
                 }
-                else if(response.body().getUserType().equals("owner")) {
+                else if(response.body().getAccountType().equals("owner")) {
                     startActivity(new Intent(LogInActivity.this, OwnerHomeActivity.class));
                 }
             }
