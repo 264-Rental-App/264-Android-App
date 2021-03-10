@@ -56,12 +56,9 @@ public class EquipmentListActivity extends AppCompatActivity {
 
         // get storeId from SearchStoreActivity
         Intent intent = getIntent();
-        storeId = (long) intent.getIntExtra("storeID", 0);
-
+        storeId = intent.getIntExtra("storeID", 0);
 
         mAuth = FirebaseAuth.getInstance();
-
-
 
         connect();
 
@@ -214,10 +211,62 @@ public class EquipmentListActivity extends AppCompatActivity {
         }
         else {
             login.setText("HOME");
-            login.setOnClickListener(v -> startActivity(new Intent(EquipmentListActivity.this, CustomerHomeActivity.class)));
+            login.setOnClickListener(v -> {
+                String uid = currentUser.getUid();
+
+                currentUser.getIdToken(true)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            verifyAccountType(idToken, uid);
+
+                        } else {
+                            // Handle error -> task.getException();
+                            task.getException().printStackTrace();
+                        }
+                    });
+            });
         }
     }
 
+    private void verifyAccountType(String idToken, String uid) {
 
+        System.out.println("GOT HEREEREERREREE");
+
+        if(retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        UserAccountAPIServices userAccountApiServices = retrofit.create(UserAccountAPIServices.class);
+
+        System.out.println("idToken is: " + idToken);
+        System.out.println("uid is: " + uid);
+
+        Call<GetUserById> call = userAccountApiServices.getUserById(idToken, uid);
+        call.enqueue(new Callback<GetUserById>() {
+            @Override
+            public void onResponse(Call<GetUserById> call, Response<GetUserById> response) {
+                assert response.body() != null : "response.body() is null!";
+
+                if(response.body().getAccountType().equals("customer")) {
+                    startActivity(new Intent(EquipmentListActivity.this, CustomerHomeActivity.class));
+                }
+                else if(response.body().getAccountType().equals("owner")) {
+                    startActivity(new Intent(EquipmentListActivity.this, OwnerHomeActivity.class));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetUserById> call, Throwable throwable) {
+                Log.e(TAG, throwable.toString());
+
+                startActivity(new Intent(EquipmentListActivity.this, SearchFailPage.class));
+            }
+        });
+
+    }
 
 }
