@@ -58,9 +58,9 @@ public class OwnerEditActivity extends AppCompatActivity {
         tvPhone = findViewById(R.id.phoneNumberCurr);
 
         // mock set
-        tvEmail.setText("a@gmail.com");
-        tvFirstName.setText("Adam");
-        tvPhone.setText("8888888888");
+//        tvEmail.setText("a@gmail.com");
+//        tvFirstName.setText("Adam");
+//        tvPhone.setText("8888888888");
 
     }
 
@@ -74,23 +74,30 @@ public class OwnerEditActivity extends AppCompatActivity {
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call get owner info
-        Call<Customer> ownerInfoCall = ownerApiService.getUserInfo(idToken, userId);
-        ownerInfoCall.enqueue(new Callback<Customer>() {
+        System.out.println("userId in owner edit: " + userId);
+        Call<User> ownerInfoCall = ownerApiService.getUserInfo(idToken, userId);
+        ownerInfoCall.enqueue(new Callback<User>() {
 
             @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                System.out.println(response.body().toString());
+                email = response.body().getEmail();
+                System.out.println("email: " + email);
+                firstName = response.body().getFirst_name();
+                phoneNumber = response.body().getPhoneNumber();
                 // get customer info
-                JSONObject customerInfo = response.body().getCustomerInfo();
+//                JSONObject customerInfo = response.body().getCustomerInfo();
 
 
                 // set customer info
-                try {
-                    firstName = customerInfo.get("firstName").toString();
-                    email = customerInfo.get("email").toString();
-                    phoneNumber = customerInfo.get("phoneNumber").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    firstName = customerInfo.get("firstName").toString();
+//                    email = customerInfo.get("email").toString();
+//                    phoneNumber = customerInfo.get("phoneNumber").toString();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
                 // set text
                 tvEmail.setText(email);
@@ -100,7 +107,7 @@ public class OwnerEditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
 

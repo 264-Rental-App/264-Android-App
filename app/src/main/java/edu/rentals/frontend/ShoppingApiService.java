@@ -14,8 +14,8 @@ public interface ShoppingApiService {
     Call<StoreInfo> getStoreInfo(@Path("storeId") String storeId);
 
     // http://localhost:8080/equipment/{storeId}
-    @GET("equipment/{storeId}")
-    Call<StoreEquipmentList> getEquipmentList(@Path("storeId") String storeId);
+    @GET("equipment/store/{storeId}")
+    Call<StoreEquipmentList> getEquipmentList(@Header("Authorization") String idToken, @Path("storeId") long storeId);
 
     // http://localhost:8080/rental/forms/{storeId}
     @GET("rental/forms/{storeId}")

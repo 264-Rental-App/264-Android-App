@@ -9,17 +9,15 @@ public class StoreInfo {
     @SerializedName("store")
     private JSONObject storeInfo;
 
+//    @SerializedName("name")
+//    private String
+
     public StoreInfo(JSONObject storeInfo) {
         this.storeInfo = storeInfo;
     }
 
     public JSONObject getStoreInfo() {
-//        String string = "{ \"store\": {\"name\": \"Big Store\",\"lat\": 130,\"long\": 122,\"id\": 1,\"commonAddress\": \"CA 91711\",\"phoneNumber\": 9999999999 }";
-//        try {
-//            storeInfo = new JSONObject(string);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+
         return storeInfo;
     }
 

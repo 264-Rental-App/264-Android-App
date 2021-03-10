@@ -17,9 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,7 +68,7 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    addNewEquipment();
+                    addNewEquipment(storeId);
                     Intent intent = new Intent(edu.rentals.frontend.OwnerStoreAddActivity.this, OwnerStoreActivity.class);
                     startActivity(intent);
                 } catch (Exception e) {
@@ -88,7 +85,7 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
     }
 
 
-    private void addNewEquipment() {
+    private void addNewEquipment(long storeId) {
 
         // get text from edit text
         String name = etName.getText().toString();
@@ -106,6 +103,7 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
         }
 
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
+        System.out.println("storeId when posting: " + storeId);
         OwnerPublishEquipment equipment = new OwnerPublishEquipment(storeId, name, cost, imgLoc, quantity, description);
         Call<OwnerPublishEquipment> call = ownerApiService.publishEquipment(idToken, equipment);
         call.enqueue(new Callback<OwnerPublishEquipment>() {
@@ -132,7 +130,9 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
-                            storeId = getStoreIdCall(idToken);
+                            getStoreIdCall(idToken);
+                            System.out.println("storeId on start" + storeId);
+//                            storeId = getStoreIdCall(idToken);
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
@@ -144,8 +144,7 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
         System.out.println("idToken: " + idToken);
     }
 
-    private long getStoreIdCall(String idToken) {
-        final long[] storeId = new long[1];
+    private void getStoreIdCall(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -155,27 +154,24 @@ public class OwnerStoreAddActivity extends AppCompatActivity {
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call for storeId
-        Call<StoreInfo> storeIdCall = ownerApiService.getStoreId(idToken);
-        storeIdCall.enqueue(new Callback<StoreInfo>() {
+        Call<Store> storeIdCall = ownerApiService.getStoreId(idToken);
+        storeIdCall.enqueue(new Callback<Store>() {
 
             @Override
-            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
-                // get store info
-                JSONObject customerInfo = response.body().getStoreInfo();
-                try {
-                    // get storeId
-                    storeId[0] = (long) customerInfo.get("storeId");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<Store> call, Response<Store> response) {
+
+                storeId = response.body().getId();
+                System.out.println("storeId in getStoreId in add: " + storeId);
+
+
             }
 
             @Override
-            public void onFailure(Call<StoreInfo> call, Throwable t) {
+            public void onFailure(Call<Store> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
-        return storeId[0];
+
     }
 
 }

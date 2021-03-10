@@ -31,12 +31,13 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
     static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     Button back, delete;
-    private int equipmentId;
+    private Long equipmentId;
     TextView tvStoreName, tvAddress, tvPhone;
     private String storeName, address, phoneNumber;
     TextView tvName, tvStock, tvPrice, tvDesc;
     private String name, desc;
-    private int stock, price;
+    private Integer stock;
+    private Float price;
     private String idToken;
     FirebaseUser mUser;
 
@@ -60,6 +61,14 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
             }
         });
 
+        // text view
+        tvName = findViewById(R.id.equipmentNameCurr);
+        tvStock = findViewById(R.id.stockCurr);
+        tvPrice = findViewById(R.id.priceCurr);
+        tvDesc = findViewById(R.id.descCurr);
+
+
+
 
         // api call for equipment info
 //        getEquipmentInfo();
@@ -69,11 +78,13 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mUser = FirebaseAuth.getInstance().getCurrentUser();
                 mUser.getIdToken(true)
                         .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                             public void onComplete(@NonNull Task<GetTokenResult> task) {
                                 if (task.isSuccessful()) {
                                     idToken = task.getResult().getToken();
+                                    System.out.println("idToken in delete: " + idToken);
                                     deleteEquipment(idToken);
                                     Intent intent = new Intent(edu.rentals.frontend.OwnerStoreUpdateActivity.this, OwnerStoreActivity.class);
                                     startActivity(intent);
@@ -102,29 +113,33 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call to get equipment info
+        System.out.println("equipmentId in getInfo: " + equipmentId);
+        System.out.println("idToken in getInfo: " + idToken);
         Call<EquipmentInfo> equipmentInfoCall = ownerApiService.getEquipmentInfo(idToken, equipmentId);
         equipmentInfoCall.enqueue(new Callback<EquipmentInfo>() {
 
             @Override
             public void onResponse(Call<EquipmentInfo> call, Response<EquipmentInfo> response) {
                 // get equipment info
-                JSONObject equipmentInfo = response.body().getStoreInfo();
+                System.out.println("response body in update: " + response.body());
+                System.out.println("equipment name in update: " + response.body().getName());
+                System.out.println("equipment price in update: " + response.body().getPrice());
+                System.out.println("equipment desc in update: " + response.body().getDescription());
+                System.out.println("equipment stock in update: " + response.body().getStock());
+                name = response.body().getName();
+//                System.out.println(response.body().getStock());
+//                stock = response.body().getStock();
+                stock = 1;
+                desc = response.body().getDescription();
+                price = response.body().getPrice();
 
-                // set equipment info
-                try {
-                    name = equipmentInfo.get("name").toString();
-                    stock = Integer.parseInt(equipmentInfo.get("stock").toString());
-                    desc = equipmentInfo.get("desc").toString();
-                    price = Integer.parseInt(equipmentInfo.get("price").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
 
                 // set text
-                tvName.setText(name);
-                tvStock.setText(stock);
-                tvPrice.setText(desc);
-                tvDesc.setText(price);
+//                tvName.setText(name);
+//                tvStock.setText(stock.toString());
+//                tvPrice.setText(price.toString());
+//                tvDesc.setText(desc);
             }
 
             @Override
@@ -170,7 +185,7 @@ public class OwnerStoreUpdateActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
-
+                            System.out.println("idToken in update: " + idToken);
                             getEquipmentInfo(idToken);
                             // Send token to your backend via HTTPS
                             // ...

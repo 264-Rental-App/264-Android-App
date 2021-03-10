@@ -70,8 +70,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
 //        connect();
     }
 
-    private long getStoreIdCall(String idToken) {
-        final long[] storeId = new long[1];
+    private void getStoreIdCall(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -81,30 +80,26 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call for storeId
-        Call<StoreInfo> storeIdCall = ownerApiService.getStoreId(idToken);
-        storeIdCall.enqueue(new Callback<StoreInfo>() {
+        Call<Store> storeIdCall = ownerApiService.getStoreId(idToken);
+        storeIdCall.enqueue(new Callback<Store>() {
 
             @Override
-            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
-                // get store info
-                JSONObject customerInfo = response.body().getStoreInfo();
-                try {
-                    // get storeId
-                    storeId[0] = (long) customerInfo.get("storeId");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<Store> call, Response<Store> response) {
+
+                storeId = response.body().getId();
+                System.out.println("storeId in getStoreId: " + storeId);
+                connect(idToken, storeId);
             }
 
             @Override
-            public void onFailure(Call<StoreInfo> call, Throwable t) {
+            public void onFailure(Call<Store> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
-        return storeId[0];
+
     }
 
-    private void connect(String idToken) {
+    private void connect(String idToken, long storeId) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -114,23 +109,18 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call get customer info
-        Call<StoreInfo> storeInfoCall = ownerApiService.getStoreInfo(idToken, storeId);
-        storeInfoCall.enqueue(new Callback<StoreInfo>() {
+        Call<Store> storeInfoCall = ownerApiService.getStoreInfo(idToken, storeId);
+        storeInfoCall.enqueue(new Callback<Store>() {
 
             @Override
-            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
+            public void onResponse(Call<Store> call, Response<Store> response) {
                 // get customer info
-                JSONObject customerInfo = response.body().getStoreInfo();
+                storeName = response.body().getStoreName();
+                address = response.body().getStoreAddress();
+                phoneNumber = response.body().getPhoneNumber();
 
+                System.out.println("storeName ");
 
-                // set customer info
-                try {
-                    storeName = customerInfo.get("name").toString();
-                    address = customerInfo.get("commonAddress").toString();
-                    phoneNumber = customerInfo.get("phoneNumber").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
                 // set text
                 tvStoreName.setText(storeName);
@@ -140,7 +130,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<StoreInfo> call, Throwable t) {
+            public void onFailure(Call<Store> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
 
@@ -161,8 +151,7 @@ public class OwnerStoreEditActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
-                            storeId = getStoreIdCall(idToken);
-                            connect(idToken);
+                            getStoreIdCall(idToken);
 
                         } else {
                             // Handle error -> task.getException();

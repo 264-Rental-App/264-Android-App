@@ -26,7 +26,7 @@
         android:gravity="center"
         android:layout_marginTop="5dp"
         android:textSize="30sp"
-        android:text="EQEUIPMENT INFO"
+        android:text="EQUIPMENT INFO"
         android:textStyle="bold"
         android:layout_below="@id/back"/>
 

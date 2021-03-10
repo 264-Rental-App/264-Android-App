@@ -13,7 +13,7 @@ public interface OwnerApiService {
 
     // http://localhost:8080/users/{userId}
     @GET("users/{userId}")
-    Call<Customer> getUserInfo(@Header("Authorization") String idToken, @Path("userId") String userId);
+    Call<User> getUserInfo(@Header("Authorization") String idToken, @Path("userId") String userId);
 
     // http://localhost:8080/invoices/{storeId}
     @GET("invoices/{storeId}")
@@ -25,23 +25,23 @@ public interface OwnerApiService {
 
     // http://localhost:8080/stores
     @GET("stores")
-    Call<StoreInfo> getStoreId(@Header("Authorization") String idToken);
+    Call<Store> getStoreId(@Header("Authorization") String idToken);
 
     // http://localhost:8080/stores/{storeId}
     @GET("stores/{storeId}")
-    Call<StoreInfo> getStoreInfo(@Header("Authorization") String idToken, @Path("storeId") long storeId);
+    Call<Store> getStoreInfo(@Header("Authorization") String idToken, @Path("storeId") long storeId);
 
     // http://localhost:8080/equipment/{equipmentId}
     @GET("equipment/{equipmentId}")
-    Call<EquipmentInfo> getEquipmentInfo(@Header("Authorization") String idToken, @Path("equipmentId") int equipmentId);
+    Call<EquipmentInfo> getEquipmentInfo(@Header("Authorization") String idToken, @Path("equipmentId") Long equipmentId);
 
-    // http://localhost:8080/equipment/{storeId}
-    @GET("equipment/{storeId}")
+    // http://localhost:8080/equipment/store/{storeId}
+    @GET("equipment/store/{storeId}")
     Call<StoreEquipmentList> getEquipmentList(@Header("Authorization") String idToken, @Path("storeId") long storeId);
 
     // http://localhost:8080/equipment/{equipmentId}
     @DELETE("equipment/{equipmentId}")
-    Call<Void> deleteEquipment(@Header("Authorization") String idToken, @Path("equipmentId") int equipmentId);
+    Call<Void> deleteEquipment(@Header("Authorization") String idToken, @Path("equipmentId") Long equipmentId);
 
     // http://localhost:8080/equipment
     @POST("equipment")

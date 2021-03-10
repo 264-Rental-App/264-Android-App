@@ -1,13 +1,13 @@
 package edu.rentals.frontend;
 
 public class Equipment {
-    int equipmentId;
+    Long equipmentId;
     String eName;
     int ePrice;
     int ePhoto;
     int quantity;
 
-    public Equipment(int equipmentId, String eName, int ePrice, int ePhoto, int quantity) {
+    public Equipment(Long equipmentId, String eName, int ePrice, int ePhoto, int quantity) {
         this.equipmentId = equipmentId;
         this.eName = eName;
         this.ePrice = ePrice;
@@ -15,13 +15,13 @@ public class Equipment {
         this.quantity = quantity;
     }
 
-    public Equipment(int equipmentId, int quantity) {
+    public Equipment(Long equipmentId, int quantity) {
         this.equipmentId = equipmentId;
         this.quantity = quantity;
     }
 
 
-    public int getEquipmentId() {
+    public Long getEquipmentId() {
         return equipmentId;
     }
 

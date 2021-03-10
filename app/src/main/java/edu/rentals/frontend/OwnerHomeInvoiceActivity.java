@@ -119,21 +119,22 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // get user firstName
-        Call<Customer> customerInfoCall = ownerApiService.getUserInfo(idToken, customerUserId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
+        Call<User> customerInfoCall = ownerApiService.getUserInfo(idToken, customerUserId);
+        customerInfoCall.enqueue(new Callback<User>() {
 
             @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 // get customer info
-                JSONObject customerInfo = response.body().getCustomerInfo();
-
-                // get first name
-                String firstName = "";
-                try {
-                    firstName = customerInfo.get("userFirstName").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                String firstName = response.body().getFirst_name();
+//                JSONObject customerInfo = response.body().getCustomerInfo();
+//
+//                // get first name
+//                String firstName = "";
+//                try {
+//                    firstName = customerInfo.get("userFirstName").toString();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
                 // set text
                 tvCustomerName.setText(firstName + "!");
@@ -141,7 +142,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
