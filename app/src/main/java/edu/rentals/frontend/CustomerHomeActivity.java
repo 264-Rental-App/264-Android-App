@@ -47,13 +47,18 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
     private String idToken;
     FirebaseUser mUser;
 
-    public static int getInvoiceId() {
+    public static Long getInvoiceId() {
         return userInvoiceList.get(positionChosen).getInvoiceId();
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
 
@@ -151,6 +156,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
 
         // api call for invoice list
+        System.out.println("idToken to get invoice list : " + idToken);
         Call<InvoiceList> invoiceListCall = customerApiService.getInvoiceList(idToken);
         invoiceListCall.enqueue(new Callback<InvoiceList>() {
 
@@ -161,10 +167,11 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
                 // set invoice list
                 for (int i = 0; i < invoiceList.size(); i++) {
-                    int invoiceId = (int) invoiceList.get(i).get("id");
+                    Long invoiceId = (Long) Math.round((Double) invoiceList.get(i).get("id"));
                     String storeName = invoiceList.get(i).get("storeName").toString();
-                    float totalCost = (float) invoiceList.get(i).get("totalCost");
-                    Timestamp transactionDate = (Timestamp) invoiceList.get(i).get("transactionDate");
+                    Double totalCost = (Double) invoiceList.get(i).get("totalCost");
+//                    Timestamp transactionDate = (Timestamp) invoiceList.get(i).get("transactionDate");
+                    String transactionDate = invoiceList.get(i).get("transactionDate").toString().split(" ")[0];
                     userInvoiceList.add(new Invoice(invoiceId, storeName, totalCost, transactionDate));
                 }
                 eAdapter = new CustomerHomeAdapter(userInvoiceList, CustomerHomeActivity.this::onInvoiceClick);
@@ -189,19 +196,19 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
     }
 
     public static class Invoice {
-        private int invoiceId;
+        private Long invoiceId;
         private String storeName;
-        private float totalCost;
-        private Timestamp transactionDate;
+        private Double totalCost;
+        private String transactionDate;
 
-        public Invoice(int invoiceId, String storeName, float totalCost, Timestamp transactionDate) {
+        public Invoice(Long invoiceId, String storeName, Double totalCost, String transactionDate) {
             this.invoiceId = invoiceId;
             this.storeName = storeName;
             this.totalCost = totalCost;
             this.transactionDate = transactionDate;
         }
 
-        public int getInvoiceId() {
+        public Long getInvoiceId() {
             return invoiceId;
         }
 
@@ -209,17 +216,22 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
             return storeName;
         }
 
-        public float getTotalCost() {
+        public Double getTotalCost() {
             return totalCost;
         }
 
-        public Timestamp getTransactionDate() {
+        public String getTransactionDate() {
             return transactionDate;
         }
     }
 
     @Override
     public void onStart() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         super.onStart();
         mAuth = FirebaseAuth.getInstance();
 

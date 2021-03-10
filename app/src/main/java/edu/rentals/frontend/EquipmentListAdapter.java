@@ -1,5 +1,6 @@
 package edu.rentals.frontend;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 
-public class EquipmentListAdapter extends RecyclerView.Adapter<edu.rentals.frontend.EquipmentListAdapter.ViewHolder> {
+public class EquipmentListAdapter extends RecyclerView.Adapter<EquipmentListAdapter.ViewHolder> {
 
 
     // total price
@@ -80,12 +81,14 @@ public class EquipmentListAdapter extends RecyclerView.Adapter<edu.rentals.front
             public void onClick(View v) {
                 equipmentList.get(position).setQuantity(equipmentList.get(position).getQuantity() + 1);
                 totalPrice += equipmentList.get(position).getePrice();
+                System.out.println(totalPrice);
 //                Log.d("total price", String.valueOf(totalPrice));
 //                Log.d("quantity in list", String.valueOf(equipmentList.get(position).getQuantity()));
                 holder.tvQuantity.setText(String.valueOf(equipmentList.get(position).getQuantity()));
 
                 // send total price to equipment list activity
                 if(mOnTotalPriceChangeListener != null){
+                    System.out.println("onclick :" + totalPrice);
                     mOnTotalPriceChangeListener.onTotalPriceChanged(totalPrice);
                 }
             }
@@ -100,6 +103,7 @@ public class EquipmentListAdapter extends RecyclerView.Adapter<edu.rentals.front
 //                    Toast.makeText(EquipmentListActivity, "Cant decrease quantity < 0", Toast.LENGTH_SHORT).show();
                 } else {
                     totalPrice -= equipmentList.get(position).getePrice();
+                    System.out.println(totalPrice);
                     equipmentList.get(position).setQuantity(equipmentList.get(position).getQuantity() - 1);
                 }
 //                Log.d("total price", String.valueOf(totalPrice));
@@ -131,6 +135,14 @@ public class EquipmentListAdapter extends RecyclerView.Adapter<edu.rentals.front
     OnTotalPriceChangeListener mOnTotalPriceChangeListener;
     public void setOnTotalPriceChangeListener(OnTotalPriceChangeListener onTotalPriceChangeListener){
         mOnTotalPriceChangeListener = onTotalPriceChangeListener;
+    }
+
+    public int totalSum() {
+        int total = 0;
+        for (int i=0; i< equipmentList.size(); i++) {
+            total += (equipmentList.get(i).getePrice() * equipmentList.get(i).getQuantity());
+        }
+        return total;
     }
 
 

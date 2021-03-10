@@ -194,7 +194,6 @@ public class SummaryActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                System.out.println("idToken: " + idToken);
 
                 Intent intent = new Intent(edu.rentals.frontend.SummaryActivity.this, CustomerHomeActivity.class);
                 startActivity(intent);
@@ -246,12 +245,15 @@ public class SummaryActivity extends AppCompatActivity {
                     .build();
         }
         Log.d("hi", "hi");
-        Timestamp startTimestamp = new Timestamp(startDay.getTimeInMillis());
-        Timestamp endTimestamp = new Timestamp(endDay.getTimeInMillis());
+        String startTimestamp = new Timestamp(startDay.getTimeInMillis()).toString();
+        String endTimestamp = new Timestamp(endDay.getTimeInMillis()).toString();
+
         Log.d("startDate", String.valueOf(startTimestamp));
         Log.d("endDate", String.valueOf(endTimestamp));
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
+        System.out.println("rental equipment checkout list: " + SummaryAdapter.getRentalSummaryList().toString());
         ShoppingCheckoutRental rental = new ShoppingCheckoutRental(storeId, userId, startTimestamp, endTimestamp, SummaryAdapter.getRentalSummaryList());
+        System.out.println("in checkout idToken: " + idToken + ", storeId:" + storeId + ", userId: " + userId);
         Call<ShoppingCheckoutRental> call = shoppingApiService.createRental(idToken, rental);
         call.enqueue(new Callback<ShoppingCheckoutRental>() {
             @Override
@@ -276,7 +278,7 @@ public class SummaryActivity extends AppCompatActivity {
     private void setTotalPrice(Calendar endDay, Calendar startDay) {
         // change total price when startDay or endDay changes
         long diff = endDay.getTimeInMillis() - startDay.getTimeInMillis();
-        long days = 1 + diff / (1000 * 60 * 60 * 24);
+        long days = diff / (1000 * 60 * 60 * 24);
 
         // start date >= today
         boolean validStartDate;

@@ -48,6 +48,7 @@ public class AgreementActivity extends AppCompatActivity {
         // get storeId
         Intent intent = getIntent();
         storeId = intent.getLongExtra("storeId", 0);
+        System.out.println("storeId in agreement: " + storeId);
 
         // api call form
         connect();
@@ -73,14 +74,15 @@ public class AgreementActivity extends AppCompatActivity {
         }
         ShoppingApiService shoppingApiService = retrofit.create(ShoppingApiService.class);
         // api call form
-        Call<AgreementForm> formCall = shoppingApiService.getAgreementForm(String.valueOf(storeId));
+        Call<AgreementForm> formCall = shoppingApiService.getAgreementForm(storeId);
         formCall.enqueue(new Callback<AgreementForm>() {
 
             @Override
             public void onResponse(Call<AgreementForm> call, Response<AgreementForm> response) {
                 // Set equipment list name and price
-                List<LinkedTreeMap> formList = response.body().getFormListList();
-                String formString = formList.get(0).get("formBody").toString();
+//                List<LinkedTreeMap> formList = response.body().getFormListList();
+//                String formString = formList.get(0).get("formBody").toString();
+                String formString =  "A rental and lease agreement is a document that outlines the arrangement between an owner of a real estate, known as the “landlord” or “lessor”, and someone else that is willing to pay rent while occupying the property, known as the “tenant” or “lessee”. In layman’s term, it’s a document used for the occupying of space (either commercial or residential) for a period of time in exchange for monthly rent. The terms of the contract are negotiable between the tenant and landlord and once signed, the form is considered legally and mutually binding. ";
 
                 // find view
                 tvForm = findViewById(R.id.agreementDescription);

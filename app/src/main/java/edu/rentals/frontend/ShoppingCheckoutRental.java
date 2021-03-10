@@ -11,13 +11,13 @@ public class ShoppingCheckoutRental {
     private long storeId;
     private String userId;
     private List<Equipment> equipment;
-    private Timestamp startTimestamp, endTimestamp;
+    private String rentalTime, returnTime;
 
-    public ShoppingCheckoutRental(long storeId, String userId, Timestamp startTimestamp, Timestamp endTimestamp, List<Equipment> equipment) {
+    public ShoppingCheckoutRental(long storeId, String userId, String rentalTime, String returnTime, List<Equipment> equipment) {
         this.storeId = storeId;
         this.userId = userId;
         this.equipment = equipment;
-        this.startTimestamp = startTimestamp;
-        this.endTimestamp = endTimestamp;
+        this.rentalTime = rentalTime;
+        this.returnTime = returnTime;
     }
 }

@@ -37,7 +37,7 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
     static final String TAG = EquipmentListActivity.class.getSimpleName();
     static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
-    private int invoiceId;
+    private Long invoiceId;
     Button back;
     TextView tvStoreName, tvStartDate, tvDueDate, tvTotalCost;
     CustomerHomeInvoiceAdapter eAdapter;
@@ -89,7 +89,7 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
 //        tvTotalCost.setText("$500");
         //
         invoiceRental = new ArrayList<>();
-        invoiceRental.add(new Rental("Ski", 1, 3));
+//        invoiceRental.add(new Rental("Ski", 1, 3));
 //        invoiceRental.add(new Rental("Helmet", 2, 3));
 //        invoiceRental.add(new Rental("Snow Pants", 3, 2));
 
@@ -112,42 +112,33 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
         CustomerApiService customerApiService = retrofit.create(CustomerApiService.class);
 
         // api rental info
-        Call<CustomerRental> customerInfoCall = customerApiService.getRentalInfo(idToken, String.valueOf(invoiceId));
+        System.out.println("invoice id in customer invoice: " + invoiceId);
+        Call<CustomerRental> customerInfoCall = customerApiService.getRentalInfo(idToken, invoiceId);
         customerInfoCall.enqueue(new Callback<CustomerRental>() {
 
             @Override
             public void onResponse(Call<CustomerRental> call, Response<CustomerRental> response) {
                 // get invoice info
-                JSONObject invoiceInfo = response.body().getCustomerRental();
+//                JSONObject invoiceInfo = response.body().getCustomerRental();
 
                 // get info
-                String storeName = "";
-                Timestamp rentalStartDate = null;
-                Timestamp dueDate = null;
-                float totalCost = 0;
-                List<JSONObject> rentalList = new ArrayList<JSONObject>();
-
-                try {
-                    storeName = invoiceInfo.get("storeName").toString();
-                    rentalStartDate = (Timestamp) invoiceInfo.get("rentalStartDate");
-                    dueDate = (Timestamp) invoiceInfo.get("dueDate");
-                    totalCost = (float) invoiceInfo.get("totalCost");
-                    rentalList = (List<JSONObject>) invoiceInfo.get("equipment");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                String storeName = response.body().getStoreName();
+                String rentalStartDate = response.body().getRentalStartDate().split(" ")[0];
+                String dueDate = response.body().getDueDate().split(" ")[0];
+                Double totalCost = response.body().getTotalCost();
+                List<JSONObject> rentalList = response.body().getEquipmentList();
 
                 // date transform
-                Date dateStartDate = new Date(rentalStartDate.getTime());
-                String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
-                Date dateDueDate = new Date(dueDate.getTime());
-                String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
+//                Date dateStartDate = new Date(rentalStartDate.getTime());
+//                String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
+//                Date dateDueDate = new Date(dueDate.getTime());
+//                String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
 
 
                 // set text
                 tvStoreName.setText(storeName);
-                tvStartDate.setText(toStartDate);
-                tvDueDate.setText(toDueDate);
+                tvStartDate.setText(rentalStartDate);
+                tvDueDate.setText(dueDate);
                 tvTotalCost.setText(String.valueOf(totalCost));
 
                 // list
@@ -189,7 +180,7 @@ public class CustomerHomeInvoiceActivity extends AppCompatActivity {
                             idToken = task.getResult().getToken();
                             System.out.println("idToken 1 : " + idToken);
                             // connect api call
-                            connect(idToken);
+//                            connect(idToken);
 
                             // Send token to your backend via HTTPS
                             // ...

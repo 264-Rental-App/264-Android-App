@@ -15,7 +15,7 @@ public interface CustomerApiService {
 
     // http://localhost:8080/rental/{invoiceId}
     @GET("rental/{invoiceId}")
-    Call<CustomerRental> getRentalInfo(@Header("Authorization") String idToken, @Path("invoiceId") String invoiceId);
+    Call<CustomerRental> getRentalInfo(@Header("Authorization") String idToken, @Path("invoiceId") long invoiceId);
 
     // http://localhost:8080/users/{userId}
     @GET("users/{userId}")

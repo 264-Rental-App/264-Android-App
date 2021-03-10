@@ -60,14 +60,14 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<edu.rentals.fronte
     @Override
     public void onBindViewHolder(@NonNull CustomerHomeAdapter.ViewHolder holder, int position) {
         String storeName = invoiceList.get(position).getStoreName();
-        float totalCost = invoiceList.get(position).getTotalCost();
-        Timestamp transactionDate= invoiceList.get(position).getTransactionDate();
-        Date date = new Date(transactionDate.getTime());
-        String toDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
+        Double totalCost = invoiceList.get(position).getTotalCost();
+        String transactionDate= invoiceList.get(position).getTransactionDate();
+//        Date date = new Date(transactionDate.getTime());
+//        String toDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
 
         holder.tvStoreName.setText(storeName);
         holder.tvTotalPrice.setText("$ " + totalCost);
-        holder.tvTransactionDate.setText(toDate);
+        holder.tvTransactionDate.setText(transactionDate);
 
     }
 

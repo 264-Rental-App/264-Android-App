@@ -38,7 +38,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
     static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     Button back;
-    private int invoiceId;
+    private Long invoiceId;
     private String customerUserId;
     TextView tvCustomerName, tvStartDate, tvDueDate, tvTotalCost;
     OwnerHomeInvoiceAdapter eAdapter;
@@ -137,7 +137,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
 //                }
 
                 // set text
-                tvCustomerName.setText(firstName + "!");
+                tvCustomerName.setText(firstName);
 
             }
 
@@ -148,39 +148,24 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
         });
 
         // api rental info
+        System.out.println("invoiceId in owner invoice: " + invoiceId);
         Call<CustomerRental> ownerRenaltInfoCall = ownerApiService.getRentalInfo(idToken, invoiceId);
         ownerRenaltInfoCall.enqueue(new Callback<CustomerRental>() {
 
             @Override
             public void onResponse(Call<CustomerRental> call, Response<CustomerRental> response) {
                 // get invoice info
-                JSONObject invoiceInfo = response.body().getCustomerRental();
+//                JSONObject invoiceInfo = response.body().getCustomerRental();
 
                 // get info
-                Timestamp rentalStartDate = null;
-                Timestamp dueDate = null;
-                float totalCost = 0;
-                List<JSONObject> rentalList = new ArrayList<JSONObject>();
-
-                try {
-                    rentalStartDate = (Timestamp) invoiceInfo.get("rentalStartDate");
-                    dueDate = (Timestamp) invoiceInfo.get("dueDate");
-                    totalCost = (float) invoiceInfo.get("totalCost");
-                    rentalList = (List<JSONObject>) invoiceInfo.get("equipment");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                // date transform
-                Date dateStartDate = new Date(rentalStartDate.getTime());
-                String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
-                Date dateDueDate = new Date(dueDate.getTime());
-                String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
-
+                String rentalStartDate = response.body().getRentalStartDate().split(" ")[0];
+                String dueDate = response.body().getDueDate().split(" ")[0];
+                Double totalCost = response.body().getTotalCost();
+                List<JSONObject> rentalList = response.body().getEquipmentList();
 
                 // set text
-                tvStartDate.setText(toStartDate);
-                tvDueDate.setText(toDueDate);
+                tvStartDate.setText(rentalStartDate);
+                tvDueDate.setText(dueDate);
                 tvTotalCost.setText(String.valueOf(totalCost));
 
                 // list
@@ -222,7 +207,7 @@ public class OwnerHomeInvoiceActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
-                            connect(idToken);
+//                            connect(idToken);
                         } else {
                             // Handle error -> task.getException();
                             task.getException().printStackTrace();
