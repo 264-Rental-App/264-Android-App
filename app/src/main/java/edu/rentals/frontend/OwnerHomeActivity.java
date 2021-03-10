@@ -3,7 +3,6 @@ package edu.rentals.frontend;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -37,7 +36,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAdapter.InvoiceListClickListener {
-    Button search, manageStore, editInfo;
+    Button logOut, manageStore, editInfo;
     TextView tvFirstName;
     String userId, firstName;
     private static List<OwnerInvoice> ownerInvoiceList;
@@ -54,7 +53,8 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
     private HashMap<String, String> customerIdNameMap = new HashMap<>();
     private List<Integer> invoiceIdList = new ArrayList<>();
     private HashMap<Integer, String[]> invoiceIdDateMap = new HashMap<>();
-    FirebaseUser mUser;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     private static int positionChosen;
 
@@ -73,39 +73,30 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_home);
 
+        mAuth = FirebaseAuth.getInstance();
         // get storeId
 //        storeId = 1;
         storeId = getStoreIdCall();
 
         // search button
-        search = findViewById(R.id.searchPage);
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.OwnerHomeActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+        logOut = findViewById(R.id.s_logout);
+        logOut.setOnClickListener(v -> {
+            mAuth.signOut();
         });
 
         // store button
         manageStore = findViewById(R.id.manageStore);
-        manageStore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.OwnerHomeActivity.this, OwnerStoreActivity.class);
-                startActivity(intent);
-            }
+        manageStore.setOnClickListener(v -> {
+            Intent intent = new Intent(OwnerHomeActivity.this, OwnerStoreActivity.class);
+            startActivity(intent);
         });
 
 
         // edit info button
         editInfo = findViewById(R.id.editOwner);
-        editInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(edu.rentals.frontend.OwnerHomeActivity.this, OwnerEditActivity.class);
-                startActivity(intent);
-            }
+        editInfo.setOnClickListener(v -> {
+            Intent intent = new Intent(OwnerHomeActivity.this, OwnerEditActivity.class);
+            startActivity(intent);
         });
 
         // mock owner first name
