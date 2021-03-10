@@ -42,7 +42,7 @@ public class EquipmentListActivity extends AppCompatActivity {
     Button login;
     TextView totalSum;
     TextView tvStoreName, tvStoreAddress, tvStoreNumber;
-    private long storeId = 0;
+    private long storeId;
     private String storeName, storeAddress, storeNumber;
     private static int total = 0;
 
@@ -63,7 +63,7 @@ public class EquipmentListActivity extends AppCompatActivity {
 
         // get storeId from SearchStoreActivity
         Intent intent = getIntent();
-        storeId = intent.getIntExtra("storeID", 0);
+        storeId = intent.getLongExtra("storeID", 0);
 
         System.out.println("StoreId in EquipementListActivity: " + storeId);
 
