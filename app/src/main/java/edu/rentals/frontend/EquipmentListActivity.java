@@ -8,12 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
@@ -45,6 +49,9 @@ public class EquipmentListActivity extends AppCompatActivity {
     static final String BASE_URL = "http://35.222.193.76/";
     static Retrofit retrofit = null;
     FirebaseAuth mAuth;
+    FirebaseUser mUser;
+
+    private String idToken;
 
     // info that this view should hold onto
     private String usrAddress;
@@ -57,10 +64,9 @@ public class EquipmentListActivity extends AppCompatActivity {
         // get storeId from SearchStoreActivity
         Intent intent = getIntent();
         storeId = intent.getIntExtra("storeID", 0);
+        storeId = 1;
 
         mAuth = FirebaseAuth.getInstance();
-
-        connect();
 
         usrAddress = intent.getStringExtra("userAddress");
 
@@ -124,7 +130,7 @@ public class EquipmentListActivity extends AppCompatActivity {
     }
 
 
-    private void connect() {
+    private void connect(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -170,7 +176,7 @@ public class EquipmentListActivity extends AppCompatActivity {
         });
 
         // api call store equipment list
-        Call<StoreEquipmentList> call = shoppingApiService.getEquipmentList(String.valueOf(storeId));
+        Call<StoreEquipmentList> call = shoppingApiService.getEquipmentList(idToken, storeId);
         call.enqueue(new Callback<StoreEquipmentList>() {
 
             @Override
@@ -178,7 +184,7 @@ public class EquipmentListActivity extends AppCompatActivity {
                 // Set equipment list name and price
                 List<LinkedTreeMap> storeEquipmentList = response.body().getStoreEquipmentList();
                 for (int i = 0; i < storeEquipmentList.size(); i++) {
-                    int id = (int) storeEquipmentList.get(i).get("id");
+                    Long id = (Long) Math.round((Double) storeEquipmentList.get(i).get("id"));
                     String equipmentName = storeEquipmentList.get(i).get("name").toString();
                     int equipmentPrice = (int) storeEquipmentList.get(i).get("price");
                     equipmentList.add(new Equipment(id, equipmentName, equipmentPrice, 0, 0));
@@ -218,6 +224,7 @@ public class EquipmentListActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String idToken = task.getResult().getToken();
+                            connect(idToken);
                             verifyAccountType(idToken, uid);
 
                         } else {
@@ -268,5 +275,6 @@ public class EquipmentListActivity extends AppCompatActivity {
         });
 
     }
+
 
 }

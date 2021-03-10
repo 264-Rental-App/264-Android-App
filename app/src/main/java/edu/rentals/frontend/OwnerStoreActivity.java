@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +47,7 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
 
     private static int positionChosen;
 
-    public static int getEquipmentId() {
+    public static Long getEquipmentId() {
         return ownerEquipmentList.get(positionChosen).getEquipmentId();
     }
 
@@ -57,7 +58,7 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
 
         // get storeId
 //        storeId = 1;
-        storeId = getStoreIdCall();
+
 
         // back
         back = findViewById(R.id.back);
@@ -91,7 +92,7 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
 
         // mock invoice list
         ownerEquipmentList = new ArrayList<>();
-        ownerEquipmentList.add(new Equipment(1, "Bike", 500, 1, 10));
+//        ownerEquipmentList.add(new Equipment(1, "Bike", 500, 1, 10));
 //        ownerEquipmentList.add(new Equipment(3, "Snowboard", 300, 1, 20));
 //        ownerEquipmentList.add(new Equipment(5, "Ski", 300, 1, 30));
 //        ownerEquipmentList.add(new Equipment(7, "Scooter", 500, 1, 40));
@@ -111,8 +112,7 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
 
     }
 
-    private long getStoreIdCall() {
-        final long[] storeId = new long[1];
+    private void getStoreIdCall(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -122,27 +122,22 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call for storeId
-        Call<StoreInfo> storeIdCall = ownerApiService.getStoreId(idToken);
-        storeIdCall.enqueue(new Callback<StoreInfo>() {
+        Call<Store> storeIdCall = ownerApiService.getStoreId(idToken);
+        storeIdCall.enqueue(new Callback<Store>() {
 
             @Override
-            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
-                // get store info
-                JSONObject customerInfo = response.body().getStoreInfo();
-                try {
-                    // get storeId
-                    storeId[0] = (long) customerInfo.get("storeId");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<Store> call, Response<Store> response) {
+
+                storeId = response.body().getId();
+                System.out.println("storeId in getStoreId: " + storeId);
+                connect(idToken);
             }
 
             @Override
-            public void onFailure(Call<StoreInfo> call, Throwable t) {
+            public void onFailure(Call<Store> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
-        return storeId[0];
     }
 
     private void connect(String idToken) {
@@ -155,6 +150,7 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call for equipment list
+        System.out.println("storeId for equipment list" + storeId);
         Call<StoreEquipmentList> invoiceListCall = ownerApiService.getEquipmentList(idToken, storeId);
         invoiceListCall.enqueue(new Callback<StoreEquipmentList>() {
 
@@ -162,15 +158,17 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
             public void onResponse(Call<StoreEquipmentList> call, Response<StoreEquipmentList> response) {
                 // get equipment list
                 List<LinkedTreeMap> equipmentList = response.body().getStoreEquipmentList();
+//                System.out.println("reponse body: " + );
 
                 // set invoice list
                 for (int i = 0; i < equipmentList.size(); i++) {
-
-                    int equipmentId = (int) equipmentList.get(i).get("id");
+                    System.out.println("print out" + equipmentList.get(i));
+                    Long equipmentId = (Long) Math.round((Double) equipmentList.get(i).get("id"));
                     String equipmentName = equipmentList.get(i).get("name").toString();
-                    int stock = (int) equipmentList.get(i).get("stock");
-                    String desc = equipmentList.get(i).get("desc").toString();
-                    int price = (int) equipmentList.get(i).get("price");
+                    int stock = (int) Math.round((Double) equipmentList.get(i).get("stock"));
+                    String desc = equipmentList.get(i).get("description").toString();
+//                    int price = (double) equipmentList.get(i).get("price");
+                    int price = (int) Math.round((Double) equipmentList.get(i).get("price"));
 
                     ownerEquipmentList.add(new Equipment(equipmentId, equipmentName, price, 1, stock));
                 }
@@ -199,12 +197,16 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
 
         // TODO: Get current user's idToken
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+//        String name = mUser.getDisplayName();
+//        TextView tvFirstName = findViewById(R.id.userFirstName);
+//        tvFirstName.setText(name);
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
-                            connect(idToken);
+                            getStoreIdCall(idToken);
+
                             // Send token to your backend via HTTPS
                             // ...
                         } else {
@@ -213,7 +215,6 @@ public class OwnerStoreActivity extends AppCompatActivity implements OwnerStoreA
                         }
                     }
                 });
-        System.out.println("idToken: " + idToken);
     }
 
 }

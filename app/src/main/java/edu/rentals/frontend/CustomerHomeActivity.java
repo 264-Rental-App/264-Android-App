@@ -85,7 +85,7 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
 
         // invoice list
         userInvoiceList = new ArrayList<>();
-        userInvoiceList.add(new Invoice(1, "Bike Shop", 500, java.sql.Timestamp.valueOf("2017-09-23 10:10:10.0")));
+//        userInvoiceList.add(new Invoice(1, "Bike Shop", 500, java.sql.Timestamp.valueOf("2017-09-23 10:10:10.0")));
 //        userInvoiceList.add(new Invoice(2, "Ski Shop", 100, java.sql.Timestamp.valueOf("2016-09-23 10:10:10.0")));
 //        userInvoiceList.add(new Invoice(3, "Surf Shop", 150, java.sql.Timestamp.valueOf("2015-09-23 10:10:10.0")));
 //        userInvoiceList.add(new Invoice(4, "Bear Shop", 1000, java.sql.Timestamp.valueOf("2014-09-23 10:10:10.0")));
@@ -248,7 +248,6 @@ public class CustomerHomeActivity extends AppCompatActivity implements CustomerH
                         }
                     }
                 });
-        System.out.println("idToken 2 : " + idToken);
 
     }
 

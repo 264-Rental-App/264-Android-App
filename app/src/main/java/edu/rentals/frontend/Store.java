@@ -40,9 +40,9 @@ public class Store {
 
     public Double getLongitude() { return storeLong; }
 
-    public Long getId() { return id; }
+    public String getOwnerId() { return ownerId; }
 
-    public String getStoreId() { return ownerId; }
+    public long getStoreId() { return id; }
 
     public String getStoreAddress() { return storeAddress; }
 

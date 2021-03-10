@@ -75,8 +75,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
 
         mAuth = FirebaseAuth.getInstance();
         // get storeId
-//        storeId = 1;
-        storeId = getStoreIdCall();
+
 
         // search button
         logOut = findViewById(R.id.s_logout);
@@ -102,12 +101,12 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
 
         // mock owner first name
         tvFirstName = findViewById(R.id.userFirstName);
-        firstName = "User";
-        tvFirstName.setText(firstName + "!");
+//        firstName = "User";
+//        tvFirstName.setText(firstName + "!");
 
         // mock invoice list
         ownerInvoiceList = new ArrayList<>();
-        ownerInvoiceList.add(new OwnerInvoice(1, "1", 500, "09/23/2020", "Debby", "10/24/2020", "10/25/2020"));
+//        ownerInvoiceList.add(new OwnerInvoice(1, "1", 500, "09/23/2020", "Debby", "10/24/2020", "10/25/2020"));
 //        ownerInvoiceList.add(new OwnerInvoice(2, "3", 250, "11/23/2020", "Ken", "11/24/2020", "12/25/2020"));
 //        ownerInvoiceList.add(new OwnerInvoice(3, "5", 300, "12/20/2020", "John", "12/29/2020", "01/25/2021"));
 
@@ -125,8 +124,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         recyclerView.setAdapter(eAdapter);
     }
 
-    private long getStoreIdCall() {
-        final long[] storeId = new long[1];
+    private void getStoreIdCall(String idToken) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -136,33 +134,27 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call for storeId
-        Call<StoreInfo> storeIdCall = ownerApiService.getStoreId(idToken);
-        storeIdCall.enqueue(new Callback<StoreInfo>() {
+        Call<Store> storeIdCall = ownerApiService.getStoreId(idToken);
+        storeIdCall.enqueue(new Callback<Store>() {
 
             @Override
-            public void onResponse(Call<StoreInfo> call, Response<StoreInfo> response) {
+            public void onResponse(Call<Store> call, Response<Store> response) {
                 // get store info
-                System.out.println();
-                JSONObject customerInfo = response.body().getStoreInfo();
-                try {
-                    // get storeId
-                    storeId[0] = (long) customerInfo.get("storeId");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                storeId = response.body().getId();
+                System.out.println("storeId in getStoreId in owner home: " + storeId);
+                connect(idToken, storeId);
             }
 
             @Override
-            public void onFailure(Call<StoreInfo> call, Throwable t) {
+            public void onFailure(Call<Store> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
-        return storeId[0];
     }
 
     // this is to retrieve the Owner's name to show on the home page
     // TODO: get rid of this. Just use the FirebaseAuth to get displayName
-    private void connect(String idToken) {
+    private void connect(String idToken, long storeId) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -172,31 +164,31 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         OwnerApiService ownerApiService = retrofit.create(OwnerApiService.class);
 
         // api call user info
-        Call<Customer> customerInfoCall = ownerApiService.getUserInfo(idToken, userId);
-        customerInfoCall.enqueue(new Callback<Customer>() {
-
-            @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
-                // get customer info
-                JSONObject customerInfo = response.body().getCustomerInfo();
-
-                // get first name
-                try {
-                    firstName = customerInfo.get("userFirstName").toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                // set text
-                tvFirstName.setText(firstName + "!");
-
-            }
-
-            @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-        });
+//        Call<Customer> customerInfoCall = ownerApiService.getUserInfo(idToken, userId);
+//        customerInfoCall.enqueue(new Callback<Customer>() {
+//
+//            @Override
+//            public void onResponse(Call<Customer> call, Response<Customer> response) {
+//                // get customer info
+//                JSONObject customerInfo = response.body().getCustomerInfo();
+//
+//                // get first name
+//                try {
+//                    firstName = customerInfo.get("userFirstName").toString();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // set text
+//                tvFirstName.setText(firstName + "!");
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Customer> call, Throwable t) {
+//                Log.e(TAG, t.toString());
+//            }
+//        });
 
 
         // api call for invoice list
@@ -236,65 +228,6 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
             }
         });
 
-//        // use customerIdList to put {userId, userFirstName} pair to customerIdNameMap hashmap
-//        for (String customerUserId: customerIdList) {
-//            Call<Customer> userInfoCall = ownerApiService.getUserInfo(customerUserId);
-//            userInfoCall.enqueue(new Callback<Customer>() {
-//                @Override
-//                public void onResponse(Call<Customer> call, Response<Customer> response) {
-//                    // get user
-//                    JSONObject user = response.body().getCustomerInfo();
-//                    try {
-//                        customerIdNameMap.put(customerUserId, user.get("userFirstName").toString());
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Customer> call, Throwable t) {
-//                    Log.e(TAG, t.toString());
-//                }
-//            });
-//        }
-
-        // use invoiceIdList to put {invoiceId, [rentalStartDate, dueDate]} pair to invoiceIdRentalDate HashMap
-//        for (int invoiceId: invoiceIdList) {
-//            Call<CustomerRental> rentalInfoCall =  ownerApiService.getRentalInfo(idToken, invoiceId);
-//            rentalInfoCall.enqueue(new Callback<CustomerRental>() {
-//
-//                @Override
-//                public void onResponse(Call<CustomerRental> call, Response<CustomerRental> response) {
-//                    // get rentalInfo
-//                    JSONObject invoiceInfo = response.body().getCustomerRental();
-//                    // get info
-//                    Timestamp rentalStartDate = null;
-//                    Timestamp dueDate = null;
-//
-//                    try {
-//                        rentalStartDate = (Timestamp) invoiceInfo.get("rentalStartDate");
-//                        dueDate = (Timestamp) invoiceInfo.get("dueDate");
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    // date transform
-//                    Date dateStartDate = new Date(rentalStartDate.getTime());
-//                    String toStartDate = new SimpleDateFormat("MM/dd/yyyy").format(dateStartDate);
-//                    Date dateDueDate = new Date(dueDate.getTime());
-//                    String toDueDate = new SimpleDateFormat("MM/dd/yyyy").format(dateDueDate);
-//
-//                    // put to hash map
-//                    invoiceIdDateMap.put(invoiceId, new String[]{toStartDate, toDueDate});
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<CustomerRental> call, Throwable t) {
-//                    Log.e(TAG, t.toString());
-//                }
-//            });
-//        }
 
         // loop through tmpOwnerInvoiceList
         for (int i=0; i < tmpOwnerInvoiceList.size(); i++) {
@@ -303,21 +236,19 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
             String tmpUserId = tmpOwnerInvoiceList.get(i).getUserId();
 
             // use customerIdList to put {userId, userFirstName} pair to customerIdNameMap hashmap
-            Call<Customer> userInfoCall = ownerApiService.getUserInfo(idToken, tmpUserId);
-            userInfoCall.enqueue(new Callback<Customer>() {
+            Call<User> userInfoCall = ownerApiService.getUserInfo(idToken, tmpUserId);
+            userInfoCall.enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<Customer> call, Response<Customer> response) {
+                public void onResponse(Call<User> call, Response<User> response) {
                     // get user
-                    JSONObject user = response.body().getCustomerInfo();
-                    try {
-                        customerIdNameMap.put(tmpUserId, user.get("userFirstName").toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+//                    JSONObject user = response.body().getCustomerInfo();
+                    String userFirstName = response.body().getFirst_name();
+                    //                        customerIdNameMap.put(tmpUserId, user.get("userFirstName").toString());
+                    customerIdNameMap.put(tmpUserId, userFirstName);
                 }
 
                 @Override
-                public void onFailure(Call<Customer> call, Throwable t) {
+                public void onFailure(Call<User> call, Throwable t) {
                     Log.e(TAG, t.toString());
                 }
             });
@@ -437,20 +368,25 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         // get userId
         userId = mUser.getUid();
-        Log.d("userId", userId);
+        Log.d("userId in owner home: ", userId);
+
+        String name = mUser.getDisplayName();
+        TextView tvFirstName = findViewById(R.id.userFirstName);
+        tvFirstName.setText(name);
         mUser.getIdToken(true)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
-//                            connect(idToken);
+                            System.out.println("idToken in owner home: " + idToken);
+                            getStoreIdCall(idToken);
+
                         } else {
                             // Handle error -> task.getException();
                             task.getException().printStackTrace();
                         }
                     }
                 });
-        System.out.println("idToken: " + idToken);
     }
 
 }
