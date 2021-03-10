@@ -82,6 +82,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
         logOut = findViewById(R.id.s_logout);
         logOut.setOnClickListener(v -> {
             mAuth.signOut();
+            startActivity(new Intent(OwnerHomeActivity.this, MainActivity.class));
         });
 
         // store button
@@ -442,7 +443,7 @@ public class OwnerHomeActivity extends AppCompatActivity implements OwnerHomeAda
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             idToken = task.getResult().getToken();
-                            connect(idToken);
+//                            connect(idToken);
                         } else {
                             // Handle error -> task.getException();
                             task.getException().printStackTrace();

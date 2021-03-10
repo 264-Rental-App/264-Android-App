@@ -5,41 +5,41 @@ import com.google.gson.annotations.SerializedName;
 import java.util.UUID;
 
 public class PostNewStore {
-    private String storeName;
+    private String name;
 
-    private Double storeLat;
+    private Double lat;
 
-    private Double storeLong;
+    private Double lon;
 
     private String ownerId;
 
-    private String storeAddress;
+    private String commonAddress;
 
-    private String storeCategory;
+    private String category;
 
     private String phoneNumber;
 
     public PostNewStore(String name, Double lat, Double lon, String ownerId, String address, String category, String phoneNumber) {
-        this.storeName = name;
-        this.storeLat = lat;
-        this.storeLong = lon;
+        this.name = name;
+        this.lat = lat;
+        this.lon = lon;
         this.ownerId = ownerId;
-        this.storeAddress = address;
-        this.storeCategory = category;
+        this.commonAddress = address;
+        this.category = category;
         this.phoneNumber = phoneNumber;
     }
 
-    public String getStoreName() { return storeName; }
+    public String getStoreName() { return name; }
 
-    public Double getLatitude() { return storeLat; }
+    public Double getLatitude() { return lat; }
 
-    public Double getLongitude() { return storeLong; }
+    public Double getLongitude() { return lon; }
 
     public String getStoreId() { return ownerId; }
 
-    public String getStoreAddress() { return storeAddress; }
+    public String getStoreAddress() { return commonAddress; }
 
-    public String getStoreCategory() { return storeCategory; }
+    public String getStoreCategory() { return category; }
 
     public String getPhoneNumber() { return phoneNumber; }
 

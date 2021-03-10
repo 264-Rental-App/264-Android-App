@@ -130,7 +130,7 @@ public class StoreOwnerCreatesStoreActivity extends AppCompatActivity {
 
                 // Once receive response from google, create a Store object, pass to server
                 PostNewStore store = new PostNewStore(storeNameStr, latLngFromGoogle.lat, latLngFromGoogle.lng,
-                                        ownerId, address, category,storeContactNum);
+                                        ownerId, address, category, storeContactNum);
 
                 mUser = FirebaseAuth.getInstance().getCurrentUser();
                 mUser.getIdToken(true)
